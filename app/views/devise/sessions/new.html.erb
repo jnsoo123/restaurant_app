@@ -1,0 +1,27 @@
+<div id="loginform" class="container">
+  <div class="form-header">
+    <div class="text-center">LOGIN</div>
+  </div>
+  <div class="form-body">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="input-group input-group-lg" style="margin-bottom: 10px;">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-user"></i>
+        </span>
+        <%= f.email_field :email, autocomplete: :on, class: 'form-control', placeholder: 'you@example.com' %>
+      </div>
+      <div class="input-group input-group-lg" style="margin-bottom: 10px;">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-lock"></i>
+        </span>
+        <%= f.password_field :password, autocomplete: :off, class: 'form-control', placeholder: 'password'%>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Login", class: 'btn btn-primary', style: 'width: 100%; height: 46px; margin-bottom: 10px;' %>
+        <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-success', style: 'width: 100%; height: 46px; padding-top: 12px; margin-bottom: 10px;' %>
+        <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+      </div>
+    <% end %>
+  </div>
+</div>

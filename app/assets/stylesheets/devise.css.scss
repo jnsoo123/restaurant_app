@@ -1,0 +1,24 @@
+#loginform, #signupform {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 500px;
+  margin-top: 20px;
+  padding: 0px;
+  
+  .form-header{
+    width: 100%; 
+    height: 75px;
+    background-color: #e7e7e7;
+    
+    .text-center{
+      padding-top: 23px; 
+      font-size: 20px;
+    }
+    
+  }
+  
+  .form-body{
+    padding: 20px;
+  }
+  
+}
+

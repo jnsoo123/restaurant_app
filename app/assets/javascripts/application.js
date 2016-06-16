@@ -22,5 +22,6 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require bootstrap-sprockets
+//= require owl.carousel
 //= require turbolinks
 //= require_tree .
