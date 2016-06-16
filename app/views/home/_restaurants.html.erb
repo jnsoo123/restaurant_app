@@ -1,3 +1,46 @@
+<div class="container" style="width: 50%;">
+  <div class="jumbotron" style="margin-top: 0px; background-color: #fff;">
+    <h1 class="text-center">Fudz Finder</h1>
+    <p class="text-center" style="color: #9c9c9c;">find food for your appetite</p>
+    <div style='text-align: center;'>
+      <%= form_tag(home_path) do %>
+        <div class="input-group" style="">
+          <input type="text" class="form-control" placeholder="Search for food/restaurants/cuisines...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<nav id="main-nav" class="navbar navbar-default" style="margin-bottom: 0px;">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#restaurants">Restaurants</a></li>
+        <li><a href="#cuisines">Cuisines</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#make_a_resto">Make a Resto</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 <div id="restaurants" class="container">
-  popular restaurants thingy
+  <div class="owl-carousel">
+    <div> Your Content </div>
+    <div> Your Content </div>
+  </div>
 </div>
