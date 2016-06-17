@@ -36,6 +36,7 @@ end
 
 #gem 'mysql2'
 
+#gem 'activeadmin'
 gem 'devise'
 gem 'will_paginate', '~> 3.1.0'
 
