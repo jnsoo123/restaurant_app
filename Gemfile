@@ -39,7 +39,7 @@ end
 gem 'devise'
 gem 'will_paginate', '~> 3.1.0'
 
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'momentjs-rails', '>= 2.9.0'

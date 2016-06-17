@@ -1,3 +1,18 @@
 <div id="cuisines" class="container">
-  popular cuisines or in demand
+  <h2 class="text-center">Popular Cuisines</h2>
+  <div class="row">
+    <% @cuisines.each do |cuisine| %>
+      <div class="col-md-3">
+        <%= link_to(cuisine) do %>
+          <div class="thumbnail text-center" style="height: 350px;">
+            <%= image_tag 'sisig.jpg' %>
+            <div class="caption">
+              <h3><%= cuisine.name %></h3>
+              <p><%= cuisine.description %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

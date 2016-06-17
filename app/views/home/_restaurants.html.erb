@@ -1,21 +1,28 @@
 <div class="container" style="width: 50%;">
-  <div class="jumbotron" style="margin-top: 0px; background-color: #fff;">
-    <h1 class="text-center">Fudz Finder</h1>
-    <p class="text-center" style="color: #9c9c9c;">find food for your appetite</p>
-    <div style='text-align: center;'>
-      <%= form_tag(home_path) do %>
-        <div class="input-group" style="">
-          <input type="text" class="form-control" placeholder="Search for food/restaurants/cuisines...">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Go!</button>
-          </span>
+  <div class="jumbotron" style="margin-top: 0px; background-color: whitesmoke;">
+    <div class="owl-carousel">
+      <div>
+        <h1 class="text-center">Fudz Finder</h1>
+        <p class="text-center" style="color: #9c9c9c;">find food for your appetite</p>
+        <div style='text-align: center;'>
+          <%= form_tag(home_path) do %>
+            <div class="input-group" style="">
+              <input type="text" class="form-control" placeholder="Search for food/restaurants/cuisines...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
+      <div>
+        more ads
+      </div>
     </div>
   </div>
 </div>
 
-<nav id="main-nav" class="navbar navbar-default" style="margin-bottom: 0px;">
+<nav id="main-nav" class="navbar navbar-default" style="margin-bottom: 0px; background-color: #fff;">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -38,9 +45,30 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div id="restaurants" class="container">
-  <div class="owl-carousel">
-    <div> Your Content </div>
-    <div> Your Content </div>
+<div id="restaurants" class="container" style="margin-top: 20px;">
+  <h2 class="text-center">Popular Restaurants</h2>
+  <div class="list-group"> 
+    <% @restaurants.each do |resto| %>
+    <%= link_to(resto, class: 'list-group-item', style: 'margin-bottom: 10px; height: 175px; padding: 20px;') do %>
+        <div class="row">
+          <div class="col-md-3">
+            pic here
+          </div>
+          <div class="col-md-9">
+            <h3 class="list-group-item-heading"><%= resto.name %></h3>
+            <p class="list-group-item-text"><%= resto.description %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
+
+
+
+
+
+
+
+
+

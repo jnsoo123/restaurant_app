@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   get 'administrator' => 'administrator#index'
+  get 'owner/dashboard' => 'users#dashboard', as: :users_dashboard
 
   get 'home/index'
 
   devise_for :users
   
   resources :restaurants
+  resources :cuisines
+  get 'users/:id' => 'users#show', as: :user_profile
   
   
   # The priority is based upon order of creation: first created -> highest priority.
