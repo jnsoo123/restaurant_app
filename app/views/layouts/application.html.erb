@@ -8,7 +8,7 @@
 <!--  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">-->
 </head>
 <body>
-  
+
   <nav id="top-nav" class="navbar navbar-default" style="margin-bottom: 0px;">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -28,6 +28,14 @@
           <li><%= link_to 'Home', home_path %></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
+          <% if user_signed_in? %>
+		  	     <% if current_user.admin?%>
+				         <li><%= link_to "Users", administrator_path %> </li>
+				         <li><%= link_to "Restaurants", restaurants_index_path %> </li>
+				         <li><%= link_to "Cuisines", cuisines_index_path %> </li>
+			        <% end%>
+		      <% end%>
+		  
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if user_signed_in? %>
@@ -35,7 +43,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height: 100%;"><%= "<span class='glyphicon glyphicon-user' style='margin-right: 5px;'></span> #{current_user.name} <span style='margin-left: 5px;' class='glyphicon glyphicon-chevron-down'></span>".html_safe %></a>
               <ul id="dropdown-menu" class="dropdown-menu">
                 <li><%= link_to 'View Profile', user_profile_path(current_user.id) %></li>
-                
+
                 <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
               </ul>
             </li>
@@ -43,14 +51,14 @@
             <li><%= link_to 'Login', new_user_session_path %></li>
             <li><%= link_to 'Sign Up', new_user_registration_path %></li>
           <% end %>
-          
-          
+
+
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  
-  
+
+
 
 <%= yield %>
 

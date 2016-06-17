@@ -1,0 +1,78 @@
+<h3> Pending</h3>
+
+<% if !@restos_ongoing.empty? %>
+	<table class = 'table'>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Address</th>
+		<th>Contact</th>
+		<th>Price Range</th>
+		<th>Map</th>
+	<% @restos_ongoing.each do |resto| %>
+		<tr>
+			<td><%= resto.name%></td>
+			<td><%= resto.description %></td>
+			<td><%= resto.address %></td>
+			<td><%= resto.contact%></td>
+			<td><%= resto.low_price_range %> - <%= resto.high_price_range %> </td>
+			<td><%= resto.map %></td>
+			<td><%= link_to 'Accept', accept_restaurant_path(resto.id), method: :put%></td>
+			<td><%= link_to 'Reject', reject_restaurant_path(resto.id), method: :put%></td>
+		</tr>
+	<% end%>
+	</table>
+<% else %>
+	No Pending Restaurant Registrations
+<% end%>
+
+</br><h3> Accepted</h3>
+
+<% if !@restos_accepted.empty? %>
+	<table class = 'table'>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Address</th>
+		<th>Contact</th>
+		<th>Price Range</th>
+		<th>Map</th>
+	<% @restos_accepted.each do |resto| %>
+		<tr>
+			<td><%= resto.name%></td>
+			<td><%= resto.description %></td>
+			<td><%= resto.address %></td>
+			<td><%= resto.contact%></td>
+			<td><%= resto.low_price_range %> - <%= resto.high_price_range %> </td>
+			<td><%= resto.map %></td>
+		</tr>
+	<% end%>
+	</table>
+<% else %>
+	No Accepted Restaurants
+<% end%>
+
+
+</br><h3> Rejected</h3>
+
+
+<% if !@restos_rejected.empty? %>
+	<table class = 'table'>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Address</th>
+		<th>Contact</th>
+		<th>Price Range</th>
+		<th>Map</th>
+	<% @restos_rejected.each do |resto| %>
+		<tr>
+			<td><%= resto.name%></td>
+			<td><%= resto.description %></td>
+			<td><%= resto.address %></td>
+			<td><%= resto.contact%></td>
+			<td><%= resto.low_price_range %> - <%= resto.high_price_range %> </td>
+			<td><%= resto.map %></td>
+		</tr>
+	<% end%>
+	</table>
+<% else %>
+	No Rejected Restaurants
+<% end%>

@@ -1,0 +1,19 @@
+<% if !@cuisines.nil? %>
+<table class = 'table'>
+	<th>Name</th>
+	<th>Description</th>
+<% @cuisines.each do |cuisine| %>
+	<tr>
+		<td><%= cuisine.name%></td>
+		<td><%= cuisine.description%></td>
+		<td><%= link_to "Edit Cuisine Name", edit_cuisine_path(cuisine.id) %></td>
+		<td><%= link_to "Remove Cuisine Name", remove_cuisine_path(cuisine.id), method: :delete, 
+				data: { confirm: 'Are you sure?' }  %></td>
+	</tr>
+<% end %>
+</table>
+<% else %>
+	No Cuisines Available
+<% end%>
+
+<%= link_to 'Create new cuisine', new_cuisine_path %>

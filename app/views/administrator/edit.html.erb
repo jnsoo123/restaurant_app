@@ -1,0 +1,12 @@
+Update Cuisine
+<%= form_for(@cuisine, url: update_cuisine_path, method: :patch) do |f| %>
+  <div class = 'field'>
+	  <%= f.label(:name) %>
+  	  <%= f.text_field(:name) %>
+  </div>
+  <div class = 'field'>
+    <%= f.label(:description) %>
+      <%= f.text_field(:description) %>
+  </div>
+  <%= f.submit %>
+<% end %>
