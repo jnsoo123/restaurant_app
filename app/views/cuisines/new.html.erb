@@ -1,5 +1,5 @@
 New Cuisine
-<%= form_for(@cuisine, url: create_cuisine_path, method: :post) do |f| %>
+<%= form_for(@cuisine) do |f| %>
   <div class = 'field'>
 	  <%= f.label(:name) %>
   	  <%= f.text_field(:name) %>

@@ -1,30 +1,18 @@
 Rails.application.routes.draw do
   get 'administrator' => 'administrator#index'
-
-  get 'administrator/restaurants' => 'administrator#restaurants', as: :restaurants_index
-# get 'administrator/comments' => 'administrator#comments', as: :comments_index
-  get 'administrator/cuisines' => 'administrator#cuisines', as: :cuisines_index
-  get '/administrator/:id', to: 'administrator#edit', as: :edit_cuisine
-  patch '/administrator/:id', to: 'administrator#update', as: :update_cuisine
-  get '/administrator/cuisine/new', to: 'administrator#new', as: :new_cuisine
-  post '/administrator/', to: 'administrator#create', as: :create_cuisine
-  delete '/administrator/:id', to: 'administrator#destroy', as: :remove_cuisine
-  
-  
-  put '/administrator/:id', to: 'administrator#accept', as: :accept_restaurant
-  put '/administrator/:id', to: 'administrator#reject', as: :reject_restaurant
-
+  get 'ratings' => 'ratings#index'
+  # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
+  get 'restaurants/listing' => 'restaurants#listing', as: :restaurant_listing
   get 'owner/dashboard' => 'users#dashboard', as: :users_dashboard
-
+  
   get 'home/index'
-
+  
   devise_for :users
   
-  resources :restaurants
+  resources :restaurants 
   resources :cuisines
   get 'users/:id' => 'users#show', as: :user_profile
-  
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
