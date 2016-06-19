@@ -16,9 +16,9 @@
 			<td><%= resto.contact%></td>
 			<td><%= resto.low_price_range %> - <%= resto.high_price_range %> </td>
 			<td><%= resto.map %></td>
-			<td><%= link_to 'Accept', request_restaurant_path(resto.id, restaurant: { status: 'accepted' }),
+			<td><%= link_to 'Accept', restaurant_path(resto.id, restaurant: { status: 'accepted' }),
 				 method: :put%></td>
-			<td><%= link_to 'Reject', request_restaurant_path(resto.id, restaurant: { status: 'rejected' }),
+			<td><%= link_to 'Reject', restaurant_path(resto.id, restaurant: { status: 'rejected' }),
 				 method: :put%></td>
 		</tr>
 	<% end%>

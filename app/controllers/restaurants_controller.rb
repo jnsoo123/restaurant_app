@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:request]
+  before_action :set_restaurant, only: [:update]
   respond_to :html
   
   def index
@@ -24,14 +24,14 @@ class RestaurantsController < ApplicationController
   
   def update
     @restaurant.update(restaurant_params)
-    redirect_to restaurants_index_path
+    respond_with(@restaurant, location: restaurant_listing_path)
   end
   
   private
   
   def restaurant_params
     params.require(:restaurant).permit(:name, :description, :map, :address, 
-                                      :contact_info, :low_price_range, :high_price_range)
+                                      :contact_info, :low_price_range, :high_price_range, :status)
   end
 
   def set_restaurant
