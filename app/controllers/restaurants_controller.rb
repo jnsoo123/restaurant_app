@@ -1,8 +1,13 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:update, :reject]
+  before_action :set_restaurant, only: [:show, :update, :reject]
+
+  skip_before_action :authenticate_user!, only: [:show]
   respond_to :html
   
   def index
+  end
+  
+  def show
   end
   
   def listing
@@ -17,9 +22,8 @@ class RestaurantsController < ApplicationController
   end
   
   def create
-    restaurant_params[:user_id] = current_user.id
-
-    @restaurant = Restaurant.new(hash_values)
+    @restaurant = Restaurant.new(restaurant_params)
+    @restaurant.user = current_user
     @restaurant.save
     respond_with(@restaurant, location: users_dashboard_path)
   end
@@ -28,8 +32,10 @@ class RestaurantsController < ApplicationController
   end
   
   def update
-    UserMailer.reject_email(@restaurant.user).deliver_now if restaurant_params[:status] == 'rejected'
-   
+    if restaurant_params[:status] == 'rejected'
+      Notification.create(user_id: @restaurant.user.id, message: params[:message])
+      UserMailer.reject_email(@restaurant.user).deliver_now
+    end 
     @restaurant.update(restaurant_params)
     respond_with(@restaurant, location: restaurant_listing_path)
   end
@@ -37,6 +43,7 @@ class RestaurantsController < ApplicationController
   private
   
   def restaurant_params
+    params.require(:restaurant).permit(:name, :description, :location, :contact, :address)
     params.require(:restaurant).permit(:name, :description, :map, :address, 
                                       :contact, :low_price_range, :high_price_range, :status)
   end

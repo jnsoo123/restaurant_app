@@ -6,7 +6,7 @@
   <body>
     <h1>Good day, <%= @user.name %></h1>
     <p>
-      We would like to inform you that your application to establish the restaurant, <%= @restaurant.name %>, has been rejected because  <br>
+      We would like to inform you that your application to establish the restaurant, <%= @restaurant.name %>, has been rejected due to: <br><%= @notification.message %>  <br>
     </p>
     <p>Thank you for understanding!</p>
   </body>

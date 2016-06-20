@@ -40,6 +40,7 @@ end
 gem 'devise'
 gem 'will_paginate', '~> 3.1.0'
 
+gem 'font-awesome-sass', '~> 4.6.2'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'bootstrap-datepicker-rails'

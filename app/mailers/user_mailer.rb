@@ -4,6 +4,7 @@ class UserMailer < ActionMailer::Base
   def reject_email(user)
       @user = user
       @restaurant = Restaurant.where(user_id: user.id).last
+      @notification = Notification.where(user_id: user.id).order('created_at').last
       mail(to: @user.email, subject: 'Restaurant Establishment Application')
   end
  

@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   
   resources :restaurants 
   resources :cuisines
+  
+  resources :users do
+    resources :restaurants
+  end
+  
   get 'users/:id' => 'users#show', as: :user_profile
 
   # The priority is based upon order of creation: first created -> highest priority.

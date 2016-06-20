@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   respond_to :html
-  
+  layout "owner", only: [:dashboard]
   before_action :set_user, only: [:show]
   
   def show
