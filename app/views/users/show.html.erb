@@ -1,7 +1,17 @@
 <div class="container" style="max-width: 750px;">
-  <div class="row">
-    <div class="">
-    
+  <div class="row" style="margin-top: 30px; background-color: #fff; padding: 20px;">
+    <div class="col-md-3">
+      <%= image_tag('sisig.jpg', class: 'img-circle', style: 'width: 140px; height: 140px;') %>
     </div>
+    <div class="col-md-9">
+      <h3><%= @user.name %> <small> @<%= @user.username %></small></h3>
+      <p><%= icon('envelope', @user.email) %></p>
+      <p><%= link_to "#{icon('pencil-square-o')} Edit profile".html_safe %></p>
+    </div>
+  </div>
+  
+  <div class="row" style="margin-top: 20px; background-color: #fff; padding: 20px; margin-bottom: 60px;">
+    <h3>Your Reviews</h3>
+    <p>You have not rated nor reviewed any restaurant.</p>
   </div>
 </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617040541) do
+ActiveRecord::Schema.define(version: 20160617051354) do
 
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
@@ -54,7 +54,10 @@ ActiveRecord::Schema.define(version: 20160617040541) do
     t.text     "map"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "user_id"
   end
+
+  add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
