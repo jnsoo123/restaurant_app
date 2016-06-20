@@ -1,6 +1,6 @@
 <h3> Pending</h3>
 
-<% if !@restos_ongoing.empty? %>
+<% if !@restos_pending.empty? %>
 	<table class = 'table'>
 		<th>Name</th>
 		<th>Description</th>
@@ -8,7 +8,7 @@
 		<th>Contact</th>
 		<th>Price Range</th>
 		<th>Map</th>
-	<% @restos_ongoing.each do |resto| %>
+	<% @restos_pending.each do |resto| %>
 		<tr>
 			<td><%= resto.name%></td>
 			<td><%= resto.description %></td>
@@ -18,8 +18,7 @@
 			<td><%= resto.map %></td>
 			<td><%= link_to 'Accept', restaurant_path(resto.id, restaurant: { status: 'accepted' }),
 				 method: :put%></td>
-			<td><%= link_to 'Reject', restaurant_path(resto.id, restaurant: { status: 'rejected' }),
-				 method: :put%></td>
+			<td><%= link_to 'Reject', restaurant_reject_path(resto.id), method: :get%></td>
 		</tr>
 	<% end%>
 	</table>
