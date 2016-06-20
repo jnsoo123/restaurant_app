@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
   get 'administrator' => 'administrator#index'
+  get 'ratings' => 'ratings#index'
+  # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
+  get 'restaurants/listing' => 'restaurants#listing', as: :restaurant_listing
   get 'owner/dashboard' => 'users#dashboard', as: :users_dashboard
-
+  
   get 'home/index'
-
+  
   devise_for :users
   
-  resources :restaurants
+  resources :restaurants 
   resources :cuisines
   
   resources :users do
@@ -14,8 +17,7 @@ Rails.application.routes.draw do
   end
   
   get 'users/:id' => 'users#show', as: :user_profile
-  
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
