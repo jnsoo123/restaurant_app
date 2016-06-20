@@ -7,5 +7,11 @@ class UserMailer < ActionMailer::Base
       @notification = Notification.where(user_id: user.id).order('created_at').last
       mail(to: @user.email, subject: 'Restaurant Establishment Application')
   end
+  
+  def accept_email(user)
+    @user = user
+    @restaurant = Restaurant.where(user_id: user.id).last
+    mail(to: @user.email, subject: 'Restaurant Establishment Application')
+  end
  
 end

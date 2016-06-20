@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :update, :reject]
+  before_action :set_restaurant, only: [:show, :edit, :update, :reject]
 
   skip_before_action :authenticate_user!, only: [:show]
   respond_to :html
@@ -8,6 +8,9 @@ class RestaurantsController < ApplicationController
   end
   
   def show
+  end
+  
+  def edit
   end
   
   def listing
@@ -35,7 +38,11 @@ class RestaurantsController < ApplicationController
     if restaurant_params[:status] == 'rejected'
       Notification.create(user_id: @restaurant.user.id, message: params[:message])
       UserMailer.reject_email(@restaurant.user).deliver_now
+    else
+      Notification.create(user_id: @restaurant.user.id)
+      UserMailer.accept_email(@restaurant.user).deliver_now
     end 
+    
     @restaurant.update(restaurant_params)
     respond_with(@restaurant, location: restaurant_listing_path)
   end

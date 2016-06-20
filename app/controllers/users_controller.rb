@@ -1,9 +1,18 @@
 class UsersController < ApplicationController
   respond_to :html
   layout "owner", only: [:dashboard]
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :edit, :update]
   
   def show
+  end
+  
+  def edit
+    respond_with(@user, template: 'users/admin/edit')
+  end
+  
+  def update
+    @user.update(user_params)
+    redirect_to administrator_path
   end
   
   def dashboard
@@ -14,5 +23,9 @@ class UsersController < ApplicationController
   
   def set_user
     @user = User.find(params[:id])
+  end
+  
+  def user_params
+    params.require(:user).permit(:name, :username, :email, :location, :profile_picture_url)
   end
 end
