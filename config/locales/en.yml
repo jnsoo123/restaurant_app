@@ -69,6 +69,47 @@ en:
           description: "Description"
       edit:
           updatecuisine: "Update Cuisine"
+      index:
+          name: "Name"
+          description: "Description"
+      new:
+          newcuisine: "New Cuisine"
+          
+  foods:
+      _edit:
+          dish: "Dish"
+          dishname: "Dish Name"
+          description: "Description"
+          price: "Price"
+          pricedish: "Price of Dish"
+          selectcuisine: "Select Cuisine"
+          editdish: "Edit Dish"
+      _new:       
+          adddish: "Add a Dish"
+          dishname: "Dish Name"
+          description: "Description"
+          pricedish: "Price of Dish"
+          submitdish: "Submit Dish"
+
+  ratings: 
+      index: 
+          display: "Display by: "
+          show: "Show"
+          rating: "Rating"
+          restaurant: "Restaurant"
+          user: "User"
+          comment: "Comment"
+
+  home:
+      _cuisines:
+          popular: "Popular Cuisines"
+      _make_a_resto:
+          marketingspeech: "Super Awesome Marketing Speech"
+          speech: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          signuptoday: "Sign up today"
+      _restaurants:
+      _reviews:
+      index:
 
   users:
      show:

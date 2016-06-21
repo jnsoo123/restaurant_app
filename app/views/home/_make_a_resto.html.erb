@@ -1,9 +1,9 @@
 <div id="make_a_resto" class="">
   <div class="jumbotron">
     <div class="container text-center">
-      <h1>Super Awesome Marketing Speech</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p><%= link_to "Sign up today #{icon('check-circle-o')}".html_safe, new_restaurant_path, class: 'btn btn-primary' %></p>
+      <h1><%= t('.marketingspeech')%></h1>
+      <p><%= t('.speech')%></p>
+      <p><%= link_to "#{icon('check-circle-o', t('.signuptoday'))}".html_safe, new_restaurant_path, class: 'btn btn-primary' %></p>
     </div>
   </div>
 </div>

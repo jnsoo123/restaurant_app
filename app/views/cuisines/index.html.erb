@@ -1,7 +1,7 @@
 <% if !@cuisines.nil? %>
 <table class = 'table'>
-	<th>Name</th>
-	<th>Description</th>
+	<th><%= t('.name')%></th>
+	<th><%= t('.description')%><</th>
 <% @cuisines.each do |cuisine| %>
 	<tr>
 		<td><%= cuisine.name%></td>

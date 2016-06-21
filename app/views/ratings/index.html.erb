@@ -1,8 +1,8 @@
 
 <% search_values = ['Rating', 'Restaurant', 'User']%>
 <%= form_tag(ratings_path, :method => 'get') do %>
- Display by: <%= select_tag "search_category", options_for_select(search_values) %> 
- <%= submit_tag 'Submit' %>
+<%= t('.display')%> <%= select_tag "search_category", options_for_select(search_values) %> 
+ <%= submit_tag t('.show') %>
  <% end %>
 </span>
 
