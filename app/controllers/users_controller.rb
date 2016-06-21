@@ -1,13 +1,14 @@
 class UsersController < ApplicationController
   respond_to :html
-  layout "owner", only: [:dashboard]
+  layout "owner", only: [:restaurants]
   before_action :set_user, only: [:show]
   
   def show
   end
   
-  def dashboard
-    respond_with(nil, template: 'users/owner/dashboard')
+  def restaurants
+    @restaurants = current_user.restaurants
+    respond_with(@restaurants, template: 'users/owner/restaurants')
   end
   
   private

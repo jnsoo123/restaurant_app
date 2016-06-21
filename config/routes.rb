@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   get 'ratings' => 'ratings#index'
   # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
   get 'restaurants/listing' => 'restaurants#listing', as: :restaurant_listing
-  get 'owner/dashboard' => 'users#dashboard', as: :users_dashboard
+  get 'owner/restaurants' => 'users#restaurants', as: :users_restaurant
+  get 'owner/restaurants/new' => 'restaurants#owner_new', as: :owner_resto_new
+  get 'owner/restaurants/:id' => 'restaurants#owner_edit', as: :owner_resto_edit
+  patch 'owner/restaurants/:id' => 'restaurants#owner_patch', as: :owner_resto_patch
   
   get 'home/index'
   
@@ -11,6 +14,7 @@ Rails.application.routes.draw do
   
   resources :restaurants 
   resources :cuisines
+  resources :foods
   
   resources :users do
     resources :restaurants

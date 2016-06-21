@@ -1,0 +1,36 @@
+
+  
+  <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
+    <h4 class="pull-left" style="color: #6b6b6b;">My Restaurants</h4>
+    <%= link_to "#{icon('plus', 'Add a Resto', style: 'margin-right: 10px;')}".html_safe, owner_resto_new_path, class: 'btn btn-default pull-right'%>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr style="background-color: #404040;">
+          <th>#</th>
+          <th>Restaurants</th>
+          <th>Status</th>
+          <th>Created On</th>
+          <th>Avg. Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @restaurants.each_with_index do |resto, index| %>
+          <tr>
+            <td><%= index+1 %></td>
+            <td><%= link_to "#{resto.name}", owner_resto_edit_path(resto.id) %></td>
+            <% if resto.status == 'Pending' %>
+              <td><span class="label label-warning"><%= resto.status %></span></td>
+            <% elsif resto.status == 'Accepted'%>
+              <td><span class="label label-success"><%= resto.status %></span></td>
+            <% else %>
+              <td><span class="label label-danger"><%= resto.status %></span></td>
+            <% end %>
+            <td><%= resto.created_at.strftime("%B %-d, %Y") %></td>
+            <td><%= (resto.ratings.empty? ? "0": "func here")%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
