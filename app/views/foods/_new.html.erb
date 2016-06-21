@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">Add a Dish</h4>
+</div>
+<div class="modal-body">
+  <%= form_for(@food, url: foods_path(resto_id: @food.restaurant)) do |f| %>
+    <div class="form-group">
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Dish Name'%>
+    </div>
+    <div class="form-group">
+      <%= f.text_area :description, class: 'form-control', placeholder: 'Description'%>
+    </div>
+    <div class="form-group">
+      <%= f.number_field :price, class: 'form-control', placeholder: 'Price of Dish'%>
+    </div>
+    <div class="form-group">
+      <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name'), { prompt: "Select a Cuisine"} ,class: 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Submit Dish", class: 'btn btn-primary', style: 'width: 100%;' %>
+    </div>
+  
+  <% end %>
+</div>
+

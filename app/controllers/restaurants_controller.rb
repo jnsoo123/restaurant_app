@@ -19,6 +19,11 @@ class RestaurantsController < ApplicationController
 
   def show
   end
+
+  def owner_new
+    @restaurant = Restaurant.new
+    respond_with(@restaurant, template: 'users/owner/new')
+  end
   
   def edit
   end
@@ -45,16 +50,31 @@ class RestaurantsController < ApplicationController
   end
   
   def update
-    if restaurant_params[:status] == 'rejected'
-      Notification.create(user_id: @restaurant.user.id, message: params[:message])
-      UserMailer.reject_email(@restaurant.user).deliver_now
+    if current_user.admin
+      if restaurant_params[:status] == 'rejected'
+        Notification.create(user_id: @restaurant.user.id, message: params[:message])
+        UserMailer.reject_email(@restaurant.user).deliver_now
+      else
+        Notification.create(user_id: @restaurant.user.id)
+        UserMailer.accept_email(@restaurant.user).deliver_now
+      end 
+      @restaurant.update(restaurant_params)
     else
-      Notification.create(user_id: @restaurant.user.id)
-      UserMailer.accept_email(@restaurant.user).deliver_now
-    end 
-    
-    @restaurant.update(restaurant_params)
-    respond_with(@restaurant, location: restaurant_listing_path)
+      @restaurant.update(restaurant_params)
+      if params[:path] == 'dashboard'
+        flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
+        respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
+      else
+        respond_with(@restaurant, location: restaurant_listing_path)
+      end
+    end
+  end
+  
+  def destroy
+    name = @restaurant.name
+    @restaurant.destroy
+    flash[:success] = "#{name} has been deleted!"
+    respond_with(@restaurant, location: users_restaurant_path)
   end
   
   private
