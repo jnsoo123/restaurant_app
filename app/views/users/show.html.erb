@@ -1,17 +1,85 @@
 <div class="container" style="max-width: 750px;">
   <div class="row" style="margin-top: 30px; background-color: #fff; padding: 20px;">
     <div class="col-md-3">
-      <%= image_tag('sisig.jpg', class: 'img-circle', style: 'width: 140px; height: 140px;') %>
+      <%= image_tag(current_user.avatar.url, class: 'img-circle', style: 'width: 140px; height: 140px;') %>
     </div>
     <div class="col-md-9">
       <h3><%= @user.name %> <small> @<%= @user.username %></small></h3>
       <p><%= icon('envelope', @user.email) %></p>
-      <p><%= link_to "#{icon('pencil-square-o')} #{t('editprofile')}".html_safe, edit_user_registration_path %></p>
+      <p><%= link_to "#{icon('pencil-square-o')} #{t('editprofile')}".html_safe, nil, remote: true, data: { toggle: 'modal', target: '#edit_user_modal' } %></p>
     </div>
   </div>
   
   <div class="row" style="margin-top: 20px; background-color: #fff; padding: 20px; margin-bottom: 60px;">
     <h3><%= t('.yourreviews')%></h3>
     <p><%= t('.noreviews')%></p>
+  </div>
+</div>
+
+<div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit user information</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= devise_error_messages! %>
+
+          <div class="form-group">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, class: 'form-control'%>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :username %><br />
+            <%= f.text_field :username , class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :name %><br />
+            <%= f.text_field :name , class: 'form-control' %>
+          </div>
+
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %>
+
+          <div class="form-group">
+            <%= f.label :avatar %><br />
+            <%= f.file_field :avatar %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :location %><br />
+            <%= f.text_field :location, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+            <%= f.password_field :password, autocomplete: "off" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "off" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+            <%= f.password_field :current_password, autocomplete: "off" %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Update" %>
+          </div>
+        <% end %>
+
+        <h3>Cancel my account</h3>
+
+        <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+      </div>
+    </div>
   </div>
 </div>

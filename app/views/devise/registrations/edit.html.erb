@@ -10,12 +10,12 @@
   
   <div class="field">
     <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true %>
+    <%= f.text_field :username %>
   </div>
   
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
+    <%= f.text_field :name %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -23,13 +23,13 @@
   <% end %>
   
   <div class="field">
-    <%= f.label :location %><br />
-    <%= f.text_field :location, autofocus: true %>
+    <%= f.label :avatar %><br />
+    <%= f.file_field :avatar %>
   </div>
-  
+
   <div class="field">
-    <%= f.label :profile_picture_url %><br />
-    <%= f.text_field :profile_picture_url, autofocus: true %>
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
   </div>
 
   <div class="field">

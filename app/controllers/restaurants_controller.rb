@@ -1,6 +1,8 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :reject]
-
+  before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
+  layout 'owner', only: [:owner_edit, :owner_new]
+  
   skip_before_action :authenticate_user!, only: [:show]
   respond_to :html
   
@@ -23,6 +25,11 @@ class RestaurantsController < ApplicationController
   def owner_new
     @restaurant = Restaurant.new
     respond_with(@restaurant, template: 'users/owner/new')
+  end
+  
+  def owner_edit
+   @foods = @restaurant.foods
+   respond_with(@restaurant, template: 'users/owner/edit')
   end
   
   def edit
@@ -86,6 +93,10 @@ class RestaurantsController < ApplicationController
 
   def set_restaurant
     @restaurant = Restaurant.find(params[:id])
+  end
+  
+  def set_owner_restaurant
+    @restaurant = current_user.restaurants.find(params[:id])
   end
   
 end
