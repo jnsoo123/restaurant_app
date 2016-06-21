@@ -3,7 +3,7 @@
     <div class="container text-center">
       <h1><%= t('.marketingspeech')%></h1>
       <p><%= t('.speech')%></p>
-      <p><%= link_to "#{icon('check-circle-o', t('.signuptoday'))}".html_safe, new_restaurant_path, class: 'btn btn-primary' %></p>
+      <p><%= link_to "#{t('.signuptoday')} #{icon('check-circle-o')}".html_safe, new_restaurant_path, class: 'btn btn-primary' %></p>
     </div>
   </div>
 </div>

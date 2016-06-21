@@ -3,25 +3,27 @@
     <div class="jumbotron">
       <div class="row">
         <div class="col-md-6">
-          <h2 class="text-center">Enter your restaurant's information</h2>
-          <p align="center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <h2 class="text-center"><%= t('.enterrestoinfo')%></h2>
+		  <p>
+			  <%= t('.restoinfodetails')%>
+		  </p>
         </div>
         <div class="col-md-6">
           <%= form_for(@restaurant, url: restaurants_path) do |f| %>
             <div class="form-group">
-              <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: 'Restaurant Name' %>
+              <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: t('.restoname') %>
             </div>
             <div class="form-group">
-              <%= f.text_area :description, class: 'form-control', placeholder: 'Description' %>
+              <%= f.text_area :description, class: 'form-control', placeholder: t('.description') %>
             </div>
             <div class="form-group">
-              <%= f.text_area :address, class: 'form-control', placeholder: 'Restaurant Address' %>
+              <%= f.text_area :address, class: 'form-control', placeholder: t('.restoaddress') %>
             </div>
             <div class="form-group">
-              <%= f.text_field :contact, class: 'form-control', placeholder: 'Contact Number #' %>
+              <%= f.text_field :contact, class: 'form-control', placeholder: t('.contact') %>
             </div>
             <div class="actions">
-              <%= f.submit 'Submit Your Restaurant', class: 'btn btn-primary', style: 'width: 100%;' %>
+              <%= f.submit t('.submitresto'), class: 'btn btn-primary', style: 'width: 100%;' %>
             </div>
           <% end %>
         </div>

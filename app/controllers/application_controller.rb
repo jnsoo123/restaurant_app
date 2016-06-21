@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
   add_flash_types :success
+  include DeviseHelper
 
   def change_locale  
       l = params[:locale].to_s.strip.to_sym
@@ -27,7 +28,7 @@ class ApplicationController < ActionController::Base
   
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :email, :username, :location]
-    devise_parameter_sanitizer.for(:account_update) << [:name, :email, :username, :location, :profile_picture_url]
+    devise_parameter_sanitizer.for(:account_update) << [:name, :email, :username, :location, :profile_picture_url, :avatar]
   end
   
   def after_sign_in_path_for(resource_or_scope)

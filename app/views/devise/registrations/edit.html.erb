@@ -1,59 +1,59 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2><%= t('.edituserinfo')%> <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email, t('.email') %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
   
   <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true %>
+    <%= f.label :username, t('.username') %><br />
+    <%= f.text_field :username %>
   </div>
   
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
+    <%= f.label :name, t('.name') %><br />
+    <%= f.text_field :name %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <div><%= t('.pendingconfirm', email: resource.unconfirmed_email) %></div>
   <% end %>
   
   <div class="field">
-    <%= f.label :location %><br />
-    <%= f.text_field :location, autofocus: true %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :profile_picture_url %><br />
-    <%= f.text_field :profile_picture_url, autofocus: true %>
+    <%= f.label :avatar, t('.avatar') %><br />
+    <%= f.file_field :avatar %>
   </div>
 
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.label :location, t('.location') %><br />
+    <%= f.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, t('.password') %> <i><%= t('.passwordinfo')%></i><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation, t('.passwordconfirmation') %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.label :current_password, t('.currentpassword') %> <i><%= t('.currentpasswordinfo')%></i><br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit t('.submitupdate') %>
   </div>
 <% end %>
 
-<h3>Cancel my account</h3>
+<h3><%= t('.cancel') %></h3>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<p><%= t('.unhappy') %> <%= button_to t('.cancel'), registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
-<%= link_to "Back", :back %>
+<%= link_to t('.back'), :back %>

@@ -17,7 +17,7 @@
       <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish')%>
     </div>
     <div class="form-group">
-      <%= f.label, t('.selectcuisine')%>
+      <%= f.label t('.selectcuisine')%>
       <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name', @food.cuisine.id),{},class: 'form-control' %>
     </div>
     <div class="actions">

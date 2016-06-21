@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620075407) do
+ActiveRecord::Schema.define(version: 20160621053825) do
 
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160620075407) do
     t.boolean  "admin",                  default: false
     t.string   "profile_picture_url"
     t.text     "location"
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

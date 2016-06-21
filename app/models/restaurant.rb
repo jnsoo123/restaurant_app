@@ -13,9 +13,6 @@ class Restaurant < ActiveRecord::Base
   end
   
   def self.search_by_name(query)
-    
-    
-    
     @results = Restaurant.where("name LIKE '%#{query}%'")
     return @results
   end

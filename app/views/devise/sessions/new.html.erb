@@ -1,6 +1,6 @@
 <div id="loginform" class="container" style="margin-bottom: 35px;">
   <div class="form-header">
-    <div class="text-center">LOGIN</div>
+    <div class="text-center"><%= t('.login')%></div>
   </div>
   <div class="form-body">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -8,19 +8,19 @@
         <span class="input-group-addon">
           <%= icon('user') %>
         </span>
-        <%= f.email_field :email, autocomplete: :on, class: 'form-control', placeholder: 'you@example.com', autofocus: true %>
+        <%= f.email_field :email, autocomplete: :on, class: 'form-control', placeholder: t('.placeemail'), autofocus: true %>
       </div>
       <div class="input-group input-group-lg" style="margin-bottom: 10px;">
         <span class="input-group-addon">
           <%= icon('lock', style: 'width: 15px;') %>
         </span>
-        <%= f.password_field :password, autocomplete: :off, class: 'form-control', placeholder: 'password'%>
+        <%= f.password_field :password, autocomplete: :off, class: 'form-control', placeholder: t('.placepass')%>
       </div>
 
       <div class="actions">
-        <%= f.submit "Login", class: 'btn btn-primary', style: 'width: 100%; height: 46px; margin-bottom: 10px;' %>
-        <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-success', style: 'width: 100%; height: 46px; padding-top: 12px; margin-bottom: 10px;' %>
-        <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+        <%= f.submit t('.login'), class: 'btn btn-primary', style: 'width: 100%; height: 46px; margin-bottom: 10px;' %>
+        <%= link_to t('.signup'), new_user_registration_path, class: 'btn btn-success', style: 'width: 100%; height: 46px; padding-top: 12px; margin-bottom: 10px;' %>
+        <%= link_to t('.forgotpass'), new_password_path(resource_name) %><br />
       </div>
     <% end %>
   </div>

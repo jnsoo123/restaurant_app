@@ -1,13 +1,13 @@
-<h3> Pending</h3>
+<h3><%= t('.pending')%></h3>
 
 <% if !@restos_pending.empty? %>
 	<table class = 'table'>
-		<th>Name</th>
-		<th>Description</th>
-		<th>Address</th>
-		<th>Contact</th>
-		<th>Price Range</th>
-		<th>Map</th>
+		<th><%= t('.name')%></th>
+		<th><%= t('.description')%></th>
+		<th><%= t('.address')%></th>
+		<th><%= t('.contact')%></th>
+		<th><%= t('.pricerange')%></th>
+		<th><%= t('.map')%></th>
 	<% @restos_pending.each do |resto| %>
 		<tr>
 			<td><%= resto.name%></td>
@@ -24,19 +24,19 @@
 	<% end%>
 	</table>
 <% else %>
-	No Pending Restaurant Registrations
+	<%= t('.nopending')%>
 <% end%>
 
-</br><h3> Accepted</h3>
+</br><h3> <%= t('.accepted')%></h3>
 
 <% if !@restos_accepted.empty? %>
 	<table class = 'table'>
-		<th>Name</th>
-		<th>Description</th>
-		<th>Address</th>
-		<th>Contact</th>
-		<th>Price Range</th>
-		<th>Map</th>
+		<th><%= t('.name')%></th>
+		<th><%= t('.description')%></th>
+		<th><%= t('.address')%></th>
+		<th><%= t('.contact')%></th>
+		<th><%= t('.pricerange')%></th>
+		<th><%= t('.map')%></th>
 	<% @restos_accepted.each do |resto| %>
 		<tr>
 			<td><%= resto.name%></td>
@@ -50,21 +50,21 @@
 	<% end%>
 	</table>
 <% else %>
-	No Accepted Restaurants
+	<%= t('.noaccepted')%>
 <% end%>
 
 
-</br><h3> Rejected</h3>
+</br><h3><%= t('.rejected')%></h3>
 
 
 <% if !@restos_rejected.empty? %>
 	<table class = 'table'>
-		<th>Name</th>
-		<th>Description</th>
-		<th>Address</th>
-		<th>Contact</th>
-		<th>Price Range</th>
-		<th>Map</th>
+		<th><%= t('.name')%></th>
+		<th><%= t('.description')%></th>
+		<th><%= t('.address')%></th>
+		<th><%= t('.contact')%></th>
+		<th><%= t('.pricerange')%></th>
+		<th><%= t('.map')%></th>
 	<% @restos_rejected.each do |resto| %>
 		<tr>
 			<td><%= resto.name%></td>
@@ -78,5 +78,5 @@
 	<% end%>
 	</table>
 <% else %>
-	No Rejected Restaurants
+	<%= t('.norejected')%>
 <% end%>

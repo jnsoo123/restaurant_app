@@ -48,6 +48,9 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'jquery-atwho-rails'
 gem 'owlcarousel-rails'
+
+
+gem 'carrierwave'
 gem 'mailcatcher'
 gem 'rails-i18n', '~> 4.0.0'
 
