@@ -19,21 +19,10 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
+ru:
 
   layouts:
     application:
-      home: "Home"
-      about: "About"
-      contact: "Contact"
-      language: "Language"
-      engtranslation: "English"
-      users: "Users"
-      restaurants: "Restaurants"
-      cuisines: "Cuisines"
-      reviews: "Reviews"
-      myprofile: "My Profile"
-      myrestaurants: "My Restaurants"
-      signout: "Sign Out"
-      login: "Log In"
-      signup: "Sign Up"	  
+      home: "дом"
+      about: "Около"
+      contact: "связь"

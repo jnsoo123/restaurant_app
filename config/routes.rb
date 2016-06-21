@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
+  get 'change_locale/:locale' => 'application#change_locale', as: :change_locale
   get 'administrator' => 'administrator#index'
   get 'ratings' => 'ratings#index'
   # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
   get 'restaurants/listing' => 'restaurants#listing', as: :restaurant_listing
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
-  get 'owner/dashboard' => 'users#dashboard', as: :users_dashboard
   
   get 'home/index'
   

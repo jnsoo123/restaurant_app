@@ -49,6 +49,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'jquery-atwho-rails'
 gem 'owlcarousel-rails'
 gem 'mailcatcher'
+gem 'rails-i18n', '~> 4.0.0'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
