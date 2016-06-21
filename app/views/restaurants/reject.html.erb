@@ -1,0 +1,11 @@
+Rejection Letter for <%= @restaurant.name %>
+
+<%= form_tag(restaurant_path(@restaurant.id, restaurant: { status: 'rejected' }), method: :put) do |f| %>
+   <div class="form-group">
+	  <%= label_tag :message %><br/>
+      <%= text_area_tag :message, nil, rows: 10, cols: 20, required: true %>
+   </div>
+   <div class="actions">
+      <%= submit_tag 'Submit Letter' %>
+   </div>
+<% end %>

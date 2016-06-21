@@ -15,7 +15,7 @@
 <% @ratings.each do |rating| %>
 	<tr>
 		<td><%= rating.rate %></td>
-		<td><%= rating.restaurant.name %></td>
+		<td><%= rating.restaurant.try(:name) %></td>
 		<td><%= rating.user.name %></td>
 		<td><%= rating.comment %></td>
 	</tr>

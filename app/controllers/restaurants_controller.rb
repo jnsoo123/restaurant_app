@@ -1,8 +1,9 @@
 class RestaurantsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show]
-  before_action :set_restaurant, only: [:show, :update, :destroy]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
+  before_action :set_restaurant, only: [:show, :edit, :update, :reject, :update, :destroy]
   layout 'owner', only: [:owner_edit, :owner_new]
+  
   respond_to :html
   
   def index
@@ -19,12 +20,13 @@ class RestaurantsController < ApplicationController
   def owner_new
     @restaurant = Restaurant.new
     respond_with(@restaurant, template: 'users/owner/new')
+  def edit
   end
   
   def listing
     @restos_accepted = Restaurant.where(status: "accepted").order('updated_at DESC')
     @restos_rejected = Restaurant.where(status: "rejected").order('updated_at DESC')
-    @restos_ongoing = Restaurant.where(status: "ongoing").order('updated_at DESC')
+    @restos_pending = Restaurant.where(status: "pending").order('updated_at DESC')
   end
   
   def new
@@ -40,7 +42,18 @@ class RestaurantsController < ApplicationController
     respond_with(@restaurant, location: users_restaurant_path)
   end
   
+  def reject
+  end
+  
   def update
+    if restaurant_params[:status] == 'rejected'
+      Notification.create(user_id: @restaurant.user.id, message: params[:message])
+      UserMailer.reject_email(@restaurant.user).deliver_now
+    else
+      Notification.create(user_id: @restaurant.user.id)
+      UserMailer.accept_email(@restaurant.user).deliver_now
+    end 
+    
     @restaurant.update(restaurant_params)
     if params[:path] == 'dashboard'
       flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
