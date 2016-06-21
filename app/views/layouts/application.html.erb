@@ -63,7 +63,7 @@
 				  
                 <li><%= link_to t('.myprofile'), user_profile_path(current_user.id) %></li>
                 <% if current_user.restaurants.present? %>
-                  <li><%= link_to t('.myrestaurants'), users_dashboard_path %></li>
+                  <li><%= link_to t('.myrestaurants'), users_restaurant_path %></li>
                 <% end %>
                 <li><%= link_to t('.signout'), destroy_user_session_path, method: :delete %></li>
               </ul>
@@ -92,7 +92,7 @@
 
 <%= yield %>
 
-  <footer class="" style="background-color: #fff; height: 200px;">
+  <footer class="" style="background-color: #fff; height: 200px; margin-top: 30px;">
     <div class="container" style="padding-top: 25px;">
       <p class="text-muted">Place footer content here.</p>
     </div>

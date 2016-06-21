@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620035306) do
+ActiveRecord::Schema.define(version: 20160620075407) do
 
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
@@ -25,11 +25,13 @@ ActiveRecord::Schema.define(version: 20160620035306) do
     t.decimal  "price"
     t.text     "description"
     t.integer  "cuisine_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "restaurant_id"
   end
 
   add_index "foods", ["cuisine_id"], name: "index_foods_on_cuisine_id"
+  add_index "foods", ["restaurant_id"], name: "index_foods_on_restaurant_id"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -58,12 +60,12 @@ ActiveRecord::Schema.define(version: 20160620035306) do
     t.text     "description"
     t.text     "address"
     t.string   "contact"
-    t.string   "status"
+    t.string   "status",           default: "Pending"
     t.decimal  "low_price_range"
     t.decimal  "high_price_range"
     t.text     "map"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "user_id"
   end
 

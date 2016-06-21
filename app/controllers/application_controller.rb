@@ -4,16 +4,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
-  before_action :set_locale
-  
-  
+  add_flash_types :success
+
   def change_locale  
       l = params[:locale].to_s.strip.to_sym
       l = I18n.default_locale unless I18n.available_locales.include?(l)
       cookies.permanent[:educator_locale] = l
       redirect_to request.referer || root_url
   end
-  
+
   private
   
   def set_locale
