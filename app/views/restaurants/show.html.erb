@@ -1,29 +1,50 @@
+<div class="container" style="max-width: 750px; padding: 0;">
+  <h1><%= @restaurant.name %></h1>
+  <p><%= @restaurant.description %></p>
+</div>
 <div class="container resto-container">
   <div class="row" style="margin-bottom: 20px;">
-    <%= image_tag('manginasal.jpg', width: '750', class: 'img-responsive', style: 'margin-bottom: 10px;') %>
-    <div class="col-md-12">
-      <h2><%= @restaurant.name %></h2>
-      <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 12px;') %><%= icon('phone', @restaurant.contact, style: 'margin-left: 20px; margin-right: 10px;') %></p>
+    <div class="pull-left">
+      <%= @restaurant.map.html_safe %>
+    </div>
+    <div class="pull-right">
+      <%= image_tag('manginasal.jpg', width: '500', class: 'img-responsive', style: 'margin-bottom: 10px;') %>
+    </div>
+    
+    
+    <div class="col-md-12" style="border-bottom: 2px solid #d9d9d9;">
+      <div class="row" style="padding: 10px 20px 20px 20px;">
+        <div class="col-md-4">
+          <%= icon('phone', @restaurant.contact, style: 'margin-right: 10px;') %>
+        </div>
+        <div class="col-md-8">
+          <%= link_to "www.jollibee.com.ph/", "http://www.jollibee.com.ph/" %>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-<div class="container resto-container">
-  <h3>Menu</h3>
-  <p>foodz here</p>
-  <p>foodz here</p>
-  <p>foodz here</p>
-  <p>foodz here</p>
-</div>
-
-<div class="container resto-container">
-  <h3>Maps</h3>
-</div>
-
-<div class="container resto-container">
-  <h3>Pictures from customers</h3>
-</div>
-
-<div class="container resto-container" style="margin-bottom: 60px;">
-  <h3>Ratings and Reviews</h3>
+  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('cutlery', 'Menu', style: 'margin-right: 10px;')%></h3>
+  <div class="row" style="margin-bottom: 30px;">
+    <% @restaurant.foods.each_with_index do |food, index| %>
+      <div class="col-md-1" style="height: 50px;">
+        <span style="font-size: 30px;"><%= index+1 %></span>
+      </div>
+      <div class="col-md-9" style="height: 50px;">
+        <h3 style="margin: 0;"><%= food.name %></h3>
+        <p><%= food.description %></p>
+      </div>
+      <div class="col-md-2" style="height: 50px; padding: 5px; margin-bottom: 20px;">
+        <div class="pull-right" style="margin-right: 10px; margin-top: 5px;">
+          <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #333333;" class="label label-default">P <%= food.price %></span>
+        </div>
+        
+      </div>
+    <% end %>
+  </div>
+  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', 'Customer Uploads', style: 'margin-right: 8px;')%></h3>
+  <div id="picture-part"></div>
+  
+  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', 'Reviews', style: 'margin-right: 8px;')%></h3>
+  
+  
 </div>

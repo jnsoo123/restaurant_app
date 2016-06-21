@@ -70,11 +70,37 @@
 
 <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
   <h4 class="pull-left" style="color: #6b6b6b;">Dishes</h4>
-  <%= link_to "#{icon('plus', 'Add Dish', style: 'margin-right: 10px;')}".html_safe, new_food_path, class: 'btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
+  <%= link_to "#{icon('plus', 'Add Dish', style: 'margin-right: 10px;')}".html_safe, new_food_path(resto_id: @restaurant.id), class: 'btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
 </div>
 
-<div>
+<div style="">
   <% unless @foods.empty? %>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr style="background-color: #404040;">
+            <th>#</th>
+            <th>Dish</th>
+            <th>Description</th>
+            <th>Cuisine</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @foods.each_with_index do |food, index| %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td><%= food.name %></td>
+              <td><%= food.description %></td>
+              <td><%= food.cuisine.name %></td>
+              <td>P <%= food.price %></td>
+              <td style="width: 150px;"><%= link_to "Edit", edit_food_path(food.id), class: 'btn btn-warning', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to "Delete", nil, class: 'btn btn-danger' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% else %>
     No Dishes yet. Please add some.
   <% end %>
