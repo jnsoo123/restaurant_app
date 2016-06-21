@@ -11,4 +11,12 @@ class Restaurant < ActiveRecord::Base
   def avg_ratings
     #func for avg ratings
   end
+  
+  def self.search_by_name(query)
+    
+    
+    
+    @results = Restaurant.where("name LIKE '%#{query}%'")
+    return @results
+  end
 end

@@ -1,11 +1,11 @@
 <%= form_for(@cuisine) do |f| %>
   <div class = 'field'>
-	  <%= f.label(:name) %>
+	  <%= f.label(:name, t('.name')) %>
   	  <%= f.text_field(:name) %>
   </div>
 
   <div class = 'field'>
-	  <%= f.label(:description) %><br/>
+	  <%= f.label(:description, t('.description')) %><br/>
   	  <%= f.text_area(:description, cols: 30, rows: 10) %>
   </div>
   <%= f.submit %>

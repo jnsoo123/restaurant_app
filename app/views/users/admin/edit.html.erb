@@ -5,29 +5,29 @@
         <div class="col-md-6">
           <%= form_for(@user) do |f| %>
             <div class="form-group">
-			  <%= f.label :username %>
+			  <%= f.label :username, t('.username') %>
               <%= f.text_field :username, autofocus: true, class: 'form-control'%>
             </div>
             <div class="form-group">
-				<%= f.label :name %>
+				<%= f.label :name, t('.name') %>
               <%= f.text_field :name, class: 'form-control'%>
             </div>
             <div class="form-group">
-				<%= f.label :email %>
+				<%= f.label :email, t('.email') %>
               <%= f.email_field :email, class: 'form-control'%>
             </div>
             <div class="form-group">
-				<%= f.label :location %>
+				<%= f.label :location, t('.location') %>
               <%= f.text_field :location, class: 'form-control'%>
             </div>
 			
             <div class="form-group">
-				<%= f.label :profile_picture_url %>
+				<%= f.label :profile_picture_url, t('.profile_picture_url') %>
               <%= f.text_field :profile_picture_url, class: 'form-control'%>
             </div>
 			
             <div class="actions">
-              <%= f.submit 'Edit User Information', class: 'btn btn-primary', style: 'width: 100%;' %>
+              <%= f.submit class: 'btn btn-primary', style: 'width: 100%;' %>
             </div>
           <% end %>
         </div>

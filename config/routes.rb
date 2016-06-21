@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'administrator' => 'administrator#index'
   get 'ratings' => 'ratings#index'
   # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
+  get 'restaurants/search' => 'restaurants#search', as: :restaurant_search
   get 'restaurants/listing' => 'restaurants#listing', as: :restaurant_listing
   get 'owner/restaurants' => 'users#restaurants', as: :users_restaurant
   get 'owner/restaurants/new' => 'restaurants#owner_new', as: :owner_resto_new

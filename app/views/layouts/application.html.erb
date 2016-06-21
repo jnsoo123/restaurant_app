@@ -83,7 +83,7 @@
 		<% if current_user.admin? %>
 			<div class = 'panel'>
 	
-<%= "You have #{Restaurant.where(status: 'pending').count} pending restaurant applications" %>
+<%=  t('.notice', n: Restaurant.where(status: 'pending').count) %>
  	
 			</div>
 		<%end%>
@@ -94,7 +94,7 @@
 
   <footer class="" style="background-color: #fff; height: 200px; margin-top: 30px;">
     <div class="container" style="padding-top: 25px;">
-      <p class="text-muted">Place footer content here.</p>
+      <p class="text-muted"><%= t('.footer')%></p>
     </div>
   </footer>
  

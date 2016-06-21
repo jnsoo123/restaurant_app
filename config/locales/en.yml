@@ -18,9 +18,13 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-
+  helpers:
+    submit:
+      create: "Create a %{model}"
+      update: "Update %{model} Information"
+      edit: "Edit %{model} information"
+      
   layouts:
     application:
       home: "Home"
@@ -36,4 +40,47 @@ en:
       myrestaurants: "My Restaurants"
       signout: "Sign Out"
       login: "Log In"
-      signup: "Sign Up"	  
+      signup: "Sign Up"
+      notice: "You have %{n} pending restaurant applications"
+      footer: "Place footer content here"     
+
+    owner:
+      fudzdashboard: "Fudz Dashboard"
+      myrestaurants: "My Restaurants"
+      addrestaurants: "Add Restaurants"
+      comments: "Comments"
+      ratings: "Ratings"
+      reservations: "Reservations"
+      notifications: "Notifications"
+      mainpage: "Go Back to Mainpage"
+
+  administrator:
+     index:
+       username: "Username"
+       name: "Name"
+       email: "Email"
+       location: "Location"
+       profile_picture_url: "Profile Picture URL"
+       edit: "Edit"
+  
+  cuisines:
+      _form:
+          name: "Name"
+          description: "Description"
+      edit:
+          updatecuisine: "Update Cuisine"
+
+  users:
+     show:
+       yourreviews: "Your Reviews"
+       noreviews: "You have not rated nor reviewed any restaurant."
+       editprofile: "Edit Profile"
+          
+     admin:
+       edit:     
+         username: "Username"
+         name: "Name"
+         email: "Email"
+         location: "Location"
+         profile_picture_url: "Profile Picture URL"
+         edit_user_info: "Edit User Information"       

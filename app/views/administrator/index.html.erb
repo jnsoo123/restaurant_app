@@ -1,9 +1,9 @@
 <table class = 'table'>
-	<th>Username</th>
-	<th>Name</th>
-	<th>Email</th>
-	<th>Location</th>
-	<th>Profile Picture URL</th>
+	<th><%= t('.username') %></th>
+	<th><%= t('.name') %></th>
+	<th><%= t('.email') %></th>
+	<th><%= t('.location') %></th>
+	<th><%= t('.profile_picture_url') %></th>
 <% @users.each do |user| %>
 	<tr>
 		<td><%= user.username%></td>
@@ -11,7 +11,7 @@
 		<td><%= user.email %></td>
 		<td><%= user.location %></td>
 		<td><%= user.profile_picture_url %></td>
-		<td><%= link_to 'Edit', edit_user_path(user.id), method: :get%></td>
+		<td><%= link_to t('.edit'), edit_user_path(user.id), method: :get%></td>
 	</tr>
 <% end%>
 </table>

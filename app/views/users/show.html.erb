@@ -6,12 +6,12 @@
     <div class="col-md-9">
       <h3><%= @user.name %> <small> @<%= @user.username %></small></h3>
       <p><%= icon('envelope', @user.email) %></p>
-      <p><%= link_to "#{icon('pencil-square-o')} Edit profile".html_safe, edit_user_registration_path %></p>
+      <p><%= link_to "#{icon('pencil-square-o')} #{t('editprofile')}".html_safe, edit_user_registration_path %></p>
     </div>
   </div>
   
   <div class="row" style="margin-top: 20px; background-color: #fff; padding: 20px; margin-bottom: 60px;">
-    <h3>Your Reviews</h3>
-    <p>You have not rated nor reviewed any restaurant.</p>
+    <h3><%= t('.yourreviews')%></h3>
+    <p><%= t('.noreviews')%></p>
   </div>
 </div>

@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def restaurants
     @restaurants = current_user.restaurants
     respond_with(@restaurants, template: 'users/owner/restaurants')
+  end
   def edit
     respond_with(@user, template: 'users/admin/edit')
   end
