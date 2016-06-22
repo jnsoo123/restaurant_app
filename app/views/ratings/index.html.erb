@@ -1,16 +1,16 @@
 
 <% search_values = ['Rating', 'Restaurant', 'User']%>
 <%= form_tag(ratings_path, :method => 'get') do %>
- Display by: <%= select_tag "search_category", options_for_select(search_values) %> 
- <%= submit_tag 'Submit' %>
+<%= t('.display')%> <%= select_tag "search_category", options_for_select(search_values) %> 
+ <%= submit_tag t('.show') %>
  <% end %>
 </span>
 
 <table class = 'table'>
-	<th>Rating</th>
-	<th>Restaurant</th>
-	<th>User</th>
-	<th>Comment</th>
+	<th><%= t('.rating')%></th>
+	<th><%= t('.user')%></th>
+	<th><%= t('.restaurant')%></th>
+	<th><%= t('.comment')%></th>
 	
 <% @ratings.each do |rating| %>
 	<tr>

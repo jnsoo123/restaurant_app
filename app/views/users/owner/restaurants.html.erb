@@ -1,18 +1,18 @@
 
   
   <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
-    <h4 class="pull-left" style="color: #6b6b6b;">My Restaurants</h4>
-    <%= link_to "#{icon('plus', 'Add a Resto', style: 'margin-right: 10px;')}".html_safe, owner_resto_new_path, class: 'btn btn-default pull-right'%>
+    <h4 class="pull-left" style="color: #6b6b6b;"><%= t('.myrestaurants')%></h4>
+    <%= link_to "#{icon('plus', t('.addresto'), style: 'margin-right: 10px;')}".html_safe, owner_resto_new_path, class: 'btn btn-default pull-right'%>
   </div>
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr style="background-color: #404040;">
           <th>#</th>
-          <th>Restaurants</th>
-          <th>Status</th>
-          <th>Created On</th>
-          <th>Avg. Rating</th>
+          <th><%= t('.restaurants')%></th>
+          <th><%= t('.status')%></th>
+          <th><%= t('.createdon')%></th>
+          <th><%= t('.avgrating')%></th>
         </tr>
       </thead>
       <tbody>

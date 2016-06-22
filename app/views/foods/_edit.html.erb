@@ -1,27 +1,27 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">Edit Dish</h4>
+  <h4 class="modal-title" id="myModalLabel"><%= t('.editdish')%></h4>
 </div>
 <div class="modal-body">
   <%= form_for(@food, url: food_path(@food.id), method: :put) do |f| %>
     <div class="form-group">
-      <%= f.label "Dish" %>
-      <%= f.text_field :name, class: 'form-control', placeholder: 'Dish Name'%>
+      <%= f.label t('.dish') %>
+      <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname')%>
     </div>
     <div class="form-group">
-      <%= f.label :description %>
-      <%= f.text_area :description, class: 'form-control', placeholder: 'Description'%>
+      <%= f.label :description, t('.description') %>
+      <%= f.text_area :description, class: 'form-control', placeholder: t('.description')%>
     </div>
     <div class="form-group">
-      <%= f.label :price%>
-      <%= f.number_field :price, class: 'form-control', placeholder: 'Price of Dish'%>
+      <%= f.label :price, t('.price')%>
+      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish')%>
     </div>
     <div class="form-group">
-      <%= f.label "Select Cuisine"%>
+      <%= f.label t('.selectcuisine')%>
       <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name', @food.cuisine.id),{},class: 'form-control' %>
     </div>
     <div class="actions">
-      <%= f.submit "Edit Dish", class: 'btn btn-primary', style: 'width: 100%;' %>
+      <%= f.submit t('.editdish'), class: 'btn btn-primary', style: 'width: 100%;' %>
     </div>
   
   <% end %>

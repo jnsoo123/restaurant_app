@@ -8,6 +8,7 @@ class FoodsController < ApplicationController
     @food = Food.new
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     respond_with(@food)
+    
   end
   
   def edit

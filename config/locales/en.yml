@@ -18,7 +18,8 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-en:
+en:  
+  language: "English"  
   helpers:
     submit:
       create: "Create a %{model}"
@@ -26,33 +27,32 @@ en:
       edit: "Edit %{model} information"
       
   layouts:
-    application:
-      home: "Home"
-      about: "About"
-      contact: "Contact"
-      language: "Language"
-      engtranslation: "English"
-      users: "Users"
-      restaurants: "Restaurants"
-      cuisines: "Cuisines"
-      reviews: "Reviews"
-      myprofile: "My Profile"
-      myrestaurants: "My Restaurants"
-      signout: "Sign Out"
-      login: "Log In"
-      signup: "Sign Up"
-      notice: "You have %{n} pending restaurant applications"
-      footer: "Place footer content here"     
+     application:
+       home: "Home"
+       about: "About"
+       contact: "Contact"
+       language: "Language"
+       users: "Users"
+       restaurants: "Restaurants"
+       cuisines: "Cuisines"
+       reviews: "Reviews"
+       myprofile: "My Profile"
+       myrestaurants: "My Restaurants"
+       signout: "Sign Out"
+       login: "Log In"
+       signup: "Sign Up"
+       notice: "You have %{n} pending restaurant applications"
+       footer: "Place footer content here"     
 
-    owner:
-      fudzdashboard: "Fudz Dashboard"
-      myrestaurants: "My Restaurants"
-      addrestaurants: "Add Restaurants"
-      comments: "Comments"
-      ratings: "Ratings"
-      reservations: "Reservations"
-      notifications: "Notifications"
-      mainpage: "Go Back to Mainpage"
+     owner:
+       fudzdashboard: "Fudz Dashboard"
+       myrestaurants: "My Restaurants"
+       addrestaurants: "Add Restaurants"
+       comments: "Comments"
+       ratings: "Ratings"
+       reservations: "Reservations"
+       notifications: "Notifications"
+       mainpage: "Go Back to Mainpage"
 
   administrator:
      index:
@@ -64,17 +64,216 @@ en:
        edit: "Edit"
   
   cuisines:
-      _form:
+     form:
           name: "Name"
           description: "Description"
-      edit:
+          
+     edit:
           updatecuisine: "Update Cuisine"
+          
+     index:
+          name: "Name"
+          description: "Description"
+          updatecuisine: "Update Cuisine"
+          removecuisine: "Remove Cuisine"
+          createcuisine: "Create New Cuisine"
+          nocuisine: "No Cuisines Available"
+          
+     new:
+          newcuisine: "New Cuisine"
+          
+  foods:
+     edit:
+          dish: "Dish"
+          dishname: "Dish Name"
+          description: "Description"
+          price: "Price"
+          pricedish: "Price of Dish"
+          selectcuisine: "Select Cuisine"
+          editdish: "Edit Dish"
+          
+     new:       
+          adddish: "Add a Dish"
+          dishname: "Dish Name"
+          description: "Description"
+          pricedish: "Price of Dish"
+          submitdish: "Submit Dish"
 
+  ratings: 
+     index: 
+          display: "Display by: "
+          show: "Show"
+          rating: "Rating"
+          restaurant: "Restaurant"
+          user: "User"
+          comment: "Comment"
+          
+  restaurants:
+     edit:
+          name: "Name"
+          description: "Description"
+          address: "Address"
+          contact: "Contact"
+          map: "Map"
+          low_price_range: "Low Price Range"
+          high_price_range: "High Price Range"
+          editrestoinfo: "Edit Restaurant Information"  
+                
+     new:
+          enterrestoinfo: "Enter your restaurant's information"
+          restoinfodetails: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          restoname: "Restaurant Name"
+          description: "Description"
+          restoaddress: "Restaurant Address"
+          contact: "Contact Number"
+          submitresto: "Submit Your Restaurant"
+          
+     reject:
+          rejecttitle: "Rejection Letter for %{resto}" 
+          message: "Message"
+          submitletter: "Submit Letter"
+          
+     search:
+          go: "Go!"
+        
+     listing:
+          pending: "Pending"
+          nopending: "No Pending Restaurant Registrations"
+          accepted: "Accepted"
+          noaccepted: "No Accepted Restaurant"
+          rejected: "Rejected"
+          norejected: "No Rejected Restaurant"
+          name: "Name"
+          description: "Description"
+          address: "Address"
+          contact: "Contact"
+          pricerange: "Price Range"
+          map: "Map"
+  home:
+     cuisines:
+          popular: "Popular Cuisines"
+          
+     make_a_resto:
+          marketingspeech: "Super Awesome Marketing Speech"
+          speech: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          signuptoday: "Sign up today"
+          
+     restaurants:
+          caption: "Find Food for your Appetite"
+          ads: "More ads"
+          reviews: "Reviews"
+          restaurants: "Restaurants"
+          cuisines: "Cuisines"
+          makeresto: "Make a Restaurant"
+          topresto: "Top Rated Restaurants"
+          placeholder: "Search for food/restaurants/cuisines..."
+          go: "Go!"
+          
+     reviews:
+          recentreviews: "Recent Reviews"
+  
+  devise:
+     registrations:
+          edit:
+              edituserinfo: "Edit User Information"
+              email: "Email"
+              username: "Username"
+              name: "Name"
+              pendingconfirm: "Currently waiting confirmation for: %{email}"
+              avatar: "Avatar"
+              location: "Location"
+              password: "Password"
+              passwordinfo: "(leave blank if you don't want to change it)"
+              passwordconfirmation: "Password Confirmation"
+              currentpassword: "Current Password"
+              currentpasswordinfo: "(we need your current password to confirm your changes)"
+              submitupdate: "Update"
+              cancel: "Cancel my account"
+              unhappy: "Unhappy?"
+              back: "Back"
+      
+          new:
+              signup: "Sign Up"
+              name: "Full Name"
+              username: "Username"
+              address: "Address"
+              email: "Email"
+              password: "(Password %{min} characters minimum)"
+              reppassword: "Repeat Password"
+        
+     sessions:
+           new:
+              login: "Login"
+              placeemail: "you@example.com"
+              placepass: "password"
+              signup: "Sign Up"
+              forgotpass: "Forgot your password?"
+          
   users:
      show:
        yourreviews: "Your Reviews"
        noreviews: "You have not rated nor reviewed any restaurant."
        editprofile: "Edit Profile"
+       edituserinfo: "Edit User Information"
+       email: "Email"
+       username: "Username"
+       name: "Name"
+       pendingconfirm: "Currently waiting confirmation for: %{email}"
+       avatar: "Avatar"
+       location: "Location"
+       password: "Password"
+       passwordinfo: "(leave blank if you don't want to change it)"
+       passwordconfirmation: "Password Confirmation"
+       currentpassword: "Current Password"
+       currentpasswordinfo: "(we need your current password to confirm your changes)"
+       submitupdate: "Update"
+       cancel: "Cancel my account"
+       unhappy: "Unhappy?"
+       
+     owner:
+       edit:     
+         changephoto: "Change Cover Photo"
+         editinfo: "(Edit Information)"
+         name: "Name"
+         description: "Description"
+         address: "Address"
+         contact: "Contact Information"
+         pricerange: "Price Range"
+         mintomax: "(Min to Max)"
+         min: "Min"
+         max: "Max"
+         embedmap: "Embed Map"
+         updateresto: "Update Restaurant"
+         dishes: "Dishes"
+         adddish: "Add Dish"
+         dish: "Dish"
+         cuisine: "Cuisine"
+         Price: Price
+         actions: "Actions"
+         nodish: "No dishes yet. Please add some."
+         edit: "Edit"
+         delete: "Delete"
+         
+       new:
+         createtitle: "Create New Restaurant"
+         name: "Name"
+         description: "Description"
+         address: "Address"
+         contact: "Contact Information"
+         pricerange: "Price Range"
+         mintomax: "(Min to Max)"
+         min: "Min"
+         max: "Max"
+         embedmap: "Embed Map"
+         registerresto: "Register Restaurant" 
+         
+       restaurants: 
+         myrestaurants: "My Restaurants"
+         restaurants: "Restaurants"
+         status: "Status"
+         createdon: "Created On"
+         avgrating: "Average Rating"
+         addresto: "Add a Restaurant" 
           
      admin:
        edit:     

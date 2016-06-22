@@ -20,7 +20,7 @@ module Resto
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    I18n.available_locales = [:en]
+    I18n.available_locales = [:en, :ru]
     config.i18n.default_locale = :en
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

@@ -2,7 +2,6 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :reject, :destroy]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
   layout 'owner', only: [:owner_edit, :owner_new]
-  
   skip_before_action :authenticate_user!, only: [:show]
   respond_to :html
   
@@ -90,6 +89,10 @@ class RestaurantsController < ApplicationController
   def restaurant_params
     params.require(:restaurant).permit(:name, :description, :map, :address, 
       :contact, :low_price_range, :high_price_range, :status, :cover, :avatar)
+  end
+  
+  def set_owner_restaurant
+    @restaurant = current_user.restaurants.find(params[:id])
   end
 
   def set_restaurant
