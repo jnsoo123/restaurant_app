@@ -1,5 +1,5 @@
 class FoodsController < ApplicationController
-  before_action :set_food, only: [:edit, :update]
+  before_action :set_food, only: [:edit, :update, :destroy]
   
   respond_to :html
   respond_to :js, only: [:new, :edit]
@@ -23,6 +23,11 @@ class FoodsController < ApplicationController
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     @food.save
     respond_with(@food, location: owner_resto_edit_path(params[:resto_id]))
+  end
+  
+  def destroy
+    @food.destroy
+    respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
   end
   
   private

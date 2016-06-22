@@ -12,6 +12,7 @@
 //
 //= require bootstrap
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery.atwho
 //= require jquery_ujs
 //= require jquery.ui.effect-blind

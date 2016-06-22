@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :reject]
+  before_action :set_restaurant, only: [:show, :edit, :update, :reject, :destroy]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
   layout 'owner', only: [:owner_edit, :owner_new]
   
@@ -20,6 +20,8 @@ class RestaurantsController < ApplicationController
   end
 
   def show
+    @picture = Picture.new
+    @rating = Rating.new
   end
 
   def owner_new
@@ -78,7 +80,6 @@ class RestaurantsController < ApplicationController
   end
   
   def destroy
-    name = @restaurant.name
     @restaurant.destroy
     flash[:success] = "#{name} has been deleted!"
     respond_with(@restaurant, location: users_restaurant_path)
@@ -88,7 +89,7 @@ class RestaurantsController < ApplicationController
   
   def restaurant_params
     params.require(:restaurant).permit(:name, :description, :map, :address, 
-                                      :contact, :low_price_range, :high_price_range, :status)
+      :contact, :low_price_range, :high_price_range, :status, :cover, :avatar)
   end
 
   def set_restaurant

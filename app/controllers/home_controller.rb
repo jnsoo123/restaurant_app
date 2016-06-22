@@ -5,5 +5,6 @@ class HomeController < ApplicationController
   def index
     @restaurants = Restaurant.all
     @cuisines = Cuisine.all
+    @ratings = Rating.order(created_at: :desc)
   end
 end

@@ -1,6 +1,44 @@
 <div id="reviews" class="container">
   <h3>Recent Reviews</h3>
   <div class="row">
+    <% @ratings.each do |rate| %>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="media" style="padding: 10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+              <div class="media-left" style="padding: 0 25px 10px 10px;">
+                <%= image_tag(rate.restaurant.avatar.url, width: 64, height: 64, class: 'img-circle') %>
+              </div>
+              <div class="media-body" style="">
+                <h4 class="media-heading">
+                  <%= rate.restaurant.name %> 
+                  <small>
+                    <% rate.rate.times do %>
+                      <%= icon('star')%>
+                    <% end %>
+                    <% (5-rate.rate).times do %>
+                      <%= icon('star-o')%>
+                    <% end %>
+                  </small>
+                </h4>
+                <p><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= rate.comment %></p>
+                <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+  
+    
+    
+    
+    
+    
+    
+<!--
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -8,6 +46,10 @@
         </div>
       </div>
     </div>
+    
+    
+    
+    
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -30,4 +72,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->

@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get 'change_locale/:locale' => 'application#change_locale', as: :change_locale
   get 'administrator' => 'administrator#index'
-  get 'ratings' => 'ratings#index'
   # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
   get 'restaurants/search' => 'restaurants#search', as: :restaurant_search
   get 'restaurants/listing' => 'restaurants#listing', as: :restaurant_listing
@@ -18,6 +17,8 @@ Rails.application.routes.draw do
   resources :restaurants 
   resources :cuisines
   resources :foods
+  resources :pictures
+  resources :ratings
   
   resources :users do
     resources :restaurants
