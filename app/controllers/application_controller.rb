@@ -3,11 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:change_locale, :set_locale]
   add_flash_types :success
   include DeviseHelper
+  before_action :set_locale
 
-  def change_locale  
+  def change_locale
       l = params[:locale].to_s.strip.to_sym
       l = I18n.default_locale unless I18n.available_locales.include?(l)
       cookies.permanent[:educator_locale] = l
