@@ -37,9 +37,9 @@ class RestaurantsController < ApplicationController
   end
   
   def listing
-    @restos_accepted = Restaurant.where(status: "accepted").order('updated_at DESC')
-    @restos_rejected = Restaurant.where(status: "rejected").order('updated_at DESC')
-    @restos_pending = Restaurant.where(status: "pending").order('updated_at DESC')
+    @restos_accepted = Restaurant.where(status: "Accepted").order('updated_at DESC')
+    @restos_rejected = Restaurant.where(status: "Rejected").order('updated_at DESC')
+    @restos_pending = Restaurant.where(status: "Pending").order('updated_at DESC')
   end
   
   def new
@@ -51,7 +51,7 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant.user = current_user
     @restaurant.save
-    respond_with(@restaurant, location: users_dashboard_path)
+    respond_with(@restaurant, location: users_restaurant_path)
   end
   
   def reject
@@ -59,14 +59,15 @@ class RestaurantsController < ApplicationController
   
   def update
     if current_user.admin
-      if restaurant_params[:status] == 'rejected'
+      if restaurant_params[:status] == 'Rejected'
         Notification.create(user_id: @restaurant.user.id, message: params[:message])
         UserMailer.reject_email(@restaurant.user).deliver_now
-      else
+      elsif restaurant_params[:status] == 'Accepted'
         Notification.create(user_id: @restaurant.user.id)
         UserMailer.accept_email(@restaurant.user).deliver_now
       end 
       @restaurant.update(restaurant_params)
+      respond_with(@restaurant, location: restaurant_listing_path)
     else
       @restaurant.update(restaurant_params)
       if params[:path] == 'dashboard'

@@ -4,5 +4,6 @@ FactoryGirl.define do
     price "9.99"
     description "MyText"
     cuisine nil
+    restaurant nil
   end
 end

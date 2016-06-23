@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   
   def update
     @user.update(user_params)
-    redirect_to administrator_path
+    respond_with(@user, location: administrator_path)
   end
   
   private
