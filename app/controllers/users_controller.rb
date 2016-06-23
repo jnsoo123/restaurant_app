@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   respond_to :html
   layout "owner", only: [:restaurants]
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :authorize, only: [:edit, :update]
   
   def show
   end

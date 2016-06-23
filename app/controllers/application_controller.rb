@@ -14,8 +14,20 @@ class ApplicationController < ActionController::Base
       cookies.permanent[:educator_locale] = l
       redirect_to request.referer || root_url
   end
+  
+  def authorize
+    if user_signed_in?
+      unless current_user.admin?
+        redirect_to home_path
+      end
+    end
+  end
 
   private
+  
+  def previous_url
+    request.original_url
+  end
   
   def set_locale
     if cookies[:educator_locale] && I18n.available_locales.include?(cookies[:educator_locale].to_sym)
@@ -28,8 +40,8 @@ class ApplicationController < ActionController::Base
   end
   
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:name, :email, :username, :location]
-    devise_parameter_sanitizer.for(:account_update) << [:name, :email, :username, :location, :profile_picture_url, :avatar]
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :username, :location])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :username, :location, :profile_picture_url, :avatar])
   end
   
   def after_sign_in_path_for(resource_or_scope)

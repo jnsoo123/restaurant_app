@@ -1,12 +1,14 @@
 class RatingsController < ApplicationController
   
   respond_to :html
+  before_action :authorize, only: [:index]
   
   def index
+    @order = ["DESC","ASC","ASC"] if @order.nil?
     if(params[:search_category].nil?)
       @ratings = Rating.order('rate DESC')
-    else
-      @ratings = Rating.sort(params[:search_category])
+    else      
+      @ratings, @order = Rating.sort(params[:search_category], params[:search_order]) 
     end
   end
   

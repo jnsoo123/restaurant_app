@@ -3,6 +3,7 @@ class RestaurantsController < ApplicationController
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
   layout 'owner', only: [:owner_edit, :owner_new]
   skip_before_action :authenticate_user!, only: [:show, :search]
+  before_action :authorize, only: [:listing, :reject, :edit]
   respond_to :html
   
   def index
