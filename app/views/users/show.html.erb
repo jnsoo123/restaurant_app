@@ -9,7 +9,6 @@
       <% if @user === current_user %>
         <p><%= link_to "#{icon('pencil-square-o')} #{t('editprofile')}".html_safe, edit_user_registration_path %></p>
       <% end %>
-      <p><%= link_to "#{icon('pencil-square-o')} #{t('.editprofile')}".html_safe, nil, remote: true, data: { toggle: 'modal', target: '#edit_user_modal' } %></p>
     </div>
   </div>
   
@@ -37,12 +36,17 @@
       <div class="media-body">
         <h4 class="media-heading"><%= current_user.name %></h4>
         <p>Stared using Fudz Finder</p>
-        <p><%= distance_of_time_in_words_to_now(current_user.created_at) %></p>
-    <h3><%= t('.yourreviews')%></h3>
-    <p><%= t('.noreviews')%></p>
+        <p><%= distance_of_time_in_words_to_now(current_user.created_at) %> ago</p>
+      </div>
+    </div>
   </div>
 </div>
 
+    
+    
+    
+    
+    
 <div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">

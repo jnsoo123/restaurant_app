@@ -99,10 +99,12 @@
     </div>
   <% end %>
   
-  <% unless @restaurant.ratings.find_by(user_id: current_user.id) || @restaurant.user === current_user %>
-    <div style="margin-bottom: 20px;">
-      <button class="btn btn-default btn-hide-click" data-toggle="collapse" data-target="#review_part" style="width: 100%; height: 50px; padding: 14px;">Write a Review</button>
-    </div>
+  <% if user_signed_in? %>
+    <% unless @restaurant.ratings.find_by(user_id: current_user.id) || @restaurant.user === current_user %>
+      <div style="margin-bottom: 20px;">
+        <button class="btn btn-default btn-hide-click" data-toggle="collapse" data-target="#review_part" style="width: 100%; height: 50px; padding: 14px;">Write a Review</button>
+      </div>
+    <% end %>
   <% end %>
   
   
