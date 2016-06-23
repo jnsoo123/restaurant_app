@@ -1,5 +1,7 @@
 class CuisinesController < ApplicationController
   before_action :set_cuisine, only: [:edit, :update, :destroy]
+  before_action :authorize
+  respond_to :html
   
   def index
     @cuisines = Cuisine.order('updated_at DESC')
@@ -12,7 +14,7 @@ class CuisinesController < ApplicationController
   def create
     @cuisine = Cuisine.new(cuisine_params)
     @cuisine.save
-    redirect_to cuisines_path
+    respond_with(@cuisine, location: cuisines_path)
   end
 
   def edit
@@ -20,12 +22,12 @@ class CuisinesController < ApplicationController
 
   def update
     @cuisine.update(cuisine_params)
-    redirect_to cuisines_path
+    respond_with(@cuisine, location: cuisines_path)
   end
 
   def destroy
     @cuisine.destroy
-    redirect_to cuisines_path
+    respond_with(@cuisine, location: cuisines_path)
   end
   
   private

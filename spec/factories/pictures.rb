@@ -3,6 +3,8 @@ FactoryGirl.define do
     restaurant nil
     status false
     user nil
-    picture "MyString"
+    sequence :pic do |n|
+      "picture#{n}.jpg"
+    end 
   end
 end

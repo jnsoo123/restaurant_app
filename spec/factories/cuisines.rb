@@ -1,5 +1,8 @@
 FactoryGirl.define do
   factory :cuisine do
-    name "MyString"
+    sequence :name do |n|
+      "Cuisine#{n}"
+    end
+    description "random stuff"
   end
 end

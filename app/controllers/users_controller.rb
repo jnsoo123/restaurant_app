@@ -2,9 +2,9 @@ class UsersController < ApplicationController
   respond_to :html
   layout "owner", only: [:restaurants]
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :authorize, only: [:edit, :update]
   
   def show
-    
   end
   
   def restaurants
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   
   def update
     @user.update(user_params)
-    redirect_to administrator_path
+    respond_with(@user, location: administrator_path)
   end
   
   private
