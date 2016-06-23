@@ -3,7 +3,7 @@
   <div class="row">
     <% @ratings.each do |rate| %>
       <div class="col-md-6">
-        <div class="panel panel-default">
+        <div class="panel panel-default" style="border-radius: 0px;">
           <div class="panel-body">
             <div class="media" style="padding: 10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
               <div class="media-left" style="padding: 0 25px 10px 10px;">
@@ -11,7 +11,7 @@
               </div>
               <div class="media-body" style="">
                 <h4 class="media-heading">
-                  <%= rate.restaurant.name %> 
+                  <%= link_to rate.restaurant.name, restaurant_path(rate.restaurant) %> 
                   <small>
                     <% rate.rate.times do %>
                       <%= icon('star')%>

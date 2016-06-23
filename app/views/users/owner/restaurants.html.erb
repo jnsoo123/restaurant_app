@@ -2,35 +2,66 @@
   
   <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
     <h4 class="pull-left" style="color: #6b6b6b;"><%= t('.myrestaurants')%></h4>
-    <%= link_to "#{icon('plus', t('.addresto'), style: 'margin-right: 10px;')}".html_safe, owner_resto_new_path, class: 'btn btn-default pull-right'%>
   </div>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr style="background-color: #404040;">
-          <th>#</th>
-          <th><%= t('.restaurants')%></th>
-          <th><%= t('.status')%></th>
-          <th><%= t('.createdon')%></th>
-          <th><%= t('.avgrating')%></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @restaurants.each_with_index do |resto, index| %>
-          <tr>
-            <td><%= index+1 %></td>
-            <td><%= link_to "#{resto.name}", owner_resto_edit_path(resto.id) %></td>
-            <% if resto.status == 'Pending' %>
-              <td><span class="label label-warning"><%= resto.status %></span></td>
-            <% elsif resto.status == 'Accepted'%>
-              <td><span class="label label-success"><%= resto.status %></span></td>
-            <% else %>
-              <td><span class="label label-danger"><%= resto.status %></span></td>
-            <% end %>
-            <td><%= resto.created_at.strftime("%B %-d, %Y") %></td>
-            <td><%= (resto.ratings.empty? ? "0": "func here")%></td>
-          </tr>
+
+  <div class="row thumbnail_panel">
+    <% @restaurants.each do |resto| %>
+      <div class="col-md-4">
+        <%= link_to(owner_resto_edit_path(resto)) do %>
+          <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px;">
+            <%= image_tag(resto.avatar.url, style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+            <div class="caption">
+              <% if resto.status == 'Pending' %>
+                <p><span class="label label-warning"><%= resto.status %></span></p>
+              <% elsif resto.status == 'Accepted' %>
+                <p><span class="label label-success"><%= resto.status %></span></p>
+              <% else %>
+                <p><span class="label label-danger"><%= resto.status %></span></p>
+              <% end %>
+              <h3><%= resto.name %></h3>
+              <p><%= truncate(resto.description, length: 50) %></p>
+              <p>
+                <% if resto.ave_ratings%1 == 0 %>
+                  <% resto.ave_ratings.to_i.times do %>
+                    <%= icon('star')%>
+                  <% end %>
+                <% else %>
+                  <% (resto.ave_ratings.to_i).times do %>
+                    <%= icon('star')%>
+                  <% end %>
+                  <%= icon('star-half')%>
+                <% end %>
+              </p>
+            </div>
+            <div class="panel-footer" style="background-color: #333; height: 80px; padding: 5px; border-radius: 0px;">
+              <div class="row" style="padding: 5px 20px 5px 20px;">
+                <div class="col-md-4">
+                  <p style="font-size: 25px; margin: 0px;"><b><%= resto.ratings.count %></b></p>
+                  <p style="margin: 0px; color: #717171;">Ratings</p>
+                </div>
+                <div class="col-md-4">
+                  <p style="font-size: 25px; margin: 0px;"><b><%= resto.pictures.where(status: true).count %></b></p>
+                  <p style="margin: 0px; color: #717171;">Photos</p>
+                </div>
+                <div class="col-md-4">
+                  <p style="font-size: 25px; margin: 0px;"><b><%= resto.pictures.where(status: false).count %></b></p>
+                  <p style="margin: 0px; color: #717171;">New</p>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
-      </tbody>
-    </table>
+      </div>
+    <% end %>
+    <div class="col-md-4">
+        <%= link_to(owner_resto_new_path) do %>
+          <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px; height: 454px;">
+            <%= image_tag("plus.png", style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+            <div class="caption">
+              <p><span class="label label-success">New</span></p>
+              <h3>Add a Restaurant</h3>
+            </div>
+          </div>
+        <% end %>
+      </div>
   </div>

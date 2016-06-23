@@ -115,6 +115,108 @@
   <% end %>
 </div>
 
+
+<div style="width: 100%;">
+  <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Reviews</h4>
+</div>
+<div>
+  <% unless @ratings.empty? %>
+    <div class="table-responsive">
+      <table class="table table-bordered"> 
+        <thead>
+          <tr style="background-color: #404040;">
+            <th>#</th>
+            <th>Username</th>
+            <th>Rate</th>
+            <th>Comment</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @ratings.each_with_index do |rate, index| %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td><%= link_to rate.user.username, user_path(rate.user) %></td>
+              <td><%= rate.rate %></td>
+              <td><%= rate.comment %></td>
+              <td><%= rate.created_at.strftime("%B %d, %Y") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    No reviews.
+  <% end %>
+</div>
+
+<div style="width: 100%;">
+  <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Photos</h4>
+</div>
+
+<div class="row pic-row">
+  <% unless @restaurant.pictures.empty? %>
+    <% @restaurant.pictures.where(status: true).each do |picture| %>
+      <div class="col-md-3">
+        <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+        <%= image_tag(picture.pic.url, class: 'img-responsive', style: 'width: 100%; height: auto;') %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="col-md-3">
+    <div class="fileUpload btn btn-default btn-add-pic">
+      <span><%= icon('plus', "<br>Add Images".html_safe, style: '')%></span>
+      <%= form_for(@picture) do |f| %> 
+        <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+        <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div style="width: 100%;">
+  <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Pending Photos</h4>
+</div>
+
+<% unless @restaurant.pictures.where(status: false).empty? %>
+  <div class="row thumbnail_panel pending_pic">
+    <% @restaurant.pictures.where(status: false).each do |picture| %>
+      <div class="col-md-4">
+        <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px;">
+          <%= image_tag(picture.pic.url, style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+          <div class="caption">
+            <div class="row">
+              <div class="col-md-6">
+                <p>Uploader: </p>
+                <p>Upload Date: </p>
+              </div>
+              <div class="col-md-6">
+                <p><%= picture.user.username %></p>
+                <p><%= picture.created_at.strftime("%B %d, %Y") %></p>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer" style="background-color: #fff; border-radius: 0px;">
+            <div class="row">
+              <div class="col-md-6">
+                <%= button_to 'Accept', picture_path(picture.id, picture: { status: true }), class: 'btn btn-success', style: 'width: 100%;', method: :put%>
+              </div>
+              <div class="col-md-6">
+                <%= button_to 'Reject', picture_path(picture), class: 'btn btn-danger', style: 'width: 100%;', method: :delete%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  No Pending Pictures
+<% end %>
+
+ 
+
 <div style="width: 100%;">
   <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Not Happy?</h4>
   <%= button_to "Delete Restaurant", restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }%>
@@ -137,4 +239,4 @@
 
 
 
-
+  

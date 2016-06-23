@@ -1,5 +1,5 @@
 #dashboard-owner {
-  @media (min-width: 768px) {
+  @media (min-width: 992px) {
     .navbar-collapse {
       height: auto;
       border-top: 0;
@@ -24,8 +24,8 @@
       margin-right: 0;
       margin-left: 0;
       position: relative;
-      padding-bottom: 2000px;
-      margin-bottom: -2000px;
+      padding-bottom: 10000px;
+      margin-bottom: -20000px;
       height: 100%;
       overflow: hidden;
     }	
@@ -53,6 +53,27 @@
         color: white;
       }
     }
+  }
+}
+
+div.thumbnail_panel {
+  a {
+    .thumbnail {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    color: #fff;
+    &:hover {
+      text-decoration: none;
+      .thumbnail {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+    }
+  }
+}
+
+.pending_pic {
+  .thumbnail {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 }
 

@@ -16,3 +16,12 @@ body {
 #top-nav {
   background-color: white;
 }
+
+a {
+  color: #676767;
+  &:hover {
+    text-decoration: none;
+    color: #676767;
+    font-weight: 800;
+  }
+}

@@ -1,12 +1,56 @@
-<%= form_tag(restaurant_search_path, method: :get) do %>
+<div class="container" style="width: 50%;">
+  <div class="jumbotron" style="margin-top: 0px; background-color: whitesmoke;">
+    <div class="owl-carousel">
+      <div>
+        <h1 class="text-center">Fudz Finder</h1>
+        <p class="text-center" style="color: #9c9c9c;"><%= t('.caption')%></p>
+        <div style='text-align: center;'>
+          <%= form_tag(restaurant_search_path, method: :get) do %>
             <div class="input-group" style="">
-			  <%= search_field_tag :searchQuery, nil, class: "form-control", value: "#{@searchQuery}" %>	
+              <%= text_field_tag :searchQuery, nil, class: "form-control", value: "#{@searchQuery}" %>    
               <span class="input-group-btn">
-				  <%= submit_tag t('.go'), class: "btn btn-default"%>
+                  <%= submit_tag t('.go'), class: "btn btn-default"%>
                 <!-- <button class="btn btn-default" type="button">Go!</button> -->
               </span>
             </div>
-<% end %>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <%= t('.ads')%>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <ul class="list-group">
+    <% @searchResult.each do |resto| %>
+      <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
+        <div class="row">
+          <div class="col-md-3">
+            <%= image_tag(resto.avatar.url, width: '225', height: '173') %>
+          </div>
+          <div class="col-md-9" style="padding: 20px;">
+            <div class="pull-left">
+              <h3 class="list-group-item-heading"><%= link_to resto.name, resto %></h3>
+              <p class="list-group-item-text"><%= resto.description %></p>
+              <p class="list-group-item-text" style="margin-top: 20px;"><%= icon('map-marker', resto.address, style: 'margin-right: 12px;') %></p>
+              <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
+            </div>
+            <div class="pull-right" style="margin-right: 10px;">
+              <span style="padding: 7px; font-size: 20px; border-radius: 0; background-color: #333333;" class="label label-default"><%= resto.ave_ratings %></span>
+            </div>
+            
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
 
 <table class = 'table'>
 <% @searchResult.each do |result|%>

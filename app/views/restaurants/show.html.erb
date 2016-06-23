@@ -42,29 +42,32 @@
       </div>
     <% end %>
   </div>
-  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', 'Customer Uploads', style: 'margin-right: 8px;')%></h3>
+  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', pluralize(@restaurant.pictures.count,"Photo"), style: 'margin-right: 8px;')%></h3>
   
   <div id="picture-part">
-    <div class="row pic-row">
+    <div class="row pic-row" style="">
       <% unless @restaurant.pictures.empty? %>
-        <% @restaurant.pictures.each do |picture| %>
-          <div class="col-md-3">
-            <%= image_tag(picture.pic.url) %>
+        <% @restaurant.pictures.where(status: true).each do |picture| %>
+          <div class="col-md-3" style="margin-bottom: 10px;">
+            <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal'} do %>
+            <%= image_tag(picture.pic.url, class: 'img-responsive center-block', style: 'width: 100%; height: auto;')%>
+            <% end %>
           </div>
         <% end %>
       <% end %>
-      <% if user_signed_in? %>
-        <div class="col-md-3">
-          <div class="fileUpload btn btn-default btn-add-pic">
-            <span><%= icon('plus', '<br>Add Images'.html_safe, style: '')%></span>
-            <%= form_for(@picture) do |f| %> 
+      <div class="col-md-3">
+        <div class="fileUpload btn btn-default btn-add-pic" style="width: 157px; height: 150px;">
+          <span><%= icon('plus', "<br>#{'Add images' if user_signed_in? }#{'Sign in to add images' unless user_signed_in? }".html_safe, style: '')%></span>
+          <%= form_for(@picture) do |f| %> 
+            <% if user_signed_in? %>
               <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
-              <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+            <% else %>
+              <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
             <% end %>
-          </div>
+            <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+          <% end %>
         </div>
-      <% end %>
-      
+      </div>
     </div>
   </div>
   
@@ -105,6 +108,10 @@
         <button class="btn btn-default btn-hide-click" data-toggle="collapse" data-target="#review_part" style="width: 100%; height: 50px; padding: 14px;">Write a Review</button>
       </div>
     <% end %>
+  <% else %>
+    <div style="margin-bottom: 20px;">
+      <button class="btn btn-default" disabled="disabled" data-toggle="collapse" data-target="#review_part" style="width: 100%; height: 50px; padding: 14px;">Sign in to write a review</button>
+    </div>
   <% end %>
   
   

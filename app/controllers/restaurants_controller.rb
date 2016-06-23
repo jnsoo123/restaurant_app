@@ -1,20 +1,23 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :reject, :destroy]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
-  layout 'owner', only: [:owner_edit, :owner_new]
   skip_before_action :authenticate_user!, only: [:show, :search]
+  
+  layout 'owner', only: [:owner_edit, :owner_new]
+  
   respond_to :html
   
   def index
   end
 
   def search
-    @searchResult = []
-    @searchResult << Cuisine.search_by_name(params[:searchQuery])
-    @searchResult << Restaurant.search_by_name(params[:searchQuery])
-    @searchResult << Food.search_by_name(params[:searchQuery])
+#    @searchResult = []
+#    @searchResult << Cuisine.where('name LIKE ?', "%#{params[:searchQuery]}%").foods
+#    @searchResult << Cuisine.search_by_name(params[:searchQuery])
+#    @searchResult << Restaurant.search_by_name(params[:searchQuery])
+#    @searchResult << Food.search_by_name(params[:searchQuery])
     
-    @searchQuery = params[:searchQuery]
+#    @searchQuery = params[:searchQuery]
     respond_with(@searchResult)
   end
 
@@ -29,8 +32,10 @@ class RestaurantsController < ApplicationController
   end
   
   def owner_edit
-   @foods = @restaurant.foods
-   respond_with(@restaurant, template: 'users/owner/edit')
+    @foods = @restaurant.foods
+    @ratings = @restaurant.ratings
+    @picture = Picture.new
+    respond_with(@restaurant, template: 'users/owner/edit')
   end
   
   def edit

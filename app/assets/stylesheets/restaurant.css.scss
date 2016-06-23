@@ -32,7 +32,15 @@
 }
 
 .pic-row {
-  .col-md-3 {
+  .col-md-3 { // for restaurant page
+    height: 150px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  
+  .col-md-2 { // for owner page
     height: 150px;
     img {
       width: 100%;
