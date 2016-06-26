@@ -20,9 +20,7 @@ Rails.application.routes.draw do
   resources :pictures
   resources :ratings
   
-  resources :users do
-    resources :restaurants
-  end
+  resources :users
   
   get 'users/:id' => 'users#show', as: :user_profile
 

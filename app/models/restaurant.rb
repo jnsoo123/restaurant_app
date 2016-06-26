@@ -16,8 +16,15 @@ class Restaurant < ActiveRecord::Base
     ratings.collect(&:rate).sum.to_f/ratings.size unless ratings.empty?
   end
   
+  def min_price
+    foods.minimum(:price).to_i
+  end
+  
+  def max_price
+    foods.maximum(:price).to_i
+  end
+  
   def self.search_by_name(query)
-    @results = Restaurant.where("name LIKE '%#{query}%'")
-    return @results
+    Restaurant.where("name LIKE ?","%#{query}%").map(&:id)
   end
 end
