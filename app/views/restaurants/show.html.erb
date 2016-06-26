@@ -42,7 +42,7 @@
       </div>
     <% end %>
   </div>
-  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', pluralize(@restaurant.pictures.count,"Photo"), style: 'margin-right: 8px;')%></h3>
+  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
   
   <div id="picture-part">
     <div class="row pic-row" style="">

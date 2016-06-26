@@ -6,3 +6,41 @@
   font-family: 'Baloo Bhai', cursive;
   font-size: 20px;
 }
+
+.slider-selection {
+  background: #333;
+}
+.slider-handle {
+  background: #8d8d8d;
+  border: 3px solid #222;
+}
+.slider-horizontal{
+  width: 100%!important;
+}
+
+ul.list-unstyled{
+  li.active a {
+    color: #222;
+  }
+  
+  li a {
+    color: #888;
+  }
+}
+
+
+@media screen and (min-width: 992px) {
+  .search_container {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 992px) {
+  .search_container {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .search_container {
+    width: 100%;
+  }
+}

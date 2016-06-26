@@ -1,7 +1,11 @@
 <%= image_tag(@picture.pic.url, style: 'width: 100%; height: 100%;')%>
 
 <div style="background-color: #222; padding: 10px 20px 5px 20px;">
-  <span style="font-size: 15px; color: #fff;">Filename: <%= @picture.pic_identifier %></span>
+  <% if user_signed_in? %>
+    <% if @picture.restaurant.user === current_user || current_user.admin %>
+      <span style="font-size: 15px; color: #fff;">Filename: <%= @picture.pic_identifier %></span>
+    <% end %>
+  <% end %>
 </div>
 <div style="background-color: #222; padding: 5px 20px;">
   <span style="font-size: 15px; color: #fff;">Uploader: <%= link_to @picture.user.username, user_path(@picture.user), style: 'color: #fff;' %></span>
