@@ -21,24 +21,25 @@ class RestaurantsController < ApplicationController
       @search_result << Cuisine.find(params[:cuisine]).foods.where("name LIKE ?", "%#{params[:searchQuery]}%").map {|food| food.restaurant.id }
     end 
     @search_result.flatten!(1)
-    puts "\n\n\nTHIS IS SEARCH RESULT VALUE: #{@search_result.inspect}\n\n\n"
     unless params[:price_range].nil?
       @search_range = params[:price_range].split(',')
       @result = Restaurant.find(@search_result).map {|restaurant| restaurant.foods.map {|food| food.restaurant if food.price.between?(@search_range[0].to_i,@search_range[1].to_i)} }.flatten(1).compact
-      if sort_type == 'ratings'
-        @result.sort! {|a,b| b.ave_ratings <=> a.ave_ratings}.map(&:id)
-      elsif sort_type == 'name'
-        @result.sort! {|a,b| a.name <=> b.name }.map(&:id)
-      elsif sort_type == 'price'
-        
-      end
-      @result = Restaurant.find(@result)
+      @search_result = Restaurant.find(@result)
+    end
+    
+    if sort_type == 'ratings'
+      @result = Restaurant.includes(:ratings).order('ratings.rate desc').find(@search_result)
+    elsif sort_type == 'name'
+      @result = Restaurant.order('name').find(@search_result)
+    elsif sort_type == 'price_low_to_high'
+      @result = Restaurant.includes(:foods).order('foods.price').find(@search_result)
     else
-      @result = Restaurant.find(Restaurant.where(id: @search_result).sort {|a,b| b.ave_ratings <=> a.ave_ratings}.map(&:id))
+      @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
     end
     puts "@@@@@@@@@@@@#{@result}"
     puts "@@@@@@@@@@@@#{@search_result}"
     @searchQuery = params[:searchQuery]
+    @price_range = params[:price_range] unless params[:price_range].nil?
     respond_with(@result)
   end
 

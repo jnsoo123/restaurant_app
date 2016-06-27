@@ -57,10 +57,10 @@
       <div class="panel-body">
         <p>Sort by</p>
         <ul class="list-unstyled">
-          <li class="active"><%= link_to "Ratings - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery) %></li>
-          <li><%= link_to "Name - <small>Alphabetical Order</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'name') %></li>
-          <li><%= link_to "Price - <small>Low to high</small>".html_safe, nil %></li>
-          <li><%= link_to "Price - <small>High to low</small>".html_safe, nil %></li>
+          <li class="active"><%= link_to "Ratings - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, price_range: (@price_range.nil? ? nil : @price_range )) %></li>
+          <li><%= link_to "Name - <small>Alphabetical Order</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'name', price_range: (@price_range.nil? ? nil : @price_range )) %></li>
+          <li><%= link_to "Price - <small>Low to high</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'price_low_to_high', price_range: (@price_range.nil? ? nil : @price_range )) %></li>
+          <li><%= link_to "Price - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'price_high_to_low', price_range: (@price_range.nil? ? nil : @price_range )) %></li>
         </ul>
       </div>
     </div>
