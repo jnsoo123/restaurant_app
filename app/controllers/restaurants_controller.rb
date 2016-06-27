@@ -2,7 +2,6 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :reject, :destroy]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
   skip_before_action :authenticate_user!, only: [:show, :search]
-  
   layout 'owner', only: [:owner_edit, :owner_new]
   before_action :authorize, only: [:listing, :reject, :edit]
   respond_to :html
@@ -22,7 +21,6 @@ class RestaurantsController < ApplicationController
       @search_result << Cuisine.find(params[:cuisine]).foods.where("name LIKE ?", "%#{params[:searchQuery]}%").map {|food| food.restaurant.id }
     end 
     @search_result.flatten!(1)
-    
     unless params[:price_range].nil?
       @search_range = params[:price_range].split(',')
       @result = Restaurant.find(@search_result).map {|restaurant| restaurant.foods.map {|food| food.restaurant if food.price.between?(@search_range[0].to_i,@search_range[1].to_i)} }.flatten(1).compact
@@ -38,8 +36,6 @@ class RestaurantsController < ApplicationController
     else
       @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
     end
-    puts "@@@@@@@@@@@@#{@result}"
-    puts "@@@@@@@@@@@@#{@search_result}"
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     respond_with(@result)
@@ -57,6 +53,9 @@ class RestaurantsController < ApplicationController
   
   def owner_edit
     @foods = @restaurant.foods
+    
+     puts "\n\n\nTHIS IS foods: #{@foods.inspect}\n\n\n"
+    
     @ratings = @restaurant.ratings
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
@@ -109,6 +108,7 @@ class RestaurantsController < ApplicationController
   end
   
   def destroy
+    name = @restaurant.name
     @restaurant.destroy
     flash[:success] = "#{name} has been deleted!"
     respond_with(@restaurant, location: users_restaurant_path)

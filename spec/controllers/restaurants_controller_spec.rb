@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe RestaurantsController, type: :controller do
   let!(:user1){FactoryGirl.create(:user, :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Resto", :user_id => user1.id)}
-  
   let!(:restaurant2){FactoryGirl.create(:restaurant, :name => "RestoAcc", :status => "Accepted", :user_id => user1.id)}
   let!(:restaurant3){FactoryGirl.create(:restaurant, :name => "RestoRej", :status => "Rejected", :user_id => user1.id)}
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Filipino")}
   let!(:food1){FactoryGirl.create(:food, :name => "Sisig", :cuisine_id => cuisine1.id,
                :restaurant_id => restaurant1.id)}
+
 
   context "Logged in as user" do
     before(:each) do
@@ -37,9 +37,23 @@ RSpec.describe RestaurantsController, type: :controller do
     end
     
     describe "get#owner_edit" do
-      it "displays the edit restaurant page for owner" do
+      
+      before(:each) do
         get :owner_edit, :id => restaurant1.id
+      end
+      
+      it "displays the edit restaurant page for owner" do
         expect(response).to render_template("owner/edit")
+      end
+      
+      it "returns all foods connected to restaurant" do
+        foods = assigns(:foods)
+        expect(foods).to include(food1)
+      end
+      
+      it "returns all ratings connected to restaurant" do
+        ratings = assigns(:ratings)
+        expect(ratings.count).to be 0
       end
     end
     
@@ -51,7 +65,14 @@ RSpec.describe RestaurantsController, type: :controller do
     end
     
     describe "delete#destroy" do
-      it "removes restaurant entry"
+      before(:each) do 
+        @id = restaurant3.id
+        delete :destroy, :id => restaurant3.id
+      end
+      
+      it "removes restaurant entry" do
+        expect(Restaurant.exists?(@id)).to be false
+      end
     end
     
     describe "put#update" do
@@ -202,62 +223,10 @@ RSpec.describe RestaurantsController, type: :controller do
     end
     
     describe "get#search" do
-      context "it searches for food containing name of sisig" do
-        before(:each) do
-          get :search, :searchQuery => "sisig"
-        end
-        
-        it "has search query containing sisig" do
-          expect(assigns(:searchQuery)).to eq("sisig")
-        end
-        
-        it "has search result containing food sisig" do
-          results = assigns(:searchResult)
-          results.each do |result|
-            result.each do |food|
-                expect(food.name).to eq(food1.name)
-            end
-          end
-        end
-      end
       
-      context "it searches for cuisine containing name of filipino" do
-        before(:each) do
-          get :search, :searchQuery => "filipino"
-        end
-        
-        it "has search query containing filipino" do
-          expect(assigns(:searchQuery)).to eq("filipino")
-        end
-        
-        it "has search result containing cuisine filipino" do
-          results = assigns(:searchResult)
-          results.each do |result|
-            result.each do |cuisine|
-                expect(cuisine.name).to eq(cuisine1.name)
-            end
-          end
-        end
-      end 
-      
-      context "it searches for restaurant containing name of resto" do
-        before(:each) do
-          get :search, :searchQuery => "restoAcc"
-        end
-        
-        it "has search query containing resto" do
-          expect(assigns(:searchQuery)).to eq("restoAcc")
-        end
-        
-        it "has search result containing restaurant restoAcc" do
-          results = assigns(:searchResult)
-          results.each do |result|
-            result.each do |restaurant|
-                expect(restaurant.name).to eq(restaurant2.name)
-            end
-          end
-        end
-      end 
+
+      it "does a search method"
+
     end
   end
   

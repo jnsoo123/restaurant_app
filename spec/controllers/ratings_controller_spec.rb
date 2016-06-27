@@ -44,9 +44,9 @@ RSpec.describe RatingsController, type: :controller do
       
       context "get index with search params" do  
         it "returns all ratings sorted by rate" do
-          get :index, :search_category => "Rating"
+          get :index, :search_category => "Rating", :search_order => ["DESC","ASC","ASC"]
           
-          ratingList = Rating.order('rate desc')
+          ratingList = Rating.order('rate DESC')
           controllerList = assigns(:ratings)
    
           ratingList.zip(controllerList).each do |rList, cList|
@@ -57,7 +57,7 @@ RSpec.describe RatingsController, type: :controller do
         end
       
         it "returns all ratings sorted by restaurant name" do
-          get :index, :search_category => "Restaurant"
+          get :index, :search_category => "Restaurant", :search_order => ["DESC","ASC","ASC"]
           
           ratingList = Rating.joins("LEFT JOIN restaurants on ratings.restaurant_id = restaurants.id").order('LOWER(name)')
           controllerList = assigns(:ratings)
@@ -70,7 +70,7 @@ RSpec.describe RatingsController, type: :controller do
         end
         
         it "returns all ratings sorted by restaurant name" do
-          get :index, :search_category => "User"
+          get :index, :search_category => "User", :search_order => ["DESC","ASC","ASC"]
           
           ratingList = Rating.joins("LEFT JOIN users on ratings.user_id = users.id").order("LOWER(name)")
           controllerList = assigns(:ratings)

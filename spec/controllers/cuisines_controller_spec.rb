@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CuisinesController, type: :controller do
 
-  let!(:admin1){FactoryGirl.create(:user, :admin => false)}
+  let!(:admin1){FactoryGirl.create(:user, :admin => true)}
 
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Indian")}
   let!(:cuisine2){FactoryGirl.create(:cuisine, :name => "Filipino")}
