@@ -1,4 +1,5 @@
 class Cuisine < ActiveRecord::Base
+  mount_uploader :avatar, AvatarUploader
   has_many :foods, dependent: :destroy
 
   def self.search_by_name(query)
