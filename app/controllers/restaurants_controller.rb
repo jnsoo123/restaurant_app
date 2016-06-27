@@ -15,12 +15,13 @@ class RestaurantsController < ApplicationController
     sort_type ||= 'ratings'
     if params[:cuisine].blank?
       @search_result << Cuisine.search_by_name(params[:searchQuery])
-      @search_result << Restaurant.search_by_name(params[:searchQuery])
+      @search_result << Restaurant.search_by_name(params[:searchQuery])    
       @search_result << Food.search_by_name(params[:searchQuery])
     else
       @search_result << Cuisine.find(params[:cuisine]).foods.where("name LIKE ?", "%#{params[:searchQuery]}%").map {|food| food.restaurant.id }
     end 
     @search_result.flatten!(1)
+    
     unless params[:price_range].nil?
       @search_range = params[:price_range].split(',')
       @result = Restaurant.find(@search_result).map {|restaurant| restaurant.foods.map {|food| food.restaurant if food.price.between?(@search_range[0].to_i,@search_range[1].to_i)} }.flatten(1).compact
@@ -36,6 +37,7 @@ class RestaurantsController < ApplicationController
     else
       @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
     end
+    
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     respond_with(@result)
@@ -53,9 +55,6 @@ class RestaurantsController < ApplicationController
   
   def owner_edit
     @foods = @restaurant.foods
-    
-     puts "\n\n\nTHIS IS foods: #{@foods.inspect}\n\n\n"
-    
     @ratings = @restaurant.ratings
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
