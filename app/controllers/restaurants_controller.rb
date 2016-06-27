@@ -36,8 +36,6 @@ class RestaurantsController < ApplicationController
     else
       @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
     end
-    puts "@@@@@@@@@@@@#{@result}"
-    puts "@@@@@@@@@@@@#{@search_result}"
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     respond_with(@result)
