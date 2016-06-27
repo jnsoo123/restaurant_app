@@ -21,6 +21,7 @@ class RestaurantsController < ApplicationController
       @search_result << Cuisine.find(params[:cuisine]).foods.where("name LIKE ?", "%#{params[:searchQuery]}%").map {|food| food.restaurant.id }
     end 
     @search_result.flatten!(1)
+    puts "\n\n\nTHIS IS SEARCH RESULT VALUE: #{@search_result.inspect}\n\n\n"
     unless params[:price_range].nil?
       @search_range = params[:price_range].split(',')
       @result = Restaurant.find(@search_result).map {|restaurant| restaurant.foods.map {|food| food.restaurant if food.price.between?(@search_range[0].to_i,@search_range[1].to_i)} }.flatten(1).compact
@@ -53,6 +54,9 @@ class RestaurantsController < ApplicationController
   
   def owner_edit
     @foods = @restaurant.foods
+    
+     puts "\n\n\nTHIS IS foods: #{@foods.inspect}\n\n\n"
+    
     @ratings = @restaurant.ratings
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
@@ -105,6 +109,7 @@ class RestaurantsController < ApplicationController
   end
   
   def destroy
+    name = @restaurant.name
     @restaurant.destroy
     flash[:success] = "#{name} has been deleted!"
     respond_with(@restaurant, location: users_restaurant_path)
