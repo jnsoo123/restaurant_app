@@ -36,9 +36,17 @@ RSpec.describe CuisinesController, type: :controller do
     end
     
     describe "GET #edit" do
-      it "renders the edit template" do
+      
+      before(:each) do 
         get :edit, :id => cuisine1.id
+      end
+      
+      it "renders the edit template" do
         expect(response).to render_template("edit")
+      end
+      
+      it "passes the cuisine" do
+        expect(assigns(:cuisine)).to eq(cuisine1)
       end
     end
     

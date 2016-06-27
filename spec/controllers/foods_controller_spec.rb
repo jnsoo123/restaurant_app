@@ -43,6 +43,10 @@ RSpec.describe FoodsController, type: :controller do
       it "renders edit template" do
         expect(response).to render_template('edit')
       end
+      
+      it "passes food entry" do
+        expect(assigns(:food)).to eq(food1)
+      end
     end
     
     describe "post #create" do
