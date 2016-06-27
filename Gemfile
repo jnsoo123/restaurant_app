@@ -40,7 +40,7 @@ end
 #gem 'activeadmin'
 gem 'devise'
 gem 'will_paginate', '~> 3.1.0'
-
+gem 'activeadmin', github: 'activeadmin'
 gem 'font-awesome-sass', '~> 4.6.2'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'

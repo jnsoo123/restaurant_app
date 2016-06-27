@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   get 'change_locale/:locale' => 'application#change_locale', as: :change_locale
   get 'administrator' => 'administrator#index'
   # get 'ratings/:id' => 'ratings#sorting', as: :ratings_sort
