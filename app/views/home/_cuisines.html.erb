@@ -1,18 +1,26 @@
 <div id="cuisines" class="container">
   <h3><%= t('.popular')%></h3>
-  <div class="row thumbnail_panel">
-    <% @cuisines.each do |cuisine| %>
-      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6  ">
-        <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
-          <div class="thumbnail text-center" style="padding: 0px; border: 0; border-radius: 0px; height: 375px;">
-            <%= image_tag(cuisine.avatar.url, style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
-            <div class="caption">
-              <h3><%= cuisine.name %></h3>
-              <p><%= cuisine.description %></p>
-            </div>
+    <% unless Food.all.empty? %>
+      <div class="row thumbnail_panel">
+        <% @cuisines.each do |cuisine| %>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6  ">
+            <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
+              <div class="thumbnail text-center" style="padding: 0px; border: 0; border-radius: 0px; height: 375px;">
+                <%= image_tag(cuisine.avatar.url, style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+                <div class="caption">
+                  <h3><%= cuisine.name %></h3>
+                  <p><%= cuisine.description %></p>
+                </div>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>
+    <% else %>
+      <ul class="list-group">
+        <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
+          <h3 class="text-center" style="padding-top: 50px">No Cuisines available yet</h3>
+        </li>
+      </ul>
     <% end %>
-  </div>
 </div>

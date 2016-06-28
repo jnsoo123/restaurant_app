@@ -4,16 +4,16 @@
   <p><%= @restaurant.description %></p>
 </div>
 <div class="container resto-container">
-  <div class="row" style="margin-bottom: 20px;">
-    <div class="pull-left">
-      <% unless @restaurant.map.nil? %>
+  <div class="row clearfix" style="margin-bottom: 20px;">
+    <div class="pull-left" style="height: 250px;">
+      <% unless @restaurant.map.empty? %>
         <%= @restaurant.try(:map).html_safe %>
       <% else %>
-        No map provided
+        <h5 style="padding: 100px 0 20px 80px">Map Not Available</h5>
       <% end %>
     </div>
     <div class="pull-right">
-      <%= image_tag(@restaurant.cover.url, width: '500', class: 'img-responsive', style: 'margin-bottom: 10px;') %>
+      <%= image_tag(@restaurant.cover.url, width: '500', height: '250', class: 'img-responsive', style: 'margin-bottom: 10px;') %>
     </div>
     
     
@@ -23,7 +23,11 @@
           <%= icon('phone', @restaurant.contact, style: 'margin-right: 10px;') %>
         </div>
         <div class="col-md-8">
-          <%= link_to "www.jollibee.com.ph/", "http://www.jollibee.com.ph/" %>
+          <% unless @restaurant.website.empty? %>
+            <%= link_to @restaurant.website, "http://#{@restaurant.website}" %>
+          <% else %>
+            No website available
+          <% end %>
         </div>
       </div>
     </div>
@@ -92,6 +96,9 @@
               <% end %>
               <% (5-rate.rate).times do %>
                 <%= icon('star-o')%>
+              <% end %>
+              <% if current_user === rate.user %>
+                <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
               <% end %>
             </small>
           </h4>

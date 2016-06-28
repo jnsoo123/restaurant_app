@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628003707) do
+ActiveRecord::Schema.define(version: 20160628023200) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -88,15 +88,14 @@ ActiveRecord::Schema.define(version: 20160628003707) do
     t.text     "description"
     t.text     "address"
     t.string   "contact"
-    t.string   "status",           default: "Pending"
-    t.decimal  "low_price_range"
-    t.decimal  "high_price_range"
+    t.string   "status",      default: "Pending"
     t.text     "map"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "avatar"
     t.string   "cover"
     t.integer  "user_id"
+    t.string   "website"
   end
 
   add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id"

@@ -116,7 +116,7 @@ class RestaurantsController < ApplicationController
   
   def restaurant_params
     params.require(:restaurant).permit(:name, :description, :map, :address, 
-      :contact, :low_price_range, :high_price_range, :status, :cover, :avatar)
+      :contact, :website, :status, :cover, :avatar)
   end
     
   def set_owner_restaurant
