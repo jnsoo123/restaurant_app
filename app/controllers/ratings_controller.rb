@@ -15,8 +15,13 @@ class RatingsController < ApplicationController
   def create
     @rating = Rating.new(rate_params)
     @rating.user = current_user
-    @rating.save
-    respond_with(@rating, location: @rating.restaurant)
+    if @rating.save 
+      flash[:success] = "You have successfully rated the restaurant"
+      respond_with(@rating, location: @rating.restaurant)
+    else
+      flash[:failure] = "Your rating was not saved properly"
+      respond_with(@rating, location: @rating.restaurant)
+    end
   end
   
   private

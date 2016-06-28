@@ -2,6 +2,9 @@ class Rating < ActiveRecord::Base
   belongs_to :restaurant
   belongs_to :user
   
+  validates :comment, :rate, presence: true
+  
+  
   def self.sort(sort_value, order)  
       if sort_value == 'Rating'
         @ratings = Rating.order("rate #{order[0]}")
