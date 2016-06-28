@@ -28,4 +28,8 @@ module ApplicationHelper
       "default_cover.jpg"
     end
   end
+  
+  def filter_active_class(path)
+    current_page?(path) ? "active" : ""
+  end
 end
