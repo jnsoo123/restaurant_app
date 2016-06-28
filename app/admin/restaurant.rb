@@ -2,7 +2,7 @@ ActiveAdmin.register Restaurant do
 
   menu priority: 3
   actions :index, :show, :update
-#  permit_params :status
+  permit_params :status
   
   scope :all, default: true
   scope('Accepted') { |scope| scope.where(status: 'Accepted') } 

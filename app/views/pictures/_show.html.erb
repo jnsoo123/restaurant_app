@@ -17,7 +17,7 @@
 <% if current_user === @picture.restaurant.user %>
 
   <div class="text-center" style="padding: 10px; background-color: #222; ">
-    <%= button_to 'Delete', picture_path(@picture), class: 'btn btn-danger', method: :delete %>
+    <%= button_to 'Delete', picture_path(@picture), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
   </div>
 
 <% end %>
