@@ -74,37 +74,42 @@ class RestaurantsController < ApplicationController
     respond_with(@restaurant)
   end
 
-
-#FIX PATHS ON SUCCESS AND FAIL
-#NOTE RESPOND_WITH(:location) only works if transaction is successful
-
   def create
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant.user = current_user
-    @restaurant.save ? flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully created!"
-      : flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully created!"
-    respond_with(@restaurant, location: users_restaurant_path)
+    
+    if @restaurant.save
+      flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully created!"
+      respond_with(@restaurant, location: users_restaurant_path)
+    else
+      flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully created!"
+      redirect_to owner_resto_new_path(@restaurant)
+    end
   end
   
   def reject
   end
   
   def update    
-    if @restaurant.update(restaurant_params)
-      flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
-      respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
-    else
-      flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully updated!"
-      puts "\n\n\n\nIT ENTERED IN HERE\n\n\n\n"
-      respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
-    end
+      if @restaurant.update(restaurant_params)
+        flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
+        respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
+      else
+        flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully updated!"
+        redirect_to owner_resto_edit_path(@restaurant)
+      end
   end
   
   def destroy
     name = @restaurant.name
-    @restaurant.destroy ? flash[:success] = "<strong>#{name}</strong> has been deleted!"
-      : flash[:failure] = "<strong>#{name}</strong> has not been deleted!"
-    respond_with(@restaurant, location: users_restaurant_path)
+    
+    if @restaurant.destroy
+      flash[:success] = "<strong>#{name}</strong> has been deleted!"
+      respond_with(@restaurant, location: users_restaurant_path)
+    else
+      flash[:failure] = "<strong>#{name}</strong> has not been deleted!"
+      redirect_to owner_resto_edit_path(@restaurant)
+    end
   end
   
   private
