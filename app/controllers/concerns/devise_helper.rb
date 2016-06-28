@@ -14,14 +14,16 @@ module DeviseHelper
   def devise_error_messages!
     return "" unless devise_error_messages?
 
-    messages = resource.errors.full_messages.map { |msg| content_tag(:li, "<span style='margin-right: 10px;' class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>#{msg}".html_safe) }.join
+    messages = resource.errors.full_messages.map { |msg| content_tag(:p, "#{msg}".html_safe) }.join
     sentence = I18n.t("errors.messages.not_saved",
                       :count => resource.errors.count,
                       :resource => resource.class.model_name.human.downcase)
 
     html = <<-HTML
-    <div id="error_explanation" class="alert alert-danger" role="alert">
-      <ul style='list-style-type: none'>#{messages}</ul>
+    <div id="error_explanation" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      #{messages}
     </div>
     
     HTML

@@ -3,18 +3,27 @@
     <div class="text-center"><%= t('.login')%></div>
   </div>
   <div class="form-body">
+	
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+	
+	<%= devise_error_messages! %>
+	<% if flash[:alert] && !flash[:alert].include?('You need to sign in or sign up before continuing.') %>
+	    <div class="alert alert-danger" role="alert">
+	        <%= flash[:alert] %>
+	    </div>
+	<% end %>
+
       <div class="input-group input-group-lg" style="margin-bottom: 10px;">
         <span class="input-group-addon">
           <%= icon('user') %>
         </span>
-        <%= f.email_field :email, autocomplete: :on, class: 'form-control', placeholder: t('.placeemail'), autofocus: true %>
+        <%= f.email_field :email, autocomplete: :on, class: 'form-control', placeholder: t('.placeemail'), autofocus: true, required: true %>
       </div>
       <div class="input-group input-group-lg" style="margin-bottom: 10px;">
         <span class="input-group-addon">
           <%= icon('lock', style: 'width: 15px;') %>
         </span>
-        <%= f.password_field :password, autocomplete: :off, class: 'form-control', placeholder: t('.placepass')%>
+        <%= f.password_field :password, autocomplete: :off, class: 'form-control', placeholder: t('.placepass'), required: true%>
       </div>
 
       <div class="actions">

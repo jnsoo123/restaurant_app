@@ -20,7 +20,7 @@ class RatingsController < ApplicationController
       respond_with(@rating, location: @rating.restaurant)
     else
       flash[:failure] = "Your rating was not saved properly"
-      respond_with(@rating, location: @rating.restaurant)
+      redirect_to restaurant_path(@rating.restaurant)
     end
   end
   

@@ -1,6 +1,6 @@
 class Notification < ActiveRecord::Base
   belongs_to :user
   
-  validates :message, presence: true
+  validates :message, :user, presence: true
   
 end

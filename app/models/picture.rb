@@ -3,4 +3,8 @@ class Picture < ActiveRecord::Base
   
   belongs_to :restaurant
   belongs_to :user
+  
+  validates :user, :restaurant, :pic, presence: true
+  validates_format_of :pic, with: %r{\.(gif|jpg|png)\Z}i
+  
 end

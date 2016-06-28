@@ -2,7 +2,7 @@ class Rating < ActiveRecord::Base
   belongs_to :restaurant
   belongs_to :user
   
-  validates :comment, :rate, presence: true
+  validates :comment, :rate, :user, :restaurant, presence: true
   
   
   def self.sort(sort_value, order)  

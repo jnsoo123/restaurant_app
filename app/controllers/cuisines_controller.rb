@@ -13,8 +13,11 @@ class CuisinesController < ApplicationController
 
   def create
     @cuisine = Cuisine.new(cuisine_params)
-    @cuisine.save
-    respond_with(@cuisine, location: cuisines_path)
+    
+    if @cuisine.save
+      flash[:success] = "Cuisine successfully created!"
+      respond_with(@cuisine, location: cuisines_path)
+    end
   end
 
   def edit

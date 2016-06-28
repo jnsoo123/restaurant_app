@@ -11,23 +11,45 @@ class PicturesController < ApplicationController
     if current_user === @picture.restaurant.user
       @picture.status = true
     end
-    @picture.save
-    flash[:success] = 'Image was added!'
-    respond_with(@picture, location: (@picture.status ? owner_resto_edit_path(@picture.restaurant) : @picture.restaurant ))
+    if @picture.save
+      if @picture.status
+        flash[:success] = 'Image was added!'
+        respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+      else
+        flash[:failure] = 'Image was not added!'
+        redirect_to restaurant_path(@picture.restaurant)
+      end
+    else
+      flash[:failure] = 'Image was not added!'
+      if @picture.status
+        redirect_to owner_resto_edit_path(@picture.restaurant)
+      else
+        redirect_to restaurant_path(@picture.restaurant)
+      end
+    end
   end
   
   def show
   end
   
   def update
-    @picture.update(picture_params)
-    respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+    if @picture.update(picture_params)
+      flash[:success] = 'Image successfully updated!'
+      respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+    else
+      flash[:failure] = 'Image was not updated successfully!'
+      redirect_to owner_resto_edit_path(@picture.restaurant)
+    end
   end
   
   def destroy
-    @picture.destroy
-    flash[:success] = 'Image was deleted.'
-    respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+    if @picture.destroy
+      flash[:success] = 'Image was deleted!'
+      respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+    else
+      flash[:failure] = 'Image was not deleted!'
+      redirect_to owner_resto_edit_path(@picture.restaurant)
+    end
   end
   
   private
