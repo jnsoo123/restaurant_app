@@ -4,4 +4,28 @@ module ApplicationHelper
       [I18n.t('language', locale: locale), locale]
     end
   end
+  
+  def display_user(user)
+    unless user.avatar.url.nil?
+      user.avatar.url
+    else
+      'default_user.png'
+    end
+  end
+  
+  def display_resto(resto)
+    unless resto.avatar.url.nil?
+      resto.avatar.url  
+    else
+      "default_resto.gif"
+    end
+  end
+  
+  def display_cover(resto)
+    unless resto.cover.url.nil?
+      resto.cover.url
+    else
+      "default_cover.jpg"
+    end
+  end
 end

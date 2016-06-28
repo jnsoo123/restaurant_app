@@ -9,7 +9,7 @@
       <div class="col-md-4">
         <%= link_to(owner_resto_edit_path(resto)) do %>
           <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px;">
-            <%= image_tag(resto.avatar.url, style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+            <%= image_tag(display_resto(resto), style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
             <div class="caption">
               <% if resto.status == 'Pending' %>
                 <p><span class="label label-warning"><%= resto.status %></span></p>

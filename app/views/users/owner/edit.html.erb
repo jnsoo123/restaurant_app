@@ -1,7 +1,7 @@
 
 
-<div id="coverphoto" style="width: 100%; background-size: 100%; padding-top: 20px; margin-bottom: 50px; background-repeat: no-repeat; height: 500px; background-image: url('<%= @restaurant.cover.url %>')">
-  <%= image_tag(@restaurant.avatar.url, class: 'img-responsive img-circle center-block', style: 'width: 225px; height: 225px; border: 5px solid white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);')%>
+<div id="coverphoto" style="width: 100%; background-size: 100%; padding-top: 20px; margin-bottom: 50px; background-repeat: no-repeat; height: 500px;background-position: center; background-image: url('<%= asset_path(display_cover(@restaurant)) %>')">
+  <%= image_tag(display_resto(@restaurant), class: 'img-responsive img-circle center-block', style: 'width: 225px; height: 225px; border: 5px solid white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);')%>
 
   <div class="center-block" style="max-width: 300px; background-color: rgba(0,0,0,0.5); color: #fff; padding: 0px 20px 30px 20px; border-radius: 25px; border: 2px solid black; margin-top: 25px;">
     <h2 style="padding-top: 15px;" class="text-center"><%= @restaurant.name %></h2>

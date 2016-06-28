@@ -5,6 +5,27 @@ ActiveAdmin.register_page "Dashboard" do
 
     
 #     Here is an example of a simple dashboard with columns and panels.
+    columns do
+      column do
+        panel "New Pending Restaurants" do
+          table_for Restaurant.order('id desc').where(status: 'Pending').limit(10) do
+            column('id') { |resto| "##{resto.id}" }
+            column('name') { |resto| link_to resto.name, admin_restaurant_path(resto) }
+            column('owner') { |resto| resto.user.email }
+            column('status') { |resto| status_tag(resto.status) }
+            column('registered on') { |resto| resto.created_at.strftime("%B %d, %Y") }
+            column('dishes') { |resto| resto.foods.count }
+            column('Options') do |resto|
+              if resto.status == 'Pending'
+                span link_to "Accept", admin_restaurant_path(resto.id, restaurant: { status: 'Accepted' } ), method: :put
+                span link_to "Reject", admin_restaurant_path(resto.id, restaurant: { status: 'Rejected' } ), method: :put
+              end
+            end
+          end
+        end
+      end
+    end
+      
     
      columns do
        column do
@@ -20,14 +41,8 @@ ActiveAdmin.register_page "Dashboard" do
        end
 
        column do
-         panel "New Pending Restaurants" do
-           table_for Restaurant.order('id desc').where(status: 'Pending').limit(10) do
-             column('id') { |resto| "##{resto.id}" }
-             column('name') { |resto| link_to resto.name, admin_restaurant_path(resto) }
-             column('owner') { |resto| resto.user.email }
-             column('status') { |resto| status_tag(resto.status, "#{puts 'green' if resto.status == 'Accepted' }#{puts 'red' if resto.status == 'Rejected'}" ) }
-             column('registered on') { |resto| resto.created_at.strftime("%B %d, %Y") }
-           end
+         panel "Some panel" do
+           
          end
        end
      end

@@ -1,8 +1,9 @@
 ActiveAdmin.register Restaurant do
 
   menu priority: 3
-  actions :index, :show, :update
+  actions :index, :show, :update, :destroy
   permit_params :status
+  config.batch_actions = true
   
   scope :all, default: true
   scope('Accepted') { |scope| scope.where(status: 'Accepted') } 
@@ -13,12 +14,15 @@ ActiveAdmin.register Restaurant do
     column('Id', sortable: id) {|resto| resto.id }
     column('Name', sortable: :name) {|resto| link_to resto.name, admin_restaurant_path(resto) }
     column('Owner', sortable: 'restaurant.name') { |resto| resto.user.name }
-    column('Status') { |resto| status_tag(resto.status, "#{puts 'green' if resto.status == 'Accepted' }#{puts 'red' if resto.status == 'Rejected'}" ) }
+    column('Status') { |resto| status_tag(resto.status, "#{'green' if resto.status == 'Accepted' }#{'red' if resto.status == 'Rejected'}" ) }
+    column('# of Dishes') { |resto| resto.foods.count } 
     column('Rating') {|resto| resto.ave_ratings}  
     column('Options') do |resto|
       if resto.status == 'Pending'
         span link_to "Accept", admin_restaurant_path(resto.id, restaurant: { status: 'Accepted' } ), method: :put
         span link_to "Reject", admin_restaurant_path(resto.id, restaurant: { status: 'Rejected' } ), method: :put
+      else
+        
       end
     end
     

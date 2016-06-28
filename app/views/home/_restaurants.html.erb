@@ -85,7 +85,7 @@
         <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
           <div class="row" style="width: 100%;">
             <div class="col-md-3 col-sm-5 col-xs-5">
-              <div class="clearfix" style="background-image: url('<%= resto.avatar.url %>'); background-repeat: repeat; height: 173px; width: 96%; background-size: 100% 100%;"></div>
+              <div class="clearfix" style="background-image: url('<%= asset_path(display_resto(resto)) %>'); background-repeat: repeat; height: 173px; width: 96%; background-size: 100% 100%;"></div>
             </div>
             <div class="col-md-9 col-sm-7 col-xs-7" style="padding: 20px;">
               <div class="pull-left">
@@ -95,7 +95,9 @@
                 <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
               </div>
               <div class="pull-right" style="margin-right: 10px;">
-                <span style="padding: 7px; font-size: 20px; border-radius: 0; background-color: #333333;" class="label label-default"><%= resto.ave_ratings %></span>
+                <% unless resto.ave_ratings == 0 %>
+                  <span style="padding: 7px; font-size: 20px; border-radius: 0; background-color: #333333;" class="label label-default"><%= resto.ave_ratings %></span>
+                <% end %>
               </div>
 
             </div>

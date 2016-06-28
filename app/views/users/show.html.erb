@@ -1,7 +1,7 @@
 <div class="container" style="max-width: 750px;">
   <div class="row" style="margin-top: 30px; background-color: #fff; padding: 20px;">
     <div class="col-md-3">
-      <%= image_tag(current_user.avatar.url, class: 'img-responsive img-circle center-block', style: 'width: 140px; height: 140px; border: 5px solid white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);')%>
+      <%= image_tag(display_user(@user), class: 'img-responsive img-circle center-block', style: 'width: 140px; height: 140px; border: 5px solid white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);')%>
     </div>
     <div class="col-md-9">
       <h3><%= @user.name %> <small> @<%= @user.username %></small></h3>
@@ -18,7 +18,7 @@
       <% current_user.ratings.order("created_at desc").each do |rate| %>
         <div class="media">
           <div class="media-left">
-            <%= image_tag(rate.restaurant.avatar.url, width: 44, height: 44, class: '') %>
+            <%= image_tag(display_resto(rate.restaurant), width: 44, height: 44, class: '') %>
           </div>
           <div class="media-body">
             <h4 class="media-heading"><%= rate.restaurant.name %></h4>
@@ -31,12 +31,12 @@
     <% end %>
     <div class="media">
       <div class="media-left">
-        <%= image_tag(current_user.avatar.url, width: 44, height: 44, class: '') %>
+        <%= image_tag(display_user(@user), width: 44, height: 44, class: 'img-circle') %>
       </div>
       <div class="media-body">
-        <h4 class="media-heading"><%= current_user.name %></h4>
+        <h4 class="media-heading"><%= @user.name %></h4>
         <p>Stared using Fudz Finder</p>
-        <p><%= distance_of_time_in_words_to_now(current_user.created_at) %> ago</p>
+        <p><%= distance_of_time_in_words_to_now(@user.created_at) %> ago</p>
       </div>
     </div>
   </div>

@@ -6,14 +6,16 @@
 <div class="container resto-container">
   <div class="row clearfix" style="margin-bottom: 20px;">
     <div class="pull-left" style="height: 250px;">
-      <% unless @restaurant.map.empty? %>
+      <% unless @restaurant.map.blank? %>
         <%= @restaurant.try(:map).html_safe %>
       <% else %>
         <h5 style="padding: 100px 0 20px 80px">Map Not Available</h5>
       <% end %>
     </div>
     <div class="pull-right">
-      <%= image_tag(@restaurant.cover.url, width: '500', height: '250', class: 'img-responsive', style: 'margin-bottom: 10px;') %>
+      <div style="width: 500px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-position: center ">
+      
+      </div>
     </div>
     
     
@@ -23,7 +25,7 @@
           <%= icon('phone', @restaurant.contact, style: 'margin-right: 10px;') %>
         </div>
         <div class="col-md-8">
-          <% unless @restaurant.website.empty? %>
+          <% unless @restaurant.website.blank? %>
             <%= link_to @restaurant.website, "http://#{@restaurant.website}" %>
           <% else %>
             No website available

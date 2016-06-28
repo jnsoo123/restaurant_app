@@ -18,27 +18,31 @@
             <div class="dropdown">
               <%= link_to "Search tools#{icon('caret-down', style: 'margin-left: 10px;')}".html_safe, nil, class: 'dropdown-toggle', data: { toggle: 'dropdown'} %>
               <ul class="dropdown-menu" style="width: 100%;">
-                <%= form_tag(restaurant_search_path, method: :get, style: 'padding: 20px;', id: 'filter_search_form') do %>
-                  <div class="form-group">
-                    <%= select_tag :cuisine, options_from_collection_for_select(Cuisine.all,"id","name"), prompt: 'Select a Cuisine', class: 'form-control' %>
-                  </div>
-                  Filter by price range:
-                  <div class="row">
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                      <b>PHP <%= Food.min %></b> 
+                <% unless Food.all.empty? %>
+                  <%= form_tag(restaurant_search_path, method: :get, style: 'padding: 20px;', id: 'filter_search_form') do %>
+                    <div class="form-group">
+                      <%= select_tag :cuisine, options_from_collection_for_select(Cuisine.all,"id","name"), prompt: 'Select a Cuisine', class: 'form-control' %>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                      <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= Food.min %>,<%= Food.max %>]"/> 
+                    Filter by price range:
+                    <div class="row">
+                      <div class="col-md-3 col-sm-3 col-xs-3">
+                        <b>PHP <%= Food.min %></b> 
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= Food.min %>,<%= Food.max %>]"/> 
+                      </div>
+                      <div class="col-md-3 col-sm-3 col-xs-3">
+                        <b class="pull-right">PHP <%= Food.max %></b>
+                      </div>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                      <b class="pull-right">PHP <%= Food.max %></b>
+                    <%= hidden_field_tag :searchQuery, '', id: 'filter_search_field' %>
+                    <div class="actions" style="margin-top: 20px;">
+                      <%= submit_tag 'Search', class: 'btn btn-default', style: 'width: 100%;', id: 'filter_search_button'%>
                     </div>
-                  </div>
-                  <%= hidden_field_tag :searchQuery, '', id: 'filter_search_field' %>
-                  <div class="actions" style="margin-top: 20px;">
-                    <%= submit_tag 'Search', class: 'btn btn-default', style: 'width: 100%;', id: 'filter_search_button'%>
-                  </div>
-                <% end %>
+                  <% end %>
+                <% else %>
+                  <h4 class="text-center" style='padding: 20px;'>No available dishes/restaurants yet.</h4>
+                <% end%>
               </ul>
             </div>
           </div>
