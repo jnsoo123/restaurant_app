@@ -12,6 +12,7 @@ class PicturesController < ApplicationController
       @picture.status = true
     end
     @picture.save
+    flash[:success] = 'Image was added!'
     respond_with(@picture, location: (@picture.status ? owner_resto_edit_path(@picture.restaurant) : @picture.restaurant ))
   end
   
@@ -25,6 +26,7 @@ class PicturesController < ApplicationController
   
   def destroy
     @picture.destroy
+    flash[:success] = 'Image was deleted.'
     respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
   end
   
