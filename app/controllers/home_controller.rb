@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   respond_to :html
   
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.where(status: 'Accepted')
     @cuisines = Cuisine.all
     @ratings = Rating.order(created_at: :desc)
   end

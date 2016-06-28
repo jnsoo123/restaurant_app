@@ -4,7 +4,8 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Resto"
+  config.site_title = "Fudz"
+  config.site_title_link = '/'
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -38,10 +39,10 @@ ActiveAdmin.setup do |config|
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
   # within a namespace:
-  #
-  #   config.namespace :admin do |admin|
-  #     admin.site_title = "Custom Admin Title"
-  #   end
+#  #
+#     config.namespace :admin do |admin|
+#       admin.site_title = "Custom Admin Title"
+#     end
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.

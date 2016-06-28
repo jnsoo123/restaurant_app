@@ -5,16 +5,16 @@
 <div class="modal-body">
   <%= form_for(@food, url: foods_path(resto_id: @food.restaurant)) do |f| %>
     <div class="form-group">
-      <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname')%>
+      <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname'), required: true%>
     </div>
     <div class="form-group">
-      <%= f.text_area :description, class: 'form-control', placeholder: t('.description')%>
+      <%= f.text_area :description, class: 'form-control', placeholder: t('.description'), required: true%>
     </div>
     <div class="form-group">
-      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish')%>
+      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true%>
     </div>
     <div class="form-group">
-      <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name'), { prompt: "Select a Cuisine"} ,class: 'form-control' %>
+      <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name'), { prompt: "Select a Cuisine"} ,class: 'form-control', required: true %>
     </div>
     <div class="actions">
       <%= f.submit t('.submitdish'), class: 'btn btn-primary', style: 'width: 100%;' %>

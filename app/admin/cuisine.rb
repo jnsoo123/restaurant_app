@@ -5,7 +5,7 @@ ActiveAdmin.register Cuisine do
 #
   menu priority: 5
   
-  permit_params :name, :description
+  permit_params :name, :description, :avatar
 #
 # or
 #

@@ -8,7 +8,6 @@ class FoodsController < ApplicationController
     @food = Food.new
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     respond_with(@food)
-    
   end
   
   def edit
@@ -22,12 +21,17 @@ class FoodsController < ApplicationController
   def create
     @food = Food.new(food_params)
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
-    @food.save
-    respond_with(@food, location: owner_resto_edit_path(params[:resto_id]))
+    if @food.save
+      flash[:success] = "Dish successfully added!"
+      respond_with(@food, location: owner_resto_edit_path(params[:resto_id]))
+    else
+      redirect_to owner_resto_edit_path(params[:resto_id])
+    end
   end
   
   def destroy
     @food.destroy
+    flash[:success] = 'Dish successfully delete!'
     respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
   end
   

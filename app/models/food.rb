@@ -2,6 +2,9 @@ class Food < ActiveRecord::Base
   belongs_to :cuisine
   belongs_to :restaurant
   
+  validates :name, :price, :description, :cuisine_id, presence: true
+  validates_numericality_of :price, greater_than: 0
+  
   def self.search_by_name(query)
     Food.where("name LIKE ?", "%#{query}%").map(&:restaurant).map(&:id).uniq
   end
