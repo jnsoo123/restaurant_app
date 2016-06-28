@@ -56,10 +56,7 @@
          
 		          <% if user_signed_in? %>
 				  	     <% if current_user.admin?%>
-						         <li><%= link_to t('.users'), administrator_path %> </li>
-						         <li><%= link_to t('.restaurants'), restaurant_listing_path %> </li>
-						         <li><%= link_to t('.cuisines'), cuisines_path %> </li>
-								 <li><%= link_to t('.reviews'), ratings_path %> </li>
+                <li><%= link_to "My Admin", admin_root_path %></li>
 					     <% end%>
 				  <% end%>
 		  

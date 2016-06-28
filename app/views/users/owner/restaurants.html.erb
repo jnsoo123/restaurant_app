@@ -21,7 +21,7 @@
               <h3><%= resto.name %></h3>
               <p><%= truncate(resto.description, length: 50) %></p>
               <p>
-               <% unless resto.ave_ratings.nil? %>
+               <% unless resto.ave_ratings == 0 %>
                  <% if resto.ave_ratings%1 == 0 %>
                    <% resto.ave_ratings.to_i.times do %>
                      <%= icon('star')%>
@@ -33,7 +33,7 @@
                    <%= icon('star-half')%>
                  <% end %>
                <% else %>
-                 <% 5.times do%>
+                 <% 5.times do %>
                    <%= icon('star-o') %>
                  <% end %>
                <% end %>

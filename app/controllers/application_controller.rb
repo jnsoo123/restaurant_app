@@ -47,12 +47,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :username, :location])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :username, :location, :profile_picture_url, :avatar])
   end
-  
-  def after_sign_in_path_for(resource_or_scope)
-    if current_user.admin?
-      administrator_path
-    else
-      home_path
-    end
-  end
+#  
+#  def after_sign_in_path_for(resource_or_scope)
+#    if current_user.admin?
+#      administrator_path
+#    else
+#      home_path
+#    end
+#  end
 end
