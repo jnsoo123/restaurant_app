@@ -28,6 +28,24 @@ ul.list-unstyled{
   }
 }
 
+#restaurants.container, .search_result {
+  .list-group {
+    .list-group-item {
+      border-radius: 0;
+      border: 0;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      background-color: #fff;
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: #fff;
+      }
+      &:active {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
 
 @media screen and (min-width: 992px) {
   .search_container {

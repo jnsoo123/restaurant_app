@@ -9,9 +9,15 @@ class User < ActiveRecord::Base
   has_many :restaurants, dependent: :destroy
   has_many :ratings
   has_many :pictures
+  has_many :notifications
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
+  def check_notification
+    if notifications.where(status: false).count > 0
+      "<span class='label label-danger' style='margin-left: 10px;'>New</span>"
+    end
+  end
   
 end
