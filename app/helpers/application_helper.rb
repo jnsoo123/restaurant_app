@@ -29,7 +29,11 @@ module ApplicationHelper
     end
   end
   
-  def filter_active_class(path)
-    current_page?(path) ? "active" : ""
+  def filter_active_class(path, main = false)
+    if main
+      "active"
+    else
+      current_page?(path) ? "active" : ""
+    end
   end
 end

@@ -61,7 +61,7 @@
       <div class="panel-body">
         <p>Sort by</p>
         <ul class="list-unstyled filters">
-          <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, price_range: (@price_range.nil? ? nil : @price_range )))%>"><%= link_to "Ratings - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, price_range: (@price_range.nil? ? nil : @price_range )) %></li>
+          <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, price_range: (@price_range.nil? ? nil : @price_range )), @main_active)%>"><%= link_to "Ratings - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, price_range: (@price_range.nil? ? nil : @price_range )) %></li>
           <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, sort: 'name', price_range: (@price_range.nil? ? nil : @price_range ))) %>"><%= link_to "Name - <small>Alphabetical Order</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'name', price_range: (@price_range.nil? ? nil : @price_range )) %></li>
           <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, sort: 'price_low_to_high', price_range: (@price_range.nil? ? nil : @price_range ))) %>"><%= link_to "Price - <small>Low to high</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'price_low_to_high', price_range: (@price_range.nil? ? nil : @price_range )) %></li>
           <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, sort: 'price_high_to_low', price_range: (@price_range.nil? ? nil : @price_range ))) %>"><%= link_to "Price - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, sort: 'price_high_to_low', price_range: (@price_range.nil? ? nil : @price_range )) %></li>
@@ -69,14 +69,14 @@
       </div>
     </div>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-9 search_result">
     <% unless @result.empty? %>
       <div class="list-group">
         <% @result.each do |resto| %>
           <%= link_to resto, class: "list-group-item", style: "margin-bottom: 10px; height: 175px; padding: 0px;" do %>
             <div class="row">
               <div class="col-md-3 col-sm-5 col-xs-5">
-                <div class="clearfix" style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-repeat: repeat; height: 173px; width: 96%; background-position: center;"></div>
+                <div class="clearfix" style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-repeat: repeat; height: 175px; width: 96%; background-position: center;"></div>
               </div>
               <div class="col-md-9" style="padding: 20px;">
                 <div class="pull-left">
@@ -86,7 +86,9 @@
                   <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
                 </div>
                 <div class="pull-right" style="margin-right: 10px;">
-                  <span style="padding: 7px; font-size: 20px; border-radius: 0; background-color: #333333;" class="label label-default"><%= resto.ave_ratings %></span>
+                  <% unless resto.ave_ratings == 0 %>
+                    <span style="padding: 7px; font-size: 20px; border-radius: 0; background-color: #333333;" class="label label-default"><%= resto.ave_ratings %></span>
+                  <% end %>
                 </div>
 
               </div>
