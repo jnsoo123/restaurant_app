@@ -7,11 +7,9 @@ class Restaurant < ActiveRecord::Base
   has_many :foods, dependent: :destroy
   has_many :pictures, dependent: :destroy
   
-  validates :name, presence: true
-  validates :description, presence: true
-  validates :address, presence: true
-  validates :contact, presence: true
-  
+  validates :name, :description, :address, :contact, presence: true
+  validates :name, uniqueness: true
+
   def ave_ratings
     unless ratings.empty?
       ratings.collect(&:rate).sum.to_f/ratings.size 

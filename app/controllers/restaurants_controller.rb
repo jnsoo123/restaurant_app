@@ -73,43 +73,37 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.new
     respond_with(@restaurant)
   end
-  
+
+
+#FIX PATHS ON SUCCESS AND FAIL
+#NOTE RESPOND_WITH(:location) only works if transaction is successful
+
   def create
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant.user = current_user
-    @restaurant.save
+    @restaurant.save ? flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully created!"
+      : flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully created!"
     respond_with(@restaurant, location: users_restaurant_path)
   end
   
   def reject
   end
   
-  def update
-    if current_user.admin
-      if restaurant_params[:status] == 'Rejected'
-        Notification.create(user_id: @restaurant.user.id, message: params[:message])
-        UserMailer.reject_email(@restaurant.user).deliver_now
-      elsif restaurant_params[:status] == 'Accepted'
-        Notification.create(user_id: @restaurant.user.id)
-        UserMailer.accept_email(@restaurant.user).deliver_now
-      end 
-      @restaurant.update(restaurant_params)
-      respond_with(@restaurant, location: restaurant_listing_path)
+  def update    
+    if @restaurant.update(restaurant_params)
+      flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
+      respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
     else
-      @restaurant.update(restaurant_params)
-      if params[:path] == 'dashboard'
-        flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
-        respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
-      else
-        respond_with(@restaurant, location: restaurant_listing_path)
-      end
+      flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully updated!"
+      puts "\n\n\n\nIT ENTERED IN HERE\n\n\n\n"
+      respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
     end
   end
   
   def destroy
     name = @restaurant.name
-    @restaurant.destroy
-    flash[:success] = "#{name} has been deleted!"
+    @restaurant.destroy ? flash[:success] = "<strong>#{name}</strong> has been deleted!"
+      : flash[:failure] = "<strong>#{name}</strong> has not been deleted!"
     respond_with(@restaurant, location: users_restaurant_path)
   end
   
@@ -119,7 +113,7 @@ class RestaurantsController < ApplicationController
     params.require(:restaurant).permit(:name, :description, :map, :address, 
       :contact, :low_price_range, :high_price_range, :status, :cover, :avatar)
   end
-  
+    
   def set_owner_restaurant
     @restaurant = current_user.restaurants.find(params[:id])
   end

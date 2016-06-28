@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, except: [:change_locale, :set_locale]
-  add_flash_types :success
+  add_flash_types :success, :failure
   include DeviseHelper
   before_action :set_locale
 
