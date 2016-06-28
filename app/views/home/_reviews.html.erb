@@ -1,35 +1,43 @@
 <div id="reviews" class="container">
   <h3><%= t('.recentreviews')%></h3>
-  <div class="row">
-    <% @ratings.each do |rate| %>
-      <div class="col-md-6">
-        <div class="panel panel-default" style="border-radius: 0px;">
-          <div class="panel-body">
-            <div class="media" style="padding: 10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
-              <div class="media-left" style="padding: 0 25px 10px 10px;">
-                <%= image_tag(rate.restaurant.avatar.url, width: 64, height: 64, class: 'img-circle') %>
-              </div>
-              <div class="media-body" style="">
-                <h4 class="media-heading">
-                  <%= link_to rate.restaurant.name, restaurant_path(rate.restaurant) %> 
-                  <small>
-                    <% rate.rate.times do %>
-                      <%= icon('star')%>
-                    <% end %>
-                    <% (5-rate.rate).times do %>
-                      <%= icon('star-o')%>
-                    <% end %>
-                  </small>
-                </h4>
-                <p><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= rate.comment %></p>
-                <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+  <% unless @ratings.empty? %>
+    <div class="row">
+      <% @ratings.each do |rate| %>
+        <div class="col-md-6">
+          <div class="panel panel-default" style="border-radius: 0px;">
+            <div class="panel-body">
+              <div class="media" style="padding: 10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+                <div class="media-left" style="padding: 0 25px 10px 10px;">
+                  <%= image_tag(rate.restaurant.avatar.url, width: 64, height: 64, class: 'img-circle') %>
+                </div>
+                <div class="media-body" style="">
+                  <h4 class="media-heading">
+                    <%= link_to rate.restaurant.name, restaurant_path(rate.restaurant) %> 
+                    <small>
+                      <% rate.rate.times do %>
+                        <%= icon('star')%>
+                      <% end %>
+                      <% (5-rate.rate).times do %>
+                        <%= icon('star-o')%>
+                      <% end %>
+                    </small>
+                  </h4>
+                  <p><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= rate.comment %></p>
+                  <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% else %>
+    <ul class="list-group">
+      <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
+        <h3 class="text-center" style="padding-top: 50px">No Reviews yet.</h3>
+      </li>
+    </ul>
+  <% end %>
 </div>
   
     

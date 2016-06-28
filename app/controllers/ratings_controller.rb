@@ -1,6 +1,8 @@
 class RatingsController < ApplicationController
   
   respond_to :html
+  respond_to :js, only: :edit
+  before_action :set_rating, only: [:edit, :update]
   before_action :authorize, only: [:index]
   
   def index
@@ -24,9 +26,21 @@ class RatingsController < ApplicationController
     end
   end
   
+  def update
+    @rating.update(rate_params)
+    respond_with(@rating, location: restaurant_path(@rating.restaurant))
+  end
+  
+  def edit
+  end
+  
   private
   
   def rate_params
     params.require(:rating).permit(:rate, :comment, :restaurant_id)
+  end
+  
+  def set_rating
+    @rating = Rating.find(params[:id])
   end
 end

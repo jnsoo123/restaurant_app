@@ -1,6 +1,8 @@
 class Cuisine < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   has_many :foods, dependent: :destroy
+  
+  validates_length_of :description, maximum: 150
 
   validates :name, :description, presence: true
 
