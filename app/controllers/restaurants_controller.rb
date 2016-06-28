@@ -77,12 +77,15 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant.user = current_user
+    name = @restaurant.name
     
     if @restaurant.save
       flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully created!"
       respond_with(@restaurant, location: users_restaurant_path)
     else
-      flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully created!"
+      flash[:failure] = "<dl><dt>#{name} was not successfully created because:</dt>" 
+      @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
       redirect_to owner_resto_new_path(@restaurant)
     end
   end
@@ -91,11 +94,14 @@ class RestaurantsController < ApplicationController
   end
   
   def update    
+    name = @restaurant.name
       if @restaurant.update(restaurant_params)
-        flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
+        flash[:success] = "<strong>#{name}</strong> has been successfully updated!"
         respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
       else
-        flash[:failure] = "<strong>#{@restaurant.name}</strong> was not successfully updated!"
+        flash[:failure] = "<dl><dt>#{name} was not successfully updated because:</dt>" 
+        @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+        flash[:failure] << "</dl>"
         redirect_to owner_resto_edit_path(@restaurant)
       end
   end
@@ -107,7 +113,9 @@ class RestaurantsController < ApplicationController
       flash[:success] = "<strong>#{name}</strong> has been deleted!"
       respond_with(@restaurant, location: users_restaurant_path)
     else
-      flash[:failure] = "<strong>#{name}</strong> has not been deleted!"
+      flash[:failure] = "<dl><dt>#{name} was not successfully deleted because:</dt>" 
+      @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@restaurant)
     end
   end

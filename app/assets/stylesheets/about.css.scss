@@ -1,0 +1,19 @@
+.about_center{
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 50em
+}
+section  p{
+	font-style: italic;
+	font-weight: 400;
+}
+img{
+	width: auto;
+	height: auto;
+	max-width:300px;
+	max-height:300px;
+	object-fit: contain;
+	margin-bottom: 30px;
+}

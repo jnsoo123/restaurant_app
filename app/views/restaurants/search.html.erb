@@ -4,7 +4,7 @@
     <h1 class="text-center">Fudz Finder</h1>
     <p class="text-center" style="color: #9c9c9c;"><%= t('.caption')%></p>
     <div style='text-align: center;'>
-      <%= form_tag(restaurant_search_path, method: :get, id: 'search_form') do %>
+      <%= form_tag(restaurant_search_path, method: :get, id: 'search_form', enforce_utf8: true) do %>
         <div class="input-group" style="">
           <%= text_field_tag :searchQuery, nil, class: "form-control", placeholder: 'Search for food/restaurants/cuisines...', id: 'search_field', value: "#{@searchQuery}" %>    
           <span class="input-group-btn">

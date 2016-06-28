@@ -7,4 +7,7 @@ class HomeController < ApplicationController
     @cuisines = Cuisine.all
     @ratings = Rating.order(created_at: :desc)
   end
+  
+  def about
+  end
 end

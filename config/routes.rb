@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   patch 'owner/restaurants/:id' => 'restaurants#owner_patch', as: :owner_resto_patch
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
   
+  get 'home/about' => 'home#about', as: :about_page
   get 'home/index'
   
   devise_for :users

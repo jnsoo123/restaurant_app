@@ -26,44 +26,50 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-              <li><%= link_to "#{icon('cutlery', t('.myrestaurants'), style: 'margin-right: 10px;')}".html_safe, users_restaurant_path %></li>
-              <li><%= link_to "#{icon('plus', t('.addrestaurants'), style: 'margin-right: 10px;')}".html_safe, owner_resto_new_path %></li> 
+              <li><%= link_to "#{icon('cutlery', t('.myrestaurants'),
+				      style: 'margin-right: 10px;')}".html_safe, users_restaurant_path %></li>
+              <li><%= link_to "#{icon('plus', t('.addrestaurants'), style: 'margin-right: 10px;')}".html_safe, 					  owner_resto_new_path %></li> 
               <li><%= link_to "#{icon('envelope-o', "Messages", style: 'margin-right: 7px;')}".html_safe %></li>
-              <li><%= link_to "#{icon('reply', t('.mainpage'), style: 'margin-right: 7px;')}".html_safe, home_path %></li>
+              <li><%= link_to "#{icon('reply', t('.mainpage'), 
+				  	  style: 'margin-right: 7px;')}".html_safe, home_path %></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </nav>
       </div>
-      <div class="col-md-10" style="padding: 0;">
-        <div style="padding: 15px;">
-          <% if success %>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <%= success.html_safe %>
-            </div>
-          <% end %>
-		  
-          <% if failure %>
-            <div class="alert alert-danger alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <%= failure.html_safe %>
-            </div>
-          <% end %>
-		  
-          <%= yield %>
+	  
+<div class="col-md-10" style="padding: 0;">
+  <div style="padding: 15px;">
+     <% if success %>
+       	<div class="alert alert-success alert-dismissible" role="alert">
+         	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	   	  	 	  <span aria-hidden="true">&times;</span>
+			  </button>
+           <%= success.html_safe %>
         </div>
+     <% end %>
+		  
+     <% if failure %>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+			  </button>
+              <%= failure.html_safe %>
+        </div>
+     <% end %>
+		  
+        <%= yield %>
       </div>
     </div>
   </div>
+</div>
   
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-md" role="document">
-      <div id="show-modal" class="modal-content">
-        ...
-      </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-md" role="document">
+    <div id="show-modal" class="modal-content">
+      ...
     </div>
   </div>
-  
+</div>
   
 </body>
 </html>

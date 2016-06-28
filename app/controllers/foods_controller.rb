@@ -14,8 +14,15 @@ class FoodsController < ApplicationController
   end
   
   def update
-    @food.update(food_params)
-    respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
+    if @food.update(food_params)
+      flash[:success] = "Dish successfully updated!"
+      respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
+    else
+      flash[:failure] = "<dl><dt>Your dish was not successfully updated because:</dt>" 
+      @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
+      redirect_to owner_resto_edit_path(@food.restaurant)
+    end
   end
   
   def create
@@ -25,14 +32,23 @@ class FoodsController < ApplicationController
       flash[:success] = "Dish successfully added!"
       respond_with(@food, location: owner_resto_edit_path(params[:resto_id]))
     else
+      flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 
+      @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(params[:resto_id])
     end
   end
   
   def destroy
-    @food.destroy
-    flash[:success] = 'Dish successfully delete!'
-    respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
+    if @food.destroy
+      flash[:success] = 'Dish successfully deleted!'
+      respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
+    else
+      flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 
+      @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
+      redirect_to owner_resto_edit_path(@food.restaurant)
+    end
   end
   
   private

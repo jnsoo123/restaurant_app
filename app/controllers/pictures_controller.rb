@@ -16,11 +16,15 @@ class PicturesController < ApplicationController
         flash[:success] = 'Image was added!'
         respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
       else
-        flash[:failure] = 'Image was not added!'
+        flash[:failure] = "<dl><dt>Your image was not added because:</dt>" 
+        @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+        flash[:failure] << "</dl>"
         redirect_to restaurant_path(@picture.restaurant)
       end
     else
-      flash[:failure] = 'Image was not added!'
+      flash[:failure] = "<dl><dt>Your image was not added because:</dt>" 
+      @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
       if @picture.status
         redirect_to owner_resto_edit_path(@picture.restaurant)
       else
@@ -37,7 +41,9 @@ class PicturesController < ApplicationController
       flash[:success] = 'Image successfully updated!'
       respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
     else
-      flash[:failure] = 'Image was not updated successfully!'
+      flash[:failure] = "<dl><dt>Your image was not updated successfully because:</dt>" 
+      @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@picture.restaurant)
     end
   end
@@ -47,7 +53,9 @@ class PicturesController < ApplicationController
       flash[:success] = 'Image was deleted!'
       respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
     else
-      flash[:failure] = 'Image was not deleted!'
+      flash[:failure] = "<dl><dt>Your image was not deleted because:</dt>" 
+      @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@picture.restaurant)
     end
   end
