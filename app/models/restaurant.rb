@@ -11,7 +11,12 @@ class Restaurant < ActiveRecord::Base
   validates :name, uniqueness: true
 
   def ave_ratings
-    ratings.collect(&:rate).sum.to_f/ratings.size unless ratings.empty?
+    unless ratings.empty?
+      ratings.collect(&:rate).sum.to_f/ratings.size 
+    else
+      0
+    end
+    
   end
   
   def min_price

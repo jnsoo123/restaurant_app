@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  
+  def authenticate_admin_user!
+    raise SecurityError unless current_user.try(:admin?)
+  end
 
   private
   

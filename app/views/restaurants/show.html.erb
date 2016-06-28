@@ -6,7 +6,11 @@
 <div class="container resto-container">
   <div class="row" style="margin-bottom: 20px;">
     <div class="pull-left">
-      <%= @restaurant.map.html_safe %>
+      <% unless @restaurant.map.nil? %>
+        <%= @restaurant.try(:map).html_safe %>
+      <% else %>
+        No map provided
+      <% end %>
     </div>
     <div class="pull-right">
       <%= image_tag(@restaurant.cover.url, width: '500', class: 'img-responsive', style: 'margin-bottom: 10px;') %>

@@ -1,44 +1,35 @@
 ActiveAdmin.register_page "Dashboard" do
 
-  menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-#
-#  content title: proc{ I18n.t("active_admin.dashboard") } do
-#    div class: "blank_slate_container", id: "dashboard_default_message" do
-#      span class: "blank_slate" do
-#        span I18n.t("active_admin.dashboard_welcome.welcome")
-#        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-#      end
-#    end
+  menu priority: 1
+  content title: proc{ I18n.t("active_admin.dashboard") } do
 
     
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
+#     Here is an example of a simple dashboard with columns and panels.
+    
+     columns do
+       column do
+         panel "New Users" do
+           table_for User.order('id desc').limit(10) do
+             column('id') { |user| "##{user.id}" }
+             column('name') { |user| user.name }
+             column('username') { |user| user.username }
+             column('email') { |user| user.email }
+             column('registered on') { |user| user.created_at.strftime("%B %d, %Y") }
+           end
+         end
+       end
 
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
-#  end # content
+       column do
+         panel "New Pending Restaurants" do
+           table_for Restaurant.order('id desc').where(status: 'Pending').limit(10) do
+             column('id') { |resto| "##{resto.id}" }
+             column('name') { |resto| link_to resto.name, admin_restaurant_path(resto) }
+             column('owner') { |resto| resto.user.email }
+             column('status') { |resto| status_tag(resto.status, "#{puts 'green' if resto.status == 'Accepted' }#{puts 'red' if resto.status == 'Rejected'}" ) }
+             column('registered on') { |resto| resto.created_at.strftime("%B %d, %Y") }
+           end
+         end
+       end
+     end
+  end # content
 end

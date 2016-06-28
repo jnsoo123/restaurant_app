@@ -20,7 +20,7 @@ class CuisinesController < ApplicationController
   def edit
   end
 
-  def update
+  def update  
     @cuisine.update(cuisine_params)
     respond_with(@cuisine, location: cuisines_path)
   end
@@ -36,7 +36,7 @@ class CuisinesController < ApplicationController
   end
   
   def cuisine_params
-    params.require(:cuisine).permit(:name, :description)
+    params.require(:cuisine).permit(:name, :description, :avatar)
   end
 
 end
