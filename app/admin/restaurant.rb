@@ -11,9 +11,10 @@ ActiveAdmin.register Restaurant do
   scope('Rejected') { |scope| scope.where(status: 'Rejected') } 
   
   index do
+    selectable_column
     column('Id', sortable: id) {|resto| resto.id }
     column('Name', sortable: :name) {|resto| link_to resto.name, admin_restaurant_path(resto) }
-    column('Owner', sortable: 'restaurant.name') { |resto| resto.user.name }
+    column('Owner', sortable: 'restaurant.name') { |resto| link_to resto.user.name, admin_user_path(resto.user) }
     column('Status') { |resto| status_tag(resto.status, "#{'green' if resto.status == 'Accepted' }#{'red' if resto.status == 'Rejected'}" ) }
     column('# of Dishes') { |resto| resto.foods.count } 
     column('Rating') {|resto| resto.ave_ratings}  
