@@ -34,17 +34,6 @@
           <%= f.text_area :contact, class: 'form-control' %>
         </div>
         <div class="form-group">
-          <%= f.label t('.pricerange') %> <small><%= t('.mintomax') %></small>
-          <div class="row">
-            <div class="col-md-6">
-              <%= f.text_field :low_price_range, class: 'form-control', placeholder: t('.min') %>
-            </div>
-            <div class="col-md-6">
-              <%= f.text_field :high_price_range, class: 'form-control', placeholder: t('.max') %>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
           <%= f.label t('.embedmap') %>
           <%= f.text_area :map, class: 'form-control' %>
         </div>

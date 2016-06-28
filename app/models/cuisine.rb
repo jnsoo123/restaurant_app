@@ -4,7 +4,7 @@ class Cuisine < ActiveRecord::Base
   
   validates_length_of :description, maximum: 150
 
-  validates :name, :description, presence: true
+  validates :name, :description, :avatar, presence: true
 
   def self.search_by_name(query)
     Cuisine.where('name LIKE ?', "%#{query}%").map(&:foods).flatten(1).map(&:restaurant).map(&:id).uniq
