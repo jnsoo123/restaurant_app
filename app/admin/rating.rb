@@ -14,7 +14,7 @@ ActiveAdmin.register Rating do
 # end
 
   menu priority: 4
-  actions :index
+  actions :index, :show
   
   index do
     column('ID', sortable: :id) { |rate| rate.id }
