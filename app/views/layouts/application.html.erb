@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<div id = 'wrap'>
   <nav id="top-nav" class="navbar navbar-default" style="margin-bottom: 0px;">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -120,10 +121,10 @@
 <% end %>
 
 <%= yield %>
-
-<footer class="" style="background-color: #fff; height: 200px; margin-top: 30px;">
+<div id="push"></div>
+<div id = 'footer'>
   <div class="container" style="padding-top: 25px;">
-	<div class = 'row' style="margin-bottom: 40px;">
+	<div class = 'row'>
 		<div class = 'col-lg-9 col-md-9 col-xs-9 col-sm-9'>
 			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>&copy;Soolfie</div>
 			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
@@ -145,7 +146,8 @@
 	</div>  
 	
  </div>
-</footer>
+</div>
+</div>
   
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-md" role="document">
