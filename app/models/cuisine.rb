@@ -7,7 +7,7 @@ class Cuisine < ActiveRecord::Base
   validates_format_of :avatar, with: %r{\.(gif|jpg|png)\Z}i
 
   def self.search_by_name(query)
-    Cuisine.where('name LIKE ?', "%#{query}%").map(&:foods).flatten(1).map(&:restaurant).map(&:id).uniq
+    Cuisine.where("name LIKE ?", "%#{query}%").map(&:foods).flatten(1).map(&:restaurant).map(&:id).uniq
   end
 
 end

@@ -14,7 +14,20 @@ ActiveAdmin.register Notification do
 # end
 
   menu priority: 6
-  actions :index, :show, :new, :create
+  actions :index, :new, :create, :destroy
+  
+  index do
+    selectable_column
+    column :id
+    column :message do |noti|
+      noti.message.html_safe
+    end
+    column "For" do |noti|
+      link_to noti.user.name, admin_user_path(noti.user)
+    end
+    column :status
+    column :created_at
+  end
   
   form do |f|
     inputs 'Send a Message' do
