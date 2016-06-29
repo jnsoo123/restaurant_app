@@ -31,8 +31,12 @@ ActiveAdmin.register Restaurant do
   
   controller do
     def update
-      update! do |format|
-        format.html { redirect_to admin_restaurants_path }
+      @restaurant = Restaurant.find(params[:id])
+      if @restaurant.update!(permitted_params[:restaurant])
+        Notification.create(message: "Your restaurant #{view_context.link_to @restaurant.name, restaurant_path(@restaurant)} has been #{@restaurant.status}.", user: @restaurant.user)
+        respond_to do |format|
+          format.html { redirect_to admin_restaurants_path }
+        end
       end
     end
   end

@@ -13,5 +13,10 @@ class UserMailer < ActionMailer::Base
     @restaurant = Restaurant.where(user_id: user.id).last
     mail(to: @user.email, subject: 'Restaurant Establishment Application')
   end
- 
+  
+  # def notify_email(user)
+  #   @user = user
+  #   mail(to: @user.email, subject: 'Fudz Finder Message Update')
+  # end
+  #
 end
