@@ -5,6 +5,15 @@ body {
   height: 100%;
 } 
 
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto;
+}
+
 #main-nav .navbar-nav {
   width: 100%;
   text-align: center;
