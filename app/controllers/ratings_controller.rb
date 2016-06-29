@@ -19,6 +19,7 @@ class RatingsController < ApplicationController
     @rating.user = current_user
     if @rating.save 
       flash[:success] = "You have successfully rated the restaurant"
+      Notification.create(message: "#{view_context.link_to current_user.name, user_path(current_user)} rated on your restaurant #{view_context.link_to @rating.restaurant.name, restaurant_path(@rating.restaurant)} with a #{@rating.rate} star rating.", user: @rating.restaurant.user)
       respond_with(@rating, location: @rating.restaurant)
     else
       flash[:failure] = "<dl><dt>Your rating was not saved properly because:</dt>" 

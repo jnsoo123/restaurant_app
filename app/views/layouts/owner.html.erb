@@ -29,7 +29,7 @@
               <li><%= link_to "#{icon('cutlery', t('.myrestaurants'),
 				      style: 'margin-right: 10px;')}".html_safe, users_restaurant_path %></li>
               <li><%= link_to "#{icon('plus', t('.addrestaurants'), style: 'margin-right: 10px;')}".html_safe, 					  owner_resto_new_path %></li> 
-              <li><%= link_to "#{icon('envelope-o', "Messages #{current_user.check_notification}".html_safe, style: 'margin-right: 7px;')}".html_safe %></li>
+              <li><%= link_to "#{icon('envelope-o', "Messages #{current_user.check_notification}".html_safe, style: 'margin-right: 7px;')}".html_safe, notifications_path %></li>
               <li><%= link_to "#{icon('reply', t('.mainpage'), 
 				  	  style: 'margin-right: 7px;')}".html_safe, home_path %></li>
 

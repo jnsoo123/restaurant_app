@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'owner/restaurants/new' => 'restaurants#owner_new', as: :owner_resto_new
   get 'owner/restaurants/:id' => 'restaurants#owner_edit', as: :owner_resto_edit
   patch 'owner/restaurants/:id' => 'restaurants#owner_patch', as: :owner_resto_patch
+  get 'owner/notifications' => 'notifications#index', as: :notifications
+  delete 'owner/notifications/:id' => 'notifications#destroy', as: :delete_notification
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
   
   get 'home/about' => 'home#about', as: :about_page
