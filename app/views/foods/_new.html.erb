@@ -3,7 +3,10 @@
   <h4 class="modal-title" id="myModalLabel"><%= t('.adddish')%></h4>
 </div>
 <div class="modal-body">
-  <%= form_for(@food, url: foods_path(resto_id: @food.restaurant)) do |f| %>
+  <div id="food_alert_area">
+  
+  </div>
+  <%= form_for(@food, url: foods_path(resto_id: @food.restaurant), remote: true) do |f| %>
     <div class="form-group">
       <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname'), required: true%>
     </div>
@@ -11,7 +14,7 @@
       <%= f.text_area :description, class: 'form-control', placeholder: t('.description'), required: true%>
     </div>
     <div class="form-group">
-      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true%>
+      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true, min: 1%>
     </div>
     <div class="form-group">
       <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name'), { prompt: "Select a Cuisine"} ,class: 'form-control', required: true %>

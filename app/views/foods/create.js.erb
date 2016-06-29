@@ -1,0 +1,4 @@
+<% unless @food.errors.any? %>
+  $('#myModal').modal("hide")
+  $('#food_area').html("<%= j render(@food) %>")
+<% end %>  

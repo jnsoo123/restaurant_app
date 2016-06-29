@@ -2,7 +2,7 @@ class FoodsController < ApplicationController
   before_action :set_food, only: [:edit, :update, :destroy]
   
   respond_to :html
-  respond_to :js, only: [:new, :edit]
+  respond_to :js, only: [:new, :edit, :create]
   
   def new
     @food = Food.new
@@ -30,12 +30,13 @@ class FoodsController < ApplicationController
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     if @food.save
       flash[:success] = "Dish successfully added!"
-      respond_with(@food, location: owner_resto_edit_path(params[:resto_id]))
+      @foods = @food.restaurant.foods
+      respond_with(@foods)
     else
       flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 
       @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-      redirect_to owner_resto_edit_path(params[:resto_id])
+      respond_with(@food)
     end
   end
   

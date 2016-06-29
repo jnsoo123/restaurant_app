@@ -75,37 +75,8 @@
   <%= link_to "#{icon('plus', t('.adddish'), style: 'margin-right: 10px;')}".html_safe, new_food_path(resto_id: @restaurant.id), class: 'btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
 </div>
 
-<div style="">
-  <% unless @foods.empty? %>
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr style="background-color: #404040;">
-            <th>#</th>
-            <th><%= t('.dish')%></th>
-            <th><%= t('.description')%></th>
-            <th><%= t('.cuisine')%></th>
-            <th><%= t('.price')%></th>
-            <th><%= t('.actions')%></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @foods.each_with_index do |food, index| %>
-            <tr>
-              <td><%= index+1 %></td>
-              <td><%= food.name %></td>
-              <td><%= food.description %></td>
-              <td><%= food.cuisine.name %></td>
-              <td>P <%= food.price %></td>
-              <td style="width: 150px;"><%= link_to t('.edit'), edit_food_path(food.id), class: 'btn btn-warning', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), food_path(food.id), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <%= t('.nodish')%>
-  <% end %>
+<div id="food_area">
+  <%= render 'foods/food' %>
 </div>
 
 

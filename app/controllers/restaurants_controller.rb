@@ -38,7 +38,7 @@ class RestaurantsController < ApplicationController
       @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
     end
     
-    @result = Restaurant.where(status: 'Accepted').find(@result)
+    @result = Restaurant.where(status: 'Accepted').find_by_id(@result)
     
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
@@ -47,8 +47,13 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @picture = Picture.new
-    @rating = Rating.new
+    if @restaurant.blank?
+      render text: "404 page not Found", status: 404
+    else
+      @picture = Picture.new
+      @rating = Rating.new
+    end
+    
   end
 
   def owner_new
@@ -136,7 +141,7 @@ class RestaurantsController < ApplicationController
   end
 
   def set_restaurant
-    @restaurant = Restaurant.find(params[:id])
+    @restaurant = Restaurant.where(status: 'Accepted').find_by_id(params[:id])
   end
   
   def set_owner_restaurant

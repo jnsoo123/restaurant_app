@@ -70,7 +70,7 @@
     </div>
   </div>
   <div class="col-md-9 search_result">
-    <% unless @result.empty? %>
+    <% unless @result.blank? %>
       <div class="list-group">
         <% @result.each do |resto| %>
           <%= link_to resto, class: "list-group-item", style: "margin-bottom: 10px; height: 175px; padding: 0px;" do %>
