@@ -33,7 +33,7 @@ ActiveAdmin.register Restaurant do
     def update
       @restaurant = Restaurant.find(params[:id])
       if @restaurant.update!(permitted_params[:restaurant])
-        Notification.create(message: "Your restaurant #{view_context.link_to @restaurant.name, restaurant_path(@restaurant)} has been #{@restaurant.status}.", user: @restaurant.user)
+        Notification.create(message: "Your restaurant #{view_context.link_to @restaurant.name, restaurant_path(@restaurant) unless @restaurant.status} has been #{@restaurant.status}.", user: @restaurant.user)
         UserMailer.send_email(@restaurant.user).deliver_now
        
         respond_to do |format|

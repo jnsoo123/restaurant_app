@@ -15,5 +15,16 @@ ActiveAdmin.register Cuisine do
 #   permitted
 # end
 
-
+  show do
+    attributes_table do
+      row :name
+      row :description
+      row :avatar do
+        image_tag cuisine.avatar.url, style: 'width: 300px;'
+      end
+    end
+    active_admin_comments
+  end
+  
+  
 end

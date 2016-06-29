@@ -21,62 +21,39 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <%= link_to 'Fudz', home_path, class: 'navbar-brand'%>
       </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><%= link_to t('.home'), home_path %></li>
-		  <li><%= link_to t('.about'), about_page_path %></li>
-		  <li><%= link_to t('.contact'), contact_page_path %></li>
- 
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-		  
-		  <ul class="nav navbar-nav navbar-right">
-		      <li class="dropdown">
-		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-		            <%= t('.language') %>
-		            <span class="caret"></span>
-		        </a>
-		      <ul class="dropdown-menu" role="menu">
-				<% locale_name_pairs.each do |locale|%>
-		        <li>
-		           <%= link_to locale[0], change_locale_path(locale[1].to_sym) %>
-		        </li>
-				<% end %>
-		      </ul>
-		      </li>
-		  </ul>
-			
+          <li class="navbar-left"><%= link_to "Fudz", home_path, style: 'font-weight: 800; font-size: 18px;' %></li>
+          <li><a href="#restaurants"><%= t('.restaurants')%></a></li>
+          <li><a href="#cuisines"><%= t('.cuisines')%></a></li>
+          <li><a href="#reviews"><%= t('.reviews')%></a></li>
+          <li><a href="#make_a_resto">Make a Resto</a></li>
           <% if user_signed_in? %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 						  aria-expanded="false" style="height: 100%;">
-				  <%= icon('user', current_user.name, style: 'margin-right: 5px;') %>
-				  <%= icon('chevron-down', style: 'margin-left: 5px;') %></a>
+            <li class="dropdown navbar-right">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height: 100%;">
+                <%= icon('user', current_user.name, style: 'margin-right: 5px;') %>
+                <%= icon('chevron-down', style: 'margin-left: 5px;') %>
+              </a>
               <ul id="dropdown-menu" class="dropdown-menu">
-		        <% if user_signed_in? %>
-					 <% if current_user.admin?%>
+                <% if user_signed_in? %>
+                  <% if current_user.admin? %>
                 	 	<li><%= link_to "My Admin", admin_root_path %></li>
-					 <% end%>
-				<% end%>  
-				
+                  <% end%>
+                <% end%>  
                 <li><%= link_to t('.myprofile'), user_profile_path(current_user.id) %></li>
-				
                 <% if current_user.restaurants.present? %>
-                  	 <li><%= link_to t('.myrestaurants'), users_restaurant_path %></li>
+                  <li><%= link_to t('.myrestaurants'), users_restaurant_path %></li>
                 <% end %>
-				
                	<li><%= link_to t('.signout'), destroy_user_session_path, method: :delete %></li>
               </ul>
             </li>
           <% else %>
-            <li><%= link_to t('.login'), new_user_session_path %></li>
-            <li><%= link_to t('.signup'), new_user_registration_path %></li>
+            <li class="navbar-right"><%= link_to t('.login'), new_user_session_path %></li>
           <% end %>
-
-
+          
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
