@@ -83,12 +83,13 @@ class RestaurantsController < ApplicationController
     name = @restaurant.name
     
     if @restaurant.save
-      flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully created!"
+      flash[:success] = "<strong>#{name}</strong> has been successfully created!"
       respond_with(@restaurant, location: users_restaurant_path)
     else
       flash[:failure] = "<dl><dt>#{name} was not successfully created because:</dt>" 
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
+            
       redirect_to owner_resto_new_path(@restaurant)
     end
   end

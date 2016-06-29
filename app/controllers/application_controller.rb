@@ -2,16 +2,14 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, except: [:change_locale, :set_locale]
   before_action :set_locale
-  
+  rescue_from SecurityError, with: :not_found
   add_flash_types :success, :failure
   
   include DeviseHelper
   helper ApplicationHelper
-  
 
   def change_locale
       l = params[:locale].to_s.strip.to_sym
@@ -31,11 +29,11 @@ class ApplicationController < ActionController::Base
   def authenticate_admin_user!
     raise SecurityError unless current_user.try(:admin?)
   end
-
+  
   private
   
-  def previous_url
-    request.original_url
+  def not_found
+    render :template => "errors/404", :layout => false, :status => 404
   end
   
   def set_locale
