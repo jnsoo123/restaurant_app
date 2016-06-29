@@ -12,14 +12,12 @@ class PicturesController < ApplicationController
       @picture.status = true
     end
     if @picture.save
+      flash[:success] = 'Image was added!'
       if @picture.status
-        flash[:success] = 'Image was added!'
         respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
       else
-        flash[:failure] = "<dl><dt>Your image was not added because:</dt>" 
-        @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-        flash[:failure] << "</dl>"
-        redirect_to restaurant_path(@picture.restaurant)
+        Notification.create(message: "#{view_context.link_to current_user.name, user_path(current_user)} added a photo on your restaurant: #{view_context.link_to @picture.restaurant.name, restaurant_path(@picture.restaurant)}. #{view_context.link_to 'Click Here', owner_resto_edit_path(@picture.restaurant)} to view it from the dashboard.", user: @picture.restaurant.user)
+        respond_with(@picture, location: restaurant_path(@picture.restaurant)) 
       end
     else
       flash[:failure] = "<dl><dt>Your image was not added because:</dt>" 
