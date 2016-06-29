@@ -28,7 +28,7 @@
         <ul class="nav navbar-nav">
           <li><%= link_to t('.home'), home_path %></li>
 		  <li><%= link_to t('.about'), about_page_path %></li>
-          <li><a href="#"><%= t('.contact')%></a></li>
+		  <li><%= link_to t('.contact'), contact_page_path %></li>
  
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -125,9 +125,16 @@
   <div class="container" style="padding-top: 25px;">
 	<div class = 'row' style="margin-bottom: 40px;">
 		<div class = 'col-lg-9 col-md-9 col-xs-9 col-sm-9'>
-			<span class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>&copy;Soolfie</span>
-			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'><%= link_to "About", about_page_path %></div>
-			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'><%= link_to "Get Started", new_user_registration_path %></div>
+			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>&copy;Soolfie</div>
+			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
+				<%= link_to t('.about'), about_page_path %>
+			</div>
+			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
+				<%= link_to t('.contact'), contact_page_path %>
+			</div>	
+			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
+				<%= link_to "Get Started", new_restaurant_path %>
+			</div>
 		</div>
 		<div class = 'col-lg-3 col-md-3 col-xs-3 col-sm-3'>
 			<%= link_to "#{icon('twitter')}".html_safe, "https://www.twitter.com", style: "font-size:24px; color: #55acee; margin-right: 30px;"%>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
   
   get 'home/about' => 'home#about', as: :about_page
+  get 'home/contact' => 'home#contact', as: :contact_page
   get 'home/index'
   
   devise_for :users

@@ -1,0 +1,44 @@
+.contact_title {
+  display: inline-block;
+  padding: 0 15px;
+  position: relative;
+}
+
+.contact_title:before,
+.contact_title:after {
+  background: #ddd;
+  content: "";
+  display: block;
+  height: 2px;
+  position: absolute;
+    top: 50%;
+  width: 400%;
+}
+.contact_title:before {
+  right: 100%;
+}
+.contact_title:after {
+  left: 100%;
+}
+.contact {
+  overflow: hidden;
+  text-align: center;
+}
+
+.contact_text{
+   text-align: left;	
+}
+
+.contact_sub{
+	text-align: left;	
+	font-weight: bold;
+}
+
+.image_contact{
+	width: auto;
+	height: auto;
+	max-width:300px;
+	max-height:300px;
+	object-fit: contain;
+	margin-bottom: 30px;
+}
