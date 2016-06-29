@@ -6,7 +6,7 @@
   <body>
     <h1>Good day, <%= @user.name %></h1>
     <p>
-      We would like to inform you that your application to establish the restaurant, <%= @restaurant.name %>, has been accepted. You should be able to see your restaurant in the listing now.  <br>
+      <%= @notification.message.html_safe %>
     </p>
     <p>Thank you and have a good day!</p>
   </body>

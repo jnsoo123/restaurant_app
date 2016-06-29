@@ -42,6 +42,7 @@ ActiveAdmin.register Notification do
   controller do
     def create
       create! do |format|
+        UserMailer.notify_email(User.find(params[:notification][:user_id])).deliver_now
         format.html { redirect_to admin_notifications_path } 
       end
     end
