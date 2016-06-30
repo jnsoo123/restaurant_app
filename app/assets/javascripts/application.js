@@ -13,8 +13,8 @@
 //= require bootstrap
 //= require jquery
 //= require jquery.turbolinks
-//= require jquery.atwho
 //= require jquery_ujs
+//= require jquery.atwho
 //= require jquery.ui.effect-blind
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
