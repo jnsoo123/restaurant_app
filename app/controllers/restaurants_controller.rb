@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :reject, :destroy]
+  before_action :set_restaurant, only: [:show, :edit, :update, :reject]
+  before_action :set_destroy_restaurant, only: [:destroy]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
   skip_before_action :authenticate_user!, only: [:show, :search]
   layout 'owner', only: [:owner_edit, :owner_new]
@@ -117,7 +118,7 @@ class RestaurantsController < ApplicationController
   
   def destroy
     name = @restaurant.name
-    
+
     if @restaurant.destroy
       flash[:success] = "<strong>#{name}</strong> has been deleted!"
       respond_with(@restaurant, location: users_restaurant_path)
@@ -138,6 +139,11 @@ class RestaurantsController < ApplicationController
     
   def set_owner_restaurant
     @restaurant = current_user.restaurants.find(params[:id])
+  end
+  
+  
+  def set_destroy_restaurant
+    @restaurant = Restaurant.find_by_id(params[:id])
   end
 
   def set_restaurant
