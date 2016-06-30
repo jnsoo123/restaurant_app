@@ -34,7 +34,8 @@ class UsersController < ApplicationController
   
   def authorize_owner
     if current_user.restaurants.blank?
-      render :template => "errors/404", :layout => false, :status => 404
+      flash[:failure] = "You don't have any restaurants."
+      redirect_to home_path
     end
   end
 end

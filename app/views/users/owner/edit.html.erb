@@ -116,26 +116,27 @@
 
 <div style="width: 100%;">
   <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Photos</h4>
-</div>
-
-<div class="row pic-row">
-  <% unless @restaurant.pictures.empty? %>
-    <% @restaurant.pictures.where(status: true).each do |picture| %>
-      <div class="col-md-3">
-        <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
-        <%= image_tag(picture.pic.url, class: 'img-responsive', style: 'width: 100%; height: auto;') %>
+  <div class="row pic-row" style = 'padding-left: 20px;'>
+    <% unless @restaurant.pictures.empty? %>
+      <% @restaurant.pictures.where(status: true).each do |picture| %>
+      <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+        <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); 
+          background-repeat: no-repeat; background-size: 100% auto; background-position: center;'>
+        </div>
+         <% end %>
+      <% end %>
+    <% end %>
+    
+    <div class="col-md-12 col-xs-12 col-sm-12">
+      <div class="fileUpload btn btn-default btn-add-pic">
+        <span><%= icon('plus', "<br>Add Images".html_safe, style: '')%></span>
+        <%= form_for(@picture) do |f| %> 
+          <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+          <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
         <% end %>
       </div>
-    <% end %>
-  <% end %>
-  <div class="col-md-3">
-    <div class="fileUpload btn btn-default btn-add-pic">
-      <span><%= icon('plus', "<br>Add Images".html_safe, style: '')%></span>
-      <%= form_for(@picture) do |f| %> 
-        <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
-        <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-      <% end %>
     </div>
+    
   </div>
 </div>
 
