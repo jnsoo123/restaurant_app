@@ -1,4 +1,6 @@
-
+<% if current_page?(home_path) %>
+  <%= render 'jumbotron'%>
+<% end %>
 <%= render 'restaurants' %>
 <%= render 'cuisines' %>
 <%= render 'reviews' %>
