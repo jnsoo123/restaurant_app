@@ -12,6 +12,7 @@ class RestaurantsController < ApplicationController
 
   def search
     @search_result = []
+    
     sort_type = params[:sort]
     sort_type ||= 'ratings'
     if params[:cuisine].blank?
@@ -48,7 +49,7 @@ class RestaurantsController < ApplicationController
 
   def show
     if @restaurant.blank?
-      render text: "404 page not Found", status: 404
+      render template: 'errors/404', status: 404
     else
       @picture = Picture.new
       @rating = Rating.new
@@ -94,7 +95,7 @@ class RestaurantsController < ApplicationController
       flash[:failure] = "<dl><dt>#{name} was not successfully created because:</dt>" 
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-      end
+      respond_with(@restaurant, location: owner_resto_new_path)
     end
   end
   
