@@ -77,3 +77,10 @@ a {
     float: right !important;
   }
 }
+
+#wrap {display:table;width:100%}
+
+footer{ 
+  display:table-row;
+  height:1px
+}
