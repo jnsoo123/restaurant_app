@@ -3,13 +3,14 @@ class UsersController < ApplicationController
   layout "owner", only: [:restaurants]
   before_action :set_user, only: [:show, :edit, :update]
   before_action :authorize, only: [:edit, :update]
+  before_action :authorize_owner, only: [:restaurants]
   
   def show
   end
   
   def restaurants
     @restaurants = current_user.restaurants
-    respond_with(@restaurants, template: 'users/owner/restaurants')
+    respond_with(@restaurants, template: 'users/owner/restaurants') 
   end
 
   def edit
@@ -29,5 +30,11 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:name, :username, :email, :location, :profile_picture_url)
+  end
+  
+  def authorize_owner
+    if current_user.restaurants.blank?
+      render :template => "errors/404", :layout => false, :status => 404
+    end
   end
 end

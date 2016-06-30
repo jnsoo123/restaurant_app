@@ -10,9 +10,7 @@ class UserMailer < ActionMailer::Base
   
   def notify_email(user)
     @user = user
-    
     puts "THIS IS @user: #{@user.inspect}\n\n\n"
-    
     mail(to: @user.email, subject: 'Notification Updates')
   end
   

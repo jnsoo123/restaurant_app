@@ -84,8 +84,14 @@ html, body {
           padding-right: 20px;
         }
       }
-
 .search_field, .search_button {
   height: 40px;
   border-radius: 5px;
+}
+
+#wrap {display:table;width:100%}
+
+footer{ 
+  display:table-row;
+  height:1px
 }

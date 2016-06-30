@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
 </head>
-<body>
+<body id = 'wrap'>
 
   <div class="wrapper">
     <nav id="top-nav" class="navbar navbar-default" style="margin-bottom: 0px;" data-spy="affix" data-offset-top="600">
@@ -95,29 +95,44 @@
 
   </div>
 
-<footer class="" style="background-color: #fff; height: 80px; margin-top: 30px;">
+<footer id = 'footer' style="background-color: #fff; height: 80px; margin-top: 30px;">
   <div class="container" style="padding-top: 25px;">
 	<div class = 'row' style="margin-bottom: 0;">
-		<div class = 'col-lg-9 col-md-9 col-xs-9 col-sm-9'>
-			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>&copy;Soolfie</div>
-			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
+			<div class = 'col-lg-2 col-md-2 col-xs-12 col-sm-6'>&copy;Soolfie</div>
+			<div class = 'col-lg-2 col-md-2 col-xs-12 col-sm-6'>
 				<%= link_to t('.about'), about_page_path %>
 			</div>
-			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
+			<div class = 'col-lg-2 col-md-2 col-xs-12 col-sm-6'>
 				<%= link_to t('.contact'), contact_page_path %>
 			</div>	
-			<div class = 'col-lg-2 col-md-2 col-xs-2 col-sm-2'>
+			<div class = 'col-lg-2 col-md-2 col-xs-12 col-sm-6'>
 				<%= link_to "Get Started", new_restaurant_path %>
-			</div>
-		</div>
-		<div class = 'col-lg-3 col-md-3 col-xs-3 col-sm-3'>
+			</div>      
+      
+      <div class = 'col-lg-3 col-md-3 col-xs-8 col-sm-6'>
 			<%= link_to "#{icon('twitter')}".html_safe, "https://www.twitter.com", style: "font-size:24px; color: #55acee; margin-right: 30px;"%>
 			<%= link_to "#{icon('facebook')}".html_safe, "https://www.facebook.com", style: "font-size:24px; color: #4c66a4; margin-right: 30px;" %>
 			<%= link_to "#{icon('instagram')}".html_safe, "https://www.instagram.com", style: "font-size:24px; color: #3f729b; margin-right: 30px;" %>
 			<%= link_to "#{icon('youtube-play')}".html_safe, "https://www.youtube.com", style:"font-size:24px; color: #e52d27; margin-right: 30px;" %>
 		</div>
-	</div>  
-	
+    <div class = 'col-lg-1 col-md-1 col-xs-12 col-sm-6'>
+      <div class="dropup">
+        <button class="btn btn-default dropdown-toggle" type="button"
+          id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= t('.language') %>
+          <span class="caret"></span>
+        </button>
+  		      <ul class="dropdown-menu" role="menu">
+  				     <% locale_name_pairs.each do |locale|%>
+  		        <li>
+  		           <%= link_to locale[0], change_locale_path(locale[1].to_sym) %>
+  		        </li>
+  		         <% end %>
+  		      </ul>
+      </div>
+    </div>
+	</div>
+  
  </div>
 </div>
 </div>

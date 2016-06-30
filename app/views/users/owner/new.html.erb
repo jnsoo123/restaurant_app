@@ -1,6 +1,8 @@
 <div style="width: 100%;">
   <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.createtitle')%></h4>
 </div>
+
+
 <div style="margin-bottom: 50px;">
   <%= form_for(@restaurant, url: restaurants_path(path: 'dashboard')) do |f| %>
     <% if @restaurant.errors.any? %>
