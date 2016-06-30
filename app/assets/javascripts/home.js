@@ -25,7 +25,10 @@ $(document).on("ready page:change", function() {
   
   $('.home-nav').affix({offset: {top: 620}});
   $('.home-nav').on('affixed.bs.affix', function(){
-    $('.home-nav').addClass('animated slideInDown')
+    var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+    $(this).addClass('animated slideInDown').one(animationEnd, function(){
+      $(this).removeClass('animated slideInDown')
+    })
   });
   
   setTimeout(function () {
