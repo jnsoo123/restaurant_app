@@ -38,8 +38,8 @@ class RestaurantsController < ApplicationController
       @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
     end
     
-    @result = Restaurant.where(status: 'Accepted').find_by_id(@result)
-    
+    @result = Restaurant.where(id: @result, status: 'Accepted')
+    puts "@@@@@@@@@@@#{@result.inspect}"
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
