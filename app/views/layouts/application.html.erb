@@ -87,9 +87,6 @@
         <%= notice.html_safe %>
       </div>
     <% end %>
-
-    <%= render 'restaurants/searchbar' unless current_page?(home_path) || current_page?(new_user_session_path) || current_page?(user_path) %>
-
     <%= yield %>
 
   </div>

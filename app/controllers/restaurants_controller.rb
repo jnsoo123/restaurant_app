@@ -94,6 +94,7 @@ class RestaurantsController < ApplicationController
       flash[:failure] = "<dl><dt>#{name} was not successfully created because:</dt>" 
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
+      end
     end
   end
   
