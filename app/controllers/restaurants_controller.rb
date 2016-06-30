@@ -40,7 +40,6 @@ class RestaurantsController < ApplicationController
     end
     
     @result = Restaurant.where(id: @result, status: 'Accepted')
-    puts "@@@@@@@@@@@#{@result.inspect}"
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
@@ -95,8 +94,6 @@ class RestaurantsController < ApplicationController
       flash[:failure] = "<dl><dt>#{name} was not successfully created because:</dt>" 
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-            
-      redirect_to owner_resto_new_path(@restaurant)
     end
   end
   

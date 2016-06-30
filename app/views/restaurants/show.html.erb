@@ -59,17 +59,18 @@
   <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
   
   <div id="picture-part">
-    <div class="row pic-row" style="">
+    <div class="row pic-row" style = 'padding-left: 20px;'>
       <% unless @restaurant.pictures.empty? %>
         <% @restaurant.pictures.where(status: true).each do |picture| %>
-          <div class="col-md-3" style="margin-bottom: 10px;">
-            <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal'} do %>
-            <%= image_tag(picture.pic.url, class: 'img-responsive center-block', style: 'width: 100%; height: auto;')%>
-            <% end %>
+        <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+          <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); 
+            background-repeat: no-repeat; background-size: 100% auto; background-position: center;'>
           </div>
+           <% end %>
         <% end %>
       <% end %>
-      <div class="col-md-3">
+      
+      <div class="col-md-12 col-xs-12 col-sm-12">
         <div class="fileUpload btn btn-default btn-add-pic" style="width: 157px; height: 150px;">
           <span><%= icon('plus', "<br>#{'Add images' if user_signed_in? }#{'Sign in to add images' unless user_signed_in? }".html_safe, style: '')%></span>
           <%= form_for(@picture) do |f| %> 
