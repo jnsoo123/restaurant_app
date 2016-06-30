@@ -22,4 +22,6 @@ $(document).on("ready page:change", function() {
   $(window).scroll(function(e){
       parallax();
   });
+  
+  $('.home-nav').affix({offset: {top: 600}});
 });
