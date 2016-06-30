@@ -96,7 +96,9 @@ class RestaurantsController < ApplicationController
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
             
-      redirect_to owner_resto_new_path(@restaurant)
+      respond_to do |format|
+        format.js  
+      end
     end
   end
   

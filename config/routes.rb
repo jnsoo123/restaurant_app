@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'home/contact' => 'home#contact', as: :contact_page
   get 'home/index'
   
-  devise_for :users, :controllers => { :registrations => :registrations }
+  devise_for :users, :controllers => { :registrations => :registrations}
   
   resources :restaurants 
   resources :cuisines
