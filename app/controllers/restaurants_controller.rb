@@ -12,7 +12,7 @@ class RestaurantsController < ApplicationController
 
   def search
     @search_result = []
-    
+    @main_active = false
     sort_type = params[:sort]
     sort_type ||= 'ratings'
     if params[:cuisine].blank?
@@ -31,19 +31,20 @@ class RestaurantsController < ApplicationController
     end
     
     if sort_type == 'ratings'
-      @result = Restaurant.includes(:ratings).order('ratings.rate desc').find(@search_result)
+      @result = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: @search_result, status: 'Accepted')
     elsif sort_type == 'name'
-      @result = Restaurant.order('name').find(@search_result)
+      @result = Restaurant.order('name').where(id: @search_result, status: 'Accepted')
     elsif sort_type == 'price_low_to_high'
-      @result = Restaurant.includes(:foods).order('foods.price').find(@search_result)
+      @result = Restaurant.includes(:foods).order('foods.price').where(id: @search_result, status: 'Accepted')
     else
-      @result = Restaurant.includes(:foods).order('foods.price desc').find(@search_result)
+      @result = Restaurant.includes(:foods).order('foods.price desc').where(id: @search_result, status: 'Accepted')
     end
     
-    @result = Restaurant.where(id: @result, status: 'Accepted')
+
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
+    puts "@@@@@@@@#{@result.inspect}"
     respond_with(@result)
   end
 
@@ -125,7 +126,7 @@ class RestaurantsController < ApplicationController
       flash[:failure] = "<dl><dt>#{name} was not successfully deleted because:</dt>" 
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-      redirect_to owner_resto_edit_path(@restaurant)
+      redirect_to owner_resto_edit_path(@restaurant) 
     end
   end
   

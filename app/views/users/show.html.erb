@@ -14,7 +14,7 @@
     </div>
   </div>
   
-  <div class="row" style="margin-top: 20px; background-color: #fff; padding: 20px; margin-bottom: 60px;">
+  <div class="row" style="margin-top: 20px; background-color: #fff; padding: 20px; margin-bottom: 60px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
     <h4>Fudline</h4>
     <% unless current_user.ratings.empty? %>
       <% current_user.ratings.order("created_at desc").each do |rate| %>

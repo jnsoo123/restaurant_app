@@ -6,6 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+  <link rel="stylesheet" href="http://s.mlcdn.co/animate.css">
 </head>
 <body id = 'wrap'>
 
@@ -28,10 +29,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li class="<%= filter_active_class(home_path) %>"><%= link_to t('.home'), home_path %></li>
-            <li class="<%= filter_active_class(restaurant_search_path)%>"><%= link_to "Restaurants", restaurant_search_path %></li>
-            <li><a href="#cuisines"><%= t('.cuisines')%></a></li>
-            <li><a href="#reviews"><%= t('.reviews')%></a></li>
-            <li><a href="#make_a_resto">Make a Resto</a></li>
+            <li class="<%= filter_active_class(restaurant_search_path)%>"><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
+            <% if current_page?(home_path) %>
+              <li><a href="#cuisines"><%= t('.cuisines')%></a></li>
+              <li><a href="#reviews"><%= t('.reviews')%></a></li>
+              <li><a href="#make_a_resto">Make a Resto</a></li>
+            <% end %>
             <% if user_signed_in? %>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height: 100%;">
@@ -62,7 +65,7 @@
     
 
     <% if success %>
-      <div class="alert alert-success alert-dismissible" role="alert">
+      <div class="alert alert-success alert-dismissible floating_alert" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -71,7 +74,7 @@
     <% end %>
 
     <% if failure %>
-      <div class="alert alert-danger alert-dismissible" role="alert">
+      <div class="alert alert-danger alert-dismissible floating_alert" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -80,7 +83,7 @@
     <% end %>
 
     <% if notice %>
-      <div class="alert alert-success alert-dismissible" role="alert">
+      <div class="alert alert-success alert-dismissible floating_alert" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -106,7 +109,7 @@
 			</div>      
       
       <div class = 'col-lg-3 col-md-3 col-xs-8 col-sm-6'>
-			<%= link_to "#{icon('twitter')}".html_safe, "https://www.twitter.com", style: "font-size:24px; color: #55acee; margin-right: 30px;"%>
+        <%= link_to_unless_current "#{icon('twitter')}".html_safe, "https://www.twitter.com", style: "font-size:24px; color: #55acee; margin-right: 30px;"%>
 			<%= link_to "#{icon('facebook')}".html_safe, "https://www.facebook.com", style: "font-size:24px; color: #4c66a4; margin-right: 30px;" %>
 			<%= link_to "#{icon('instagram')}".html_safe, "https://www.instagram.com", style: "font-size:24px; color: #3f729b; margin-right: 30px;" %>
 			<%= link_to "#{icon('youtube-play')}".html_safe, "https://www.youtube.com", style:"font-size:24px; color: #e52d27; margin-right: 30px;" %>

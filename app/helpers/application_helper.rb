@@ -30,6 +30,8 @@ module ApplicationHelper
   end
   
   def filter_active_class(path, main = false)
+    puts "@@@@@@@@@ path #{path}"
+    puts "@@@@@@@@@ current path #{current_page?(path)}"
     if main
       "active"
     else
