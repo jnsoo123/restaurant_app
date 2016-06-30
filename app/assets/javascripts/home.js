@@ -23,5 +23,12 @@ $(document).on("ready page:change", function() {
       parallax();
   });
   
-  $('.home-nav').affix({offset: {top: 600}});
+  $('.home-nav').affix({offset: {top: 620}});
+  $('.home-nav').on('affixed.bs.affix', function(){
+    $('.home-nav').addClass('animated slideInDown')
+  });
+  
+  setTimeout(function () {
+    $(".alert").hide('blind', {}, 50);
+  }, 5000);
 });

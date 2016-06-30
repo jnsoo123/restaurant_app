@@ -9,7 +9,7 @@
 		  </p>
         </div>
         <div class="col-md-6">
-          <%= form_for(@restaurant, url: restaurants_path, remote: true) do |f| %>
+          <%= form_for(@restaurant, url: restaurants_path) do |f| %>
             <div class="form-group">
               <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: t('.restoname'), required: true %>
             </div>

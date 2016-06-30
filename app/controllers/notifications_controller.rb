@@ -3,6 +3,7 @@ class NotificationsController < ApplicationController
   before_action :set_notification, only: :destroy
   
   respond_to :html
+  respond_to :js, only: :destroy
   layout 'owner'
   
   def index
@@ -11,7 +12,9 @@ class NotificationsController < ApplicationController
   end
   
   def destroy
-    
+    @notification.destroy
+    flash[:success] = "Message deleted."
+    respond_with(@notification)
   end
   
   private
