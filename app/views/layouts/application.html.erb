@@ -6,12 +6,11 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-  
 </head>
 <body>
 
   <div class="wrapper">
-    <nav id="top-nav" class="navbar navbar-default" style="margin-bottom: 0px;">
+    <nav id="top-nav" class="navbar navbar-default" style="margin-bottom: 0px;" data-spy="affix" data-offset-top="600">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -59,6 +58,7 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    
 
     <% if success %>
       <div class="alert alert-success alert-dismissible" role="alert">
@@ -87,61 +87,7 @@
       </div>
     <% end %>
     
-    <div class="container search_container">
-      <div class="jumbotron" style="margin-top: 0px; background-color: whitesmoke;">
-
-        <h1 class="text-center">Fudz Finder</h1>
-        <p class="text-center" style="color: #9c9c9c;">find fud for your appetite</p>
-        <div style='text-align: center;'>
-          <%= form_tag(restaurant_search_path, method: :get, id: 'search_form') do %>
-            <div class="input-group" style="">
-              <%= text_field_tag :searchQuery, nil, class: "form-control", placeholder: "Search for fudz/cuisine/dishes...", id: 'search_field', required: true %>    
-              <span class="input-group-btn">
-                <%= submit_tag "Go", class: "btn btn-default"%>
-                    <!-- <button class="btn btn-default" type="button">Go!</button> -->
-              </span>
-            </div>
-
-          <% end %>
-            <div class="row search" style="margin-top: 10px;">
-              <div class="col-md-12">
-                <div class="dropdown">
-                  <%= link_to "Search tools#{icon('caret-down', style: 'margin-left: 10px;')}".html_safe, nil, class: 'dropdown-toggle', data: { toggle: 'dropdown'} %>
-                  <ul class="dropdown-menu" style="width: 100%;">
-                    <% unless Food.all.empty? %>
-                      <%= form_tag(restaurant_search_path, method: :get, style: 'padding: 20px;', id: 'filter_search_form') do %>
-                        <div class="form-group">
-                          <%= select_tag :cuisine, options_from_collection_for_select(Cuisine.all,"id","name"), prompt: 'Select a Cuisine', class: 'form-control' %>
-                        </div>
-                        Filter by price range:
-                        <div class="row">
-                          <div class="col-md-3 col-sm-3 col-xs-3">
-                            <b>PHP <%= Food.min %></b> 
-                          </div>
-                          <div class="col-md-6 col-sm-6 col-xs-6">
-                            <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= Food.min %>,<%= Food.max %>]"/> 
-                          </div>
-                          <div class="col-md-3 col-sm-3 col-xs-3">
-                            <b class="pull-right">PHP <%= Food.max %></b>
-                          </div>
-                        </div>
-
-
-                        <%= hidden_field_tag :searchQuery, '', id: 'filter_search_field' %>
-                        <div class="actions" style="margin-top: 20px;">
-                          <%= submit_tag 'Search', class: 'btn btn-default', style: 'width: 100%;', id: 'filter_search_button'%>
-                        </div>
-                      <% end %>
-                    <% else %>
-                      <h4 class="text-center" style='padding: 20px;'>No available dishes yet.</h4>
-                    <% end %>
-                  </ul>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
+    
 
 
 
