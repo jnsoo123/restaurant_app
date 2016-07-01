@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-9 search_result">
       <% unless @result.blank? %>
-        <div class="list-group">
+        <div class="list-group restos">
           <% @result.each do |resto| %>
             <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 hvr-grow">
               <%= link_to resto, class: "list-group-item", style: "margin-bottom: 10px; height: 175px; padding: 0px;" do %>

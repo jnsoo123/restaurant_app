@@ -15,9 +15,9 @@
 .fileUpload {
   position: relative;
   overflow: hidden;
-  width: 150px;
-  height: 150px;
-  padding: 55px 0 55px 0;
+//  width: 150px;
+//  height: 150px;
+//  padding: 55px 0 55px 0;
 }
 .fileUpload input.upload {
   position: absolute;
@@ -91,3 +91,10 @@ fieldset, label { margin: 0; padding: 0; }
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+
+
+
+iframe {
+  height: 250px!important;
+  width: 250px!important;
+}

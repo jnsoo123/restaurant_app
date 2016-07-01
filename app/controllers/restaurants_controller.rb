@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :reject]
-  before_action :set_destroy_restaurant, only: [:destroy]
+  before_action :set_pending_restaurant, only: [:destroy, :update]
   before_action :set_owner_restaurant, only: [:owner_edit, :owner_patch]
   skip_before_action :authenticate_user!, only: [:show, :search]
   layout 'owner', only: [:owner_edit, :owner_new]
@@ -104,16 +104,15 @@ class RestaurantsController < ApplicationController
   end
   
   def update    
-    name = @restaurant.name
-      if @restaurant.update(restaurant_params)
-        flash[:success] = "<strong>#{name}</strong> has been successfully updated!"
-        respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
-      else
-        flash[:failure] = "<dl><dt>#{name} was not successfully updated because:</dt>" 
-        @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-        flash[:failure] << "</dl>"
-        redirect_to owner_resto_edit_path(@restaurant)
-      end
+    if @restaurant.update(restaurant_params)
+      flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
+      respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
+    else
+      flash[:failure] = "<dl><dt>#{@restaurant.name} was not successfully updated because:</dt>" 
+      @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "</dl>"
+      redirect_to owner_resto_edit_path(@restaurant)
+    end
   end
   
   def destroy
@@ -142,7 +141,7 @@ class RestaurantsController < ApplicationController
   end
   
   
-  def set_destroy_restaurant
+  def set_pending_restaurant
     @restaurant = Restaurant.find_by_id(params[:id])
   end
 

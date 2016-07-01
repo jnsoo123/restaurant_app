@@ -18,7 +18,6 @@ ActiveAdmin.register Cuisine do
   show do
     attributes_table do
       row :name
-      row :description
       row :avatar do
         image_tag cuisine.avatar.url, style: 'width: 300px;'
       end

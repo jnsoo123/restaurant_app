@@ -115,7 +115,17 @@
 </div>
 
 <div style="width: 100%;">
-  <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Photos</h4>
+  <div class="clearfix" style="border-bottom: 1px solid #a1a1a1; margin-bottom: 15px;">
+    <h4 class="pull-left" style="color: #6b6b6b">Photos</h4>
+    <div class="fileUpload btn btn-default pull-right">
+      <span><%= icon('plus', 'Add Photos')%></span>
+      <%= form_for(@picture) do |f| %> 
+        <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+        <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+      <% end %>
+    </div>
+  </div>  
+  
   <div class="row pic-row" style = 'padding-left: 20px;'>
     <% unless @restaurant.pictures.empty? %>
       <% @restaurant.pictures.where(status: true).each do |picture| %>
@@ -124,17 +134,9 @@
         </div>
          <% end %>
       <% end %>
+    <% else %>
+      <p style="margin-left: -5px;">No Photos.</p>
     <% end %>
-    
-    <div class="col-md-12 col-xs-12 col-sm-12">
-      <div class="fileUpload btn btn-default btn-add-pic">
-        <span><%= icon('plus', "<br>Add Images".html_safe, style: '')%></span>
-        <%= form_for(@picture) do |f| %> 
-          <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
-          <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-        <% end %>
-      </div>
-    </div>
     
   </div>
 </div>
