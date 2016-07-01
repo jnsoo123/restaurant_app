@@ -29,11 +29,20 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li class="<%= filter_active_class(home_path) %> hvr-pulse"><%= link_to t('.home'), home_path, class: '' %></li>
+            <% if user_signed_in? %>
+              <li class=" hvr-pulse"><%= link_to "All Cuisines", cuisines_path %></li>
+            <% end %>
             <li class="<%= filter_active_class(restaurant_search_path)%> hvr-pulse"><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
             <% if current_page?(home_path) %>
               <li class=" hvr-pulse"><a href="#cuisines"><%= t('.cuisines')%></a></li>
               <li class=" hvr-pulse"><a href="#reviews"><%= t('.reviews')%></a></li>
-              <li class=" hvr-pulse"><a href="#make_a_resto">Make a Resto</a></li>
+              <% if user_signed_in? %>
+                <% unless current_user.restaurants.present? %>
+                  <li class=" hvr-pulse"><a href="#make_a_resto">Make a Resto</a></li>
+                <% end %>
+              <% else %>
+                <li class=" hvr-pulse"><a href="#make_a_resto">Make a Resto</a></li>
+              <% end %>  
             <% end %>
             <% if user_signed_in? %>
               <li class="dropdown">
