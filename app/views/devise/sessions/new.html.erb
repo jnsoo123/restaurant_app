@@ -20,8 +20,9 @@
         <span class="input-group-addon">
           <%= icon('user') %>
         </span>
-        <%= f.email_field :email, autocomplete: :on, class: 'form-control', placeholder: t('.placeemail'), autofocus: true, required: true %>
+        <%= f.text_field :username, autocomplete: :on, class: 'form-control', placeholder: "Username", autofocus: true, required: true %>
       </div>
+
       <div class="input-group input-group-lg" style="margin-bottom: 10px;">
         <span class="input-group-addon">
           <%= icon('lock', style: 'width: 15px;') %>
