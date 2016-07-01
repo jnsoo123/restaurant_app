@@ -50,7 +50,7 @@ class RestaurantsController < ApplicationController
 
   def show
     if @restaurant.blank?
-      render text: "404 page not Found", status: 404
+      render template: 'errors/404', status: 404
     else
       @picture = Picture.new
       @rating = Rating.new

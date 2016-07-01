@@ -9,7 +9,8 @@
       <div class="col-md-4">
         <%= link_to(owner_resto_edit_path(resto)) do %>
           <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px;">
-            <%= image_tag(display_resto(resto), style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+            <div style = 'background-image: url(<%= asset_path(display_resto(resto)) %>); background-repeat: no-repeat; background-size: cover; background-position: center; min-height: 200px;'></div>
+            
             <div class="caption">
               <% if resto.status == 'Pending' %>
                 <p><span class="label label-warning"><%= resto.status %></span></p>
@@ -61,8 +62,8 @@
     <% end %>
     <div class="col-md-4">
         <%= link_to(owner_resto_new_path) do %>
-          <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px; height: 454px;">
-            <%= image_tag("plus.png", style: 'height: 220px; padding: 0px;', class: 'img-responsive') %>
+          <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px; height: 434px;">
+            <div style = 'background-image: url(<%= asset_path("plus.png") %>); background-repeat: no-repeat; background-size: contain; background-position: center; min-height: 200px;'></div>
             <div class="caption">
               <p><span class="label label-success">New</span></p>
               <h3>Add a Restaurant</h3>
