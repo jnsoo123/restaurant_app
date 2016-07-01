@@ -28,16 +28,16 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li class="<%= filter_active_class(home_path) %>"><%= link_to t('.home'), home_path %></li>
-            <li class="<%= filter_active_class(restaurant_search_path)%>"><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
+            <li class="<%= filter_active_class(home_path) %> hvr-pulse"><%= link_to t('.home'), home_path, class: '' %></li>
+            <li class="<%= filter_active_class(restaurant_search_path)%> hvr-pulse"><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
             <% if current_page?(home_path) %>
-              <li><a href="#cuisines"><%= t('.cuisines')%></a></li>
-              <li><a href="#reviews"><%= t('.reviews')%></a></li>
-              <li><a href="#make_a_resto">Make a Resto</a></li>
+              <li class=" hvr-pulse"><a href="#cuisines"><%= t('.cuisines')%></a></li>
+              <li class=" hvr-pulse"><a href="#reviews"><%= t('.reviews')%></a></li>
+              <li class=" hvr-pulse"><a href="#make_a_resto">Make a Resto</a></li>
             <% end %>
             <% if user_signed_in? %>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height: 100%;">
+                <a href="#" class="dropdown-toggle hvr-pulse" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height: 100%;">
                   <%= icon('user', current_user.name, style: 'margin-right: 5px;') %>
                   <%= icon('chevron-down', style: 'margin-left: 5px;') %>
                 </a>
@@ -55,7 +55,7 @@
                 </ul>
               </li>
             <% else %>
-              <li><%= link_to icon('user', "Login", style: 'margin-right: 8px;'), new_user_session_path %></li>
+              <li class=" hvr-pulse"><%= link_to icon('user', "Login", style: 'margin-right: 8px;'), new_user_session_path %></li>
             <% end %>
 
           </ul>

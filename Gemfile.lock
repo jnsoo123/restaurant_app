@@ -132,6 +132,8 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     hike (1.2.3)
+    hover-rails (2.0.2)
+      railties (>= 3.2)
     i18n (0.7.0)
     inherited_resources (1.6.0)
       actionpack (>= 3.2, < 5)
@@ -335,6 +337,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   font-awesome-sass (~> 4.6.2)
+  hover-rails
   jbuilder (~> 1.2)
   jquery-atwho-rails
   jquery-rails

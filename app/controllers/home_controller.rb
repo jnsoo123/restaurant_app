@@ -3,9 +3,9 @@ class HomeController < ApplicationController
   respond_to :html
   
   def index
-    @restaurants = Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(6)
-    @cuisines = Cuisine.all
-    @ratings = Rating.order(created_at: :desc)
+    @restaurants = Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(12)
+    @cuisines = Cuisine.all.limit(12)
+    @ratings = Rating.order(created_at: :desc).limit(4)
   end
   
   def about

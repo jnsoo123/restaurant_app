@@ -1,27 +1,30 @@
 <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
   <h4 class="pull-left" style="color: #6b6b6b;">My Messages</h4>
 </div>
-
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
-      <tr style="background-color: #404040;">
-        <th>#</th>
-        <th>Message</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @notifications.each_with_index do |noti, index| %>
-        <tr>
-          <td><%= index+1 %></td>
-          <td class="notification_messages">
-            <p><%= noti.message.html_safe %></p>
-            <small style="color: #bbb"><%= noti.created_at.strftime("%B %d, %Y")%></small>
-          </td>
-          <td><%= link_to 'Delete', delete_notification_path(noti), method: :delete, class: 'btn btn-danger' %></td>
+<% unless @notifications.blank? %>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr style="background-color: #404040;">
+          <th>#</th>
+          <th>Message</th>
+          <th>Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <% @notifications.each_with_index do |noti, index| %>
+          <tr>
+            <td><%= index+1 %></td>
+            <td class="notification_messages">
+              <p><%= noti.message.html_safe %></p>
+              <small style="color: #bbb"><%= noti.created_at.strftime("%B %d, %Y")%></small>
+            </td>
+            <td><%= link_to 'Delete', delete_notification_path(noti), method: :delete, class: 'btn btn-danger' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <h3>No messages.</h3>
+<% end %>
