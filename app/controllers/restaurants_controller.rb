@@ -117,7 +117,6 @@ class RestaurantsController < ApplicationController
   
   def destroy
     name = @restaurant.name
-
     if @restaurant.destroy
       flash[:success] = "<strong>#{name}</strong> has been deleted!"
       respond_with(@restaurant, location: users_restaurant_path)

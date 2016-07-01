@@ -1,19 +1,27 @@
-<% if !@cuisines.nil? %>
-<table class = 'table'>
-	<th><%= t('.name')%></th>
-	<th><%= t('.description')%></th>
-<% @cuisines.each do |cuisine| %>
-	<tr>
-		<td><%= cuisine.name%></td>
-		<td><%= cuisine.description%></td>
-		<td><%= link_to t('.updatecuisine'), edit_cuisine_path(cuisine.id) %></td>
-		<td><%= link_to t('.removecuisine'), cuisine, method: :delete, 
-				data: { confirm: 'Are you sure?' }  %></td>
-	</tr>
-<% end %>
-</table>
-<% else %>
-	<%= t('.nocuisine')%>
-<% end%>
-
-<%= link_to t('.createcuisine'), new_cuisine_path %>
+<div id="cuisines" class="container wow bounceInUp">
+  <h3><br>Explore the list of cuisines</h3><br>
+    <% unless Cuisine.all.empty? %>
+      <div class="row thumbnail_panel">
+        <% @cuisines.each do |cuisine| %>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 hvr-grow ">
+            <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
+              <div class="thumbnail text-center" style="padding: 0px; border: 0; border-radius: 0px; height: 285px;">
+                <div style = 'background-image: url(<%= cuisine.avatar.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; min-height: 200px;'></div>
+                
+                <div class="caption">
+                  <h3><%= cuisine.name %></h3>
+                </div>
+              
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <ul class="list-group">
+        <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
+          <h3 class="text-center" style="padding-top: 50px">No Cuisines available yet</h3>
+        </li>
+      </ul>
+    <% end %>
+</div>
