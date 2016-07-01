@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701021905) do
+ActiveRecord::Schema.define(version: 20160701074410) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -98,6 +98,17 @@ ActiveRecord::Schema.define(version: 20160701021905) do
   end
 
   add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id"
+
+  create_table "schedules", force: :cascade do |t|
+    t.string   "day"
+    t.string   "opening"
+    t.string   "closing"
+    t.integer  "restaurant_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "schedules", ["restaurant_id"], name: "index_schedules_on_restaurant_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false

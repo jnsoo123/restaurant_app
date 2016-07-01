@@ -66,6 +66,7 @@ class RestaurantsController < ApplicationController
   def owner_edit
     @foods = @restaurant.foods
     @ratings = @restaurant.ratings
+    @schedules = @restaurant.schedules
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
   end
