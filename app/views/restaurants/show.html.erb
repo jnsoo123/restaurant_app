@@ -56,7 +56,22 @@
       <h3 class="text-center">No menu available.</h3>
     <% end %>
   </div>
-  <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
+  
+  <div class="clearfix">
+    <h3 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
+    <div class="fileUpload btn btn-default pull-right">
+      <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{'Add Photos' if user_signed_in? }")%></span>
+      <%= form_for(@picture) do |f| %> 
+        <% if user_signed_in? %>
+          <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+        <% else %>
+          <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
+        <% end %>
+        <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+        <% end %>
+    </div>
+  </div>
+  
 
   <div id="picture-part">
     <div class="row pic-row" style = 'padding-left: 20px;'>
@@ -69,20 +84,6 @@
            <% end %>
         <% end %>
       <% end %>
-
-      <div class="col-md-12 col-xs-12 col-sm-12">
-        <div class="fileUpload btn btn-default btn-add-pic" style="width: 157px; height: 150px;">
-          <span><%= icon('plus', "<br>#{'Add images' if user_signed_in? }#{'Sign in to add images' unless user_signed_in? }".html_safe, style: '')%></span>
-          <%= form_for(@picture) do |f| %>
-            <% if user_signed_in? %>
-              <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
-            <% else %>
-              <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
-            <% end %>
-            <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-          <% end %>
-        </div>
-      </div>
     </div>
   </div>
 
