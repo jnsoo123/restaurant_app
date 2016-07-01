@@ -1,9 +1,9 @@
-<div id="cuisines" class="container">
+<div id="cuisines" class="container wow bounceInUp">
   <h3><%= t('.popular')%><br><small>Explore popular cuisines in the world</small></h3>
     <% unless Cuisine.all.empty? %>
       <div class="row thumbnail_panel">
         <% @cuisines.each do |cuisine| %>
-          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12  ">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 hvr-grow ">
             <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
               <div class="thumbnail text-center" style="padding: 0px; border: 0; border-radius: 0px; height: 375px;">
                 <div style = 'background-image: url(<%= cuisine.avatar.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; min-height: 200px;'></div>
