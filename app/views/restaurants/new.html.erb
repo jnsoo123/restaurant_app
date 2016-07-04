@@ -19,6 +19,36 @@
             <div class="form-group">
               <%= f.text_area :address, class: 'form-control', placeholder: t('.restoaddress'), required: true %>
             </div>
+            <p>Click the map to set up your restaurant's location</p>
+            <div id="map" style="height: 400px; margin: 5px;"></div>
+            <script>
+              
+              var map;
+              var marker;
+
+              function initMap() {
+                var metromanila = {lat: 14.597537989987021, lng: 120.98281860351562};
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 12,
+                  center: metromanila
+                });
+                map.addListener('click', function(event) {
+                  marker.setPosition(event.latLng);
+                  console.log(marker.getPosition().lat())
+                  console.log(marker.getPosition().lng())
+                });
+                addMarker(metromanila);
+              }
+              function addMarker(location) {
+                marker = new google.maps.Marker({
+                  position: location,
+                  map: map
+                });
+              }
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
+            </script>
             <div class="form-group">
               <%= f.text_field :contact, class: 'form-control', placeholder: t('.contact'), required: true %>
             </div>
