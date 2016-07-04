@@ -4,6 +4,8 @@ class SchedulesController < ApplicationController
   respond_to :js, only: [:new, :edit, :create]
 
   def new
+    @days = []
+    Date::DAYNAMES.each_with_index { |x, i| @days << [x, x] }
     @schedule = Schedule.new
     @schedule.restaurant = current_user.restaurants.find(params[:resto_id])
     respond_with(@schedule)
@@ -58,7 +60,7 @@ class SchedulesController < ApplicationController
   end
   
   def schedule_params
-    params.require(:schedule).permit(:day, :opening, :closing)
+    params.require(:schedule).permit(:day, :opening, :closing)    
   end
   
 end  

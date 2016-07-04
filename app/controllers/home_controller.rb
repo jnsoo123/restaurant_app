@@ -3,6 +3,8 @@ class HomeController < ApplicationController
   respond_to :html
   
   def index
+    @days = []
+    Date::DAYNAMES.each_with_index { |x, i| @days << [x, x] }
     @restaurants = Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(8)
     @cuisines = Cuisine.all.limit(8)
     @ratings = Rating.order(created_at: :desc).limit(4)

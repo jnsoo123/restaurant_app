@@ -35,7 +35,22 @@
                         <b class="pull-right">PHP <%= Food.max %></b>
                       </div>
                     </div>
-
+                     
+                      <div class='input-group datetimepicker'>
+                        <%= label_tag :day, "From: "%>
+                          <%= text_field_tag :opening, class: 'form-control'%>
+                          <span class="input-group-addon">
+                             <i class="fa fa-calendar" aria-hidden="true"></i>
+                          </span>
+                      </div>
+                                  
+                      <div class='input-group datetimepicker'>
+                        <%= label_tag :day, "To: "%>
+                          <%= text_field_tag :closing, class: 'form-control'%>
+                          <span class="input-group-addon">
+                             <i class="fa fa-calendar" aria-hidden="true"></i>
+                          </span>
+                      </div>
 
                     <%= hidden_field_tag :searchQuery, '', id: 'filter_search_field' %>
                     <div class="actions" style="margin-top: 20px;">
