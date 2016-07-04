@@ -6,7 +6,7 @@
   <%= form_for(@food, url: food_path(@food.id), method: :put) do |f| %>
     <div class="form-group">
       <%= f.label t('.dish') %>
-      <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname')%>
+      <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname'), required: true%>
     </div>
     <div class="form-group">
       <%= f.label :description, t('.description') %>
@@ -14,11 +14,11 @@
     </div>
     <div class="form-group">
       <%= f.label :price, t('.price')%>
-      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish')%>
+      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true%>
     </div>
     <div class="form-group">
       <%= f.label t('.selectcuisine')%>
-      <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name', @food.cuisine.id),{},class: 'form-control' %>
+      <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name', @food.cuisine.id),{},class: 'form-control', required: true %>
     </div>
     <div class="actions">
       <%= f.submit t('.editdish'), class: 'btn btn-primary', style: 'width: 100%;' %>

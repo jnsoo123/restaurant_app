@@ -2,7 +2,7 @@ class Food < ActiveRecord::Base
   belongs_to :cuisine
   belongs_to :restaurant
   
-  validates :name, :price, :description, :cuisine, presence: true
+  validates :name, :price, :cuisine, presence: true
   validates_numericality_of :price, greater_than: 0
   
   def self.search_by_name(query)

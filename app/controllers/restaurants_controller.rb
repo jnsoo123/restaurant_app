@@ -93,6 +93,10 @@ class RestaurantsController < ApplicationController
     name = @restaurant.name
     
     if @restaurant.save
+      if params[:latitude].present? 
+        Location.create(latitude: params[:latitude], longitude: params[:longitude], restaurant: @restaurant)
+        @restaurant.update(address: @restaurant.location.address)
+      end
       flash[:success] = "<strong>#{name}</strong> has been successfully created!"
       respond_with(@restaurant, location: users_restaurant_path)
     else

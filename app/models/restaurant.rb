@@ -7,7 +7,8 @@ class Restaurant < ActiveRecord::Base
   has_many :foods, dependent: :destroy
   has_many :pictures, dependent: :destroy
   has_many :schedules, dependent: :destroy
-  
+  has_many :cuisines, through: :foods
+  has_one :location
   validates :name, :description, :address, :contact, :user, presence: true
 
   def ave_ratings

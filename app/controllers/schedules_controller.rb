@@ -27,6 +27,8 @@ class SchedulesController < ApplicationController
   end
   
   def edit
+    @days = []
+    Date::DAYNAMES.each_with_index { |x, i| @days << [x, x] }
   end
   
   def update
