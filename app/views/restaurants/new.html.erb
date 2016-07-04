@@ -30,13 +30,15 @@
                 var metromanila = {lat: 14.597537989987021, lng: 120.98281860351562};
 
                 map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 12,
+                  zoom: 14,
                   center: metromanila
                 });
                 map.addListener('click', function(event) {
                   marker.setPosition(event.latLng);
                   console.log(marker.getPosition().lat())
                   console.log(marker.getPosition().lng())
+                  $("#latitude").val(marker.getPosition().lat())
+                  $("#longitude").val(marker.getPosition().lng())
                 });
                 addMarker(metromanila);
               }
@@ -52,6 +54,8 @@
             <div class="form-group">
               <%= f.text_field :contact, class: 'form-control', placeholder: t('.contact'), required: true %>
             </div>
+            <%= hidden_field_tag :latitude %>
+            <%= hidden_field_tag :longitude %>
             <div class="actions">
               <%= f.submit t('.submitresto'), class: 'btn btn-primary', style: 'width: 100%;' %>
             </div>

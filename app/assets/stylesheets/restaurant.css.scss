@@ -1,6 +1,6 @@
 .resto-container {
   margin-top: 20px; 
-  max-width: 750px; 
+  max-width: 1000px; 
   background-color: #fff;
 }
 
@@ -97,4 +97,10 @@ fieldset, label { margin: 0; padding: 0; }
 iframe {
   height: 250px!important;
   width: 250px!important;
+}
+
+div.list-group.nearbys {
+  a {
+    border: none;
+  }
 }
