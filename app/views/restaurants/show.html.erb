@@ -27,9 +27,9 @@
       <% end %>
       <div style="padding: 10px; margin-top: -5px;">
         <h4>Restaurants Near You</h4>
-        <% if @restaurant.location.nearbys(10).present? %>
+        <% if @restaurant.location.nearbys(5).present? %>
           <div class="list-group nearbys" style="">
-            <% @restaurant.location.nearbys(10).each do |location| %>
+            <% @restaurant.location.nearbys(5).each do |location| %>
               <% if location.restaurant.status == 'Accepted' %>
                 <%= link_to location.restaurant, class: 'list-group-item' do %>
                   <div class="row">

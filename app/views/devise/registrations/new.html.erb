@@ -1,6 +1,6 @@
 <div id="signupform" class="container">
-  <div class="form-header">
-    <div class="text-center"><%= t('.signup')%></div>
+  <div class="form-header" style="background-color: #CF2228; color: #fff;">
+    <div class="text-center" ><%= t('.signup')%></div>
   </div>
   <div class="form-body">
 	<%= devise_error_messages! %>
@@ -31,7 +31,7 @@
       </div>
 
       <div class="actions">
-        <%= f.submit t('.signup'), class: 'btn btn-primary', style: 'width: 100%;' %>
+        <%= f.submit t('.signup'), class: 'btn btn-danger', style: 'width: 100%;' %>
       </div>
     <% end %>
   </div>

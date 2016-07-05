@@ -2,19 +2,19 @@
   <% if notice %>
   <%= notice %>
   <% end %>
-  <div class="form-header">
+  <div class="form-header" style="background-color: #CF2228; color: #fff">
     <div class="text-center"><%= t('.login')%></div>
   </div>
   <div class="form-body">
 	
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 	
-	<%= devise_error_messages! %>
-	<% if flash[:alert] && !flash[:alert].include?('You need to sign in or sign up before continuing.') %>
-	    <div class="alert alert-danger" role="alert">
-	        <%= flash[:alert] %>
-	    </div>
-	<% end %>
+      <%= devise_error_messages! %>
+      <% if flash[:alert] && !flash[:alert].include?('You need to sign in or sign up before continuing.') %>
+        <div class="alert alert-danger" role="alert">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
 
       <div class="input-group input-group-lg" style="margin-bottom: 10px;">
         <span class="input-group-addon">
@@ -31,8 +31,8 @@
       </div>
 
       <div class="actions">
-        <%= f.submit t('.login'), class: 'btn btn-primary', style: 'width: 100%; height: 46px; margin-bottom: 10px;' %>
-        <%= link_to t('.signup'), new_user_registration_path, class: 'btn btn-success', style: 'width: 100%; height: 46px; padding-top: 12px; margin-bottom: 10px;' %>
+        <%= f.submit t('.login'), class: 'btn btn-danger', style: 'width: 100%; height: 46px; margin-bottom: 10px;' %>
+        <%= link_to t('.signup'), new_user_registration_path, class: 'btn btn-primary outline', style: 'width: 100%; height: 46px; padding-top: 12px; margin-bottom: 10px;' %>
         <%= link_to t('.forgotpass'), new_password_path(resource_name) %><br />
       </div>
     <% end %>
