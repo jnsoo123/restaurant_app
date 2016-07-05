@@ -59,7 +59,43 @@
         </div>
       </div>
       <div class="col-md-12">
-        <%= f.submit t('.updateresto'), class: 'btn btn-primary center-block', style: 'width: 100%; height: 40px;' %>
+        <h4>Edit Map Location</h4>
+        <div id="map" style="height: 250px; margin-bottom: 10px;"></div>
+        <script>
+
+          var map;
+          var marker;
+
+          function initMap() {
+            var init_location = {lat: <%= @restaurant.location.latitude %>, lng: <%= @restaurant.location.longitude %>};
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 14,
+              center: init_location
+            });
+            map.addListener('click', function(event) {
+              marker.setPosition(event.latLng);
+              console.log(marker.getPosition().lat())
+              console.log(marker.getPosition().lng())
+              $("#latitude").val(marker.getPosition().lat())
+              $("#longitude").val(marker.getPosition().lng())
+            });
+            addMarker(init_location);
+          }
+          function addMarker(location) {
+            marker = new google.maps.Marker({
+              position: location,
+              map: map
+            });
+          }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
+        </script>
+      </div>
+      <%= hidden_field_tag :latitude, value: "#{@restaurant.location.latitude}" %>
+      <%= hidden_field_tag :longitude, value: "#{@restaurant.location.longitude}" %>
+      <div class="col-md-12">
+        <%= f.submit t('.updateresto'), class: 'btn btn-primary center-block outline' %>
       </div>
     </div>
     
@@ -67,7 +103,7 @@
 </div>
 
 <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
-  <h4 class="pull-left" style="color: #6b6b6b;">Schedule</h4>
+  <h4 class="pull-left" style="color: #6b6b6b;">Schedules</h4>
   <%= link_to "#{icon('plus', "Add Schedule", style: 'margin-right: 10px;')}".html_safe, new_schedule_path(resto_id: @restaurant.id), class: 'time btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
 </div>
 

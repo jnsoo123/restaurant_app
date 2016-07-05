@@ -108,9 +108,10 @@ RSpec.describe RestaurantsController, type: :controller do
         before(:each) do
           @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
           :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-          :low_price_range => 10, :high_price_range => 20, :status => "Pending")
+          :status => "Pending", :website => "website", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
+          :cover => fixture_file_upload('sisig.jpg', 'image/jpg'))
 
-          put :update, :id => restaurant2.id, :restaurant => @restoAttributes, :path => 'dashboard'
+          put :update, :id => restaurant2.id, :restaurant => @restoAttributes
           restaurant2.reload
         end
       
@@ -128,9 +129,10 @@ RSpec.describe RestaurantsController, type: :controller do
         before(:each) do
           @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "",
           :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-          :low_price_range => 10, :high_price_range => 20, :status => "Pending")
-
-          put :update, :id => restaurant2.id, :restaurant => @restoAttributes, :path => 'dashboard'
+          :status => "Pending", :website => "website", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
+          :cover => fixture_file_upload('sisig.jpg', 'image/jpg'))
+         
+          put :update, :id => restaurant2.id, :restaurant => @restoAttributes
           restaurant2.reload
         end
         

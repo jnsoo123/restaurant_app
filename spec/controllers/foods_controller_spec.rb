@@ -71,7 +71,7 @@ RSpec.describe FoodsController, type: :controller do
     describe "delete #destroy" do
       before(:each) do
         @id = food1.id
-        delete :destroy, :id => food1.id
+        xhr :delete, :destroy, :id => food1.id
       end
       
       it "removes a food entry" do

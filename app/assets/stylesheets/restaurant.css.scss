@@ -104,3 +104,31 @@ div.list-group.nearbys {
     border: none;
   }
 }
+
+.panel {
+  border-radius: 0px;
+  border: none;
+  .panel-heading {
+    border-radius: 0px;
+    border: 1px solid #CF2228;
+  }
+  .panel-body{
+    border: 1px solid #e8e8e8;
+  }
+}
+
+ul.filters {
+  li.active {
+    a {
+      color: #CF2228;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+  li {
+    a{
+      color: #b8b8b8;
+    }
+  }
+}
+

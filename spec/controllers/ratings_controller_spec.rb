@@ -8,6 +8,8 @@ RSpec.describe RatingsController, type: :controller do
   
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Resto", :status => "Accepted", :user => user1)}
   let!(:restaurant2){FactoryGirl.create(:restaurant, :name => "AnotherResto", :status => "Accepted", :user => user2)}
+  let!(:rating2){FactoryGirl.create(:rating, :restaurant => restaurant2, :user => user3)}
+  
   
   context "if logged in as admin" do
     let!(:admin1){FactoryGirl.create(:user, :name => 'dave', :admin => true)}
@@ -97,8 +99,8 @@ RSpec.describe RatingsController, type: :controller do
       end
       
       it "creates a new rating entry" do
-        expect(Rating.count).to eq(1)
-        expect(Rating.find_by(user: user3).comment).to eq("Message in a bottle")
+        expect(Rating.count).to eq(2)
+        expect(Rating.where(user: user3).last.comment).to eq("Message in a bottle")
       end
     end
     
@@ -106,19 +108,44 @@ RSpec.describe RatingsController, type: :controller do
       before(:each) do
         post :create, :rating =>  FactoryGirl.attributes_for(:rating, :rate => 5,
         :restaurant_id => restaurant2.id, :comment => "Message in a bottle")
-        
-        @rating1 = Rating.last
-        
-        put :update, :id => @rating1.id ,:rating =>  FactoryGirl.attributes_for(:rating, :rate => 5,
-        :restaurant_id => restaurant2.id, :comment => "Message in a jar")
-        @rating1.reload
+      
+        @rating1 = Rating.find_by(comment: 'Message in a bottle')
       end
       
-      it "updated the message in the rating" do
-        expect(@rating1.comment).to match(/Message in a jar/)
+      context "Successful Update" do
+        before(:each) do
+          put :update, :id => @rating1.id ,:rating =>  FactoryGirl.attributes_for(:rating, :rate => 5,
+          :restaurant_id => restaurant2.id, :comment => "Message in a jar")
+          @rating1.reload
+        end
+      
+        it "updated the message in the rating" do
+          expect(@rating1.comment).to match(/Message in a jar/)
+        end
+      end
+      
+      context "Failed Update" do
+        before(:each) do
+          put :update, :id => @rating1.id ,:rating =>  FactoryGirl.attributes_for(:rating, :rate => "",
+          :restaurant_id => restaurant2.id, :comment => "Message in a jar")
+          @rating1.reload
+        end
+      
+        it "redirect to restaurant profile page" do
+          expect(response).to redirect_to(restaurant_path(restaurant2.id))
+        end
       end
     end
     
+    describe "get#edit" do
+      before(:each) do
+        xhr :get, :edit, :id => rating2.id
+      end
+      
+      it "renders edit template" do
+        expect(response).to render_template('edit')
+      end
+    end
   end
   
   

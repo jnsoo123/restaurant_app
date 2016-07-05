@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-3">
       <div class="panel panel-default">
-        <div class="panel-heading" style="background: #fff;">
+        <div class="panel-heading" style="background: #CF2228; color: #fff;">
           <h3 class="panel-title">Filters</h3>
         </div>
         <div class="panel-body">
@@ -61,7 +61,9 @@
           <% end %>
         </div>
       <% else %>
-        <h3 class="text-center">No Results Found!</h3>  
+        <h3 class="text-center">No Results Found!</h3>
+        <%= link_to "See all restaurants", restaurant_search_path(searchQuery: ""), class: 'btn btn-primary center-block', style: 'width: 200px;' %>
+        <h4 class="text-center"></h4>
       <% end %>
     </div>
   </div>
