@@ -16,6 +16,9 @@
                 <% unless Food.all.empty? %>
                   <%= form_tag(restaurant_search_path, method: :get, style: 'padding: 20px;', id: 'filter_search_form') do %>
                     <div class="form-group">
+                      <%= select_tag :location, options_from_collection_for_select(Location.where(restaurant_id: nil),"id","address",1), prompt: 'Select a Place', class: 'form-control' %>
+                    </div>
+                    <div class="form-group">
                       <%= select_tag :cuisine, options_from_collection_for_select(Cuisine.all,"id","name"), prompt: 'Select a Cuisine', class: 'form-control' %>
                     </div>
                     Filter by price range:

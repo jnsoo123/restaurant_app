@@ -43,7 +43,10 @@ class RestaurantsController < ApplicationController
     else
       @result = Restaurant.includes(:foods).order('foods.price desc').where(id: @search_result, status: 'Accepted')
     end
-  
+    if params[:location].present?
+      @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @result.map(&:id))
+    end
+    
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
