@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :authorize_owner, only: [:restaurants]
   
   def show
-    puts "@@@@@@@@#{@user}"
+#    puts "@@@@@@@@#{@user}"
   end
   
   def restaurants

@@ -2,9 +2,7 @@ $(document).on("ready page:change", function() {
   $(".owl-carousel").owlCarousel({
     singleItem: true
   });
-  
-  $('.datetimepicker').datetimepicker({format:'DD/MM/Y h:mm A'});
-  
+    
   $('#filter_search_button').click(function(e){
     e.preventDefault();
     $('#filter_search_field').val($('#search_field').val());

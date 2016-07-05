@@ -92,9 +92,8 @@ RSpec.describe RatingsController, type: :controller do
     
     describe "post #create" do
       before(:each) do
-        @initial = Rating.count
-        post :create, :rating =>  FactoryGirl.attributes_for(:rating, :rate => 5, :user => user3,
-        :restaurant => restaurant2, :comment => "Message in a bottle")
+        post :create, :rating =>  FactoryGirl.attributes_for(:rating, :rate => 5,
+        :restaurant_id => restaurant2.id, :comment => "Message in a bottle")
       end
       
       it "creates a new rating entry" do
@@ -102,6 +101,24 @@ RSpec.describe RatingsController, type: :controller do
         expect(Rating.find_by(user: user3).comment).to eq("Message in a bottle")
       end
     end
+    
+    describe "put#update" do
+      before(:each) do
+        post :create, :rating =>  FactoryGirl.attributes_for(:rating, :rate => 5,
+        :restaurant_id => restaurant2.id, :comment => "Message in a bottle")
+        
+        @rating1 = Rating.last
+        
+        put :update, :id => @rating1.id ,:rating =>  FactoryGirl.attributes_for(:rating, :rate => 5,
+        :restaurant_id => restaurant2.id, :comment => "Message in a jar")
+        @rating1.reload
+      end
+      
+      it "updated the message in the rating" do
+        expect(@rating1.comment).to match(/Message in a jar/)
+      end
+    end
+    
   end
   
   

@@ -6,15 +6,11 @@ class RestaurantsController < ApplicationController
   layout 'owner', only: [:owner_edit, :owner_new]
   before_action :authorize, only: [:listing, :reject, :edit]
   respond_to :html
-  
+
   def index
   end
 
   def search
-    
-    puts "@@@@@@@@#{params.inspect}"
-    
-    
     @search_result = []
     @main_active = false
     sort_type = params[:sort]
@@ -35,7 +31,9 @@ class RestaurantsController < ApplicationController
     end
     
     if sort_type == 'ratings'
+  #    puts "@@@@@@@@@@@@@@@@#{@search_result.inspect}"
       @result = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: @search_result, status: 'Accepted')
+  #    puts "@@@@@@@@@@@@@@@@#{@result.inspect}"
     elsif sort_type == 'name'
       @result = Restaurant.order('name').where(id: @search_result, status: 'Accepted')
     elsif sort_type == 'price_low_to_high'
@@ -47,6 +45,7 @@ class RestaurantsController < ApplicationController
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
+    
     respond_with(@result)
   end
 
@@ -57,7 +56,6 @@ class RestaurantsController < ApplicationController
       @picture = Picture.new
       @rating = Rating.new
     end
-    
   end
 
   def owner_new

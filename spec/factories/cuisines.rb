@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence :name do |n|
       "Cuisine#{n}"
     end
-    description "random stuff"
+    
+    avatar { File.open("#{Rails.root}/spec/support/sisig.jpg") }
   end
 end
