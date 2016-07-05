@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="col-md-12">
-        <h4>Edit Map Location</h4>
+        <h4><%= @restaurant.location.present? ? "Edit Map Location" : "Set up your location <small>(so that users can easily find your restaurant)</small>".html_safe %></h4>
         <div id="map" style="height: 250px; margin-bottom: 10px;"></div>
         <script>
 
@@ -67,7 +67,7 @@
           var marker;
 
           function initMap() {
-            var init_location = {lat: <%= @restaurant.location.latitude %>, lng: <%= @restaurant.location.longitude %>};
+            var init_location = {lat: <%= (@restaurant.location.present? ? @restaurant.location.latitude : "14.598451648903144") %>, lng: <%= (@restaurant.location.present? ? @restaurant.location.longitude : "120.98510786890984" ) %>};
 
             map = new google.maps.Map(document.getElementById('map'), {
               zoom: 14,
@@ -92,8 +92,8 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
         </script>
       </div>
-      <%= hidden_field_tag :latitude, value: "#{@restaurant.location.latitude}" %>
-      <%= hidden_field_tag :longitude, value: "#{@restaurant.location.longitude}" %>
+      <%= hidden_field_tag :latitude, value: (@restaurant.location.present? ? @restaurant.location.latitude : nil) %>
+      <%= hidden_field_tag :longitude, value: (@restaurant.location.present? ? @restaurant.location.longitude : nil) %>
       <div class="col-md-12">
         <%= f.submit t('.updateresto'), class: 'btn btn-primary center-block outline' %>
       </div>

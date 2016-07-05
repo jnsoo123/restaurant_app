@@ -115,8 +115,13 @@ class RestaurantsController < ApplicationController
   
   def update    
     if @restaurant.update(restaurant_params)
-      @restaurant.location.update(latitude: params[:latitude], longitude: params[:longitude])
-      @restaurant.update(address: @restaurant.location.address)
+      if @restaurant.location.present?
+        @restaurant.location.update(latitude: params[:latitude], longitude: params[:longitude])
+        @restaurant.update(address: @restaurant.location.address)
+      else
+        location = Location.create(latitude: params[:latitude], longitude: params[:longitude], restaurant_id: @restaurant.id)
+        @restaurant.update(address: location)
+      end
       flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
       respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
     else
