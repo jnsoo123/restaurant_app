@@ -110,6 +110,17 @@ ActiveRecord::Schema.define(version: 20160704044207) do
 
   add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id"
 
+  create_table "schedules", force: :cascade do |t|
+    t.string   "day"
+    t.string   "opening"
+    t.string   "closing"
+    t.integer  "restaurant_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "schedules", ["restaurant_id"], name: "index_schedules_on_restaurant_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false

@@ -11,6 +11,10 @@ class RestaurantsController < ApplicationController
   end
 
   def search
+    
+    puts "@@@@@@@@#{params.inspect}"
+    
+    
     @search_result = []
     @main_active = false
     sort_type = params[:sort]
@@ -39,12 +43,10 @@ class RestaurantsController < ApplicationController
     else
       @result = Restaurant.includes(:foods).order('foods.price desc').where(id: @search_result, status: 'Accepted')
     end
-    
-
+  
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
-    puts "@@@@@@@@#{@result.inspect}"
     respond_with(@result)
   end
 
@@ -66,6 +68,7 @@ class RestaurantsController < ApplicationController
   def owner_edit
     @foods = @restaurant.foods
     @ratings = @restaurant.ratings
+    @schedules = @restaurant.schedules
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
   end

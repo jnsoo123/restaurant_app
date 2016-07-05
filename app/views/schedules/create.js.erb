@@ -1,0 +1,4 @@
+<% unless @schedule.errors.any? %>
+  $('#myModal').modal("hide")
+  $('#sched_area').html("<%= j render(@schedule) %>")
+<% end %>  

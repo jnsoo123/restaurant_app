@@ -28,10 +28,8 @@
                       </div>
                       <div class="col-md-3 col-sm-3 col-xs-3">
                         <b class="pull-right">PHP <%= Food.max %></b>
-                      </div>
+                      </div>  
                     </div>
-
-
                     <%= hidden_field_tag :searchQuery, '', id: 'filter_search_field' %>
                     <div class="actions" style="margin-top: 20px;">
                       <%= submit_tag 'Search', class: 'btn btn-default', style: 'width: 100%;', id: 'filter_search_button'%>

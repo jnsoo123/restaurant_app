@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
+</div>
+<div class="modal-body">
+  <div id="sched_alert_area">
+  </div>
+  <%= form_for(@schedule, url: schedules_path(resto_id: @schedule.restaurant), remote: true) do |f| %>
+  
+    <div class="form-group">
+      <%= f.label "Available Day: " %><br/>
+      <%= f.select :day, @days, required: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label "Opening Time" %>
+      
+      <div class='input-group timepicker'>
+          <%= f.text_field :opening, class: 'form-control', required: true %>
+          <span class="input-group-addon">
+             <span class="glyphicon glyphicon-time"></span>
+          </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label "Closing Time" %>
+      
+      <div class='input-group timepicker'>
+          <%= f.text_field :closing, class: 'form-control', required: true %>
+          <span class="input-group-addon">
+             <span class="glyphicon glyphicon-time"></span>
+          </span>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <%= f.submit "Submit Schedule", class: 'btn btn-primary', style: 'width: 100%;' %>
+    </div>
+  
+  <% end %>
+</div>
+
