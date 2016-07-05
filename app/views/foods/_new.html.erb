@@ -20,7 +20,7 @@
       <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name'), { prompt: "Select a Cuisine"} ,class: 'form-control', required: true %>
     </div>
     <div class="actions">
-      <%= f.submit t('.submitdish'), class: 'btn btn-primary outline', style: 'width: 100%;' %>
+      <%= f.submit t('.submitdish'), class: 'btn btn-danger', style: 'width: 100%;' %>
     </div>
   
   <% end %>

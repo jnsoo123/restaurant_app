@@ -1,4 +1,15 @@
 $("#show-modal").html('<%= j render "new" %>')
 $('.timepicker').datetimepicker({
-  format: 'LT'
+  format: 'LT',
+  icons: {
+            time: 'fa fa-clock-o',
+            date: 'glyphicon glyphicon-calendar',
+            up: 'fa fa-chevron-up',
+            down: 'fa fa-chevron-down',
+            previous: 'glyphicon glyphicon-chevron-left',
+            next: 'glyphicon glyphicon-chevron-right',
+            today: 'glyphicon glyphicon-screenshot',
+            clear: 'glyphicon glyphicon-trash',
+            close: 'glyphicon glyphicon-remove'
+        }
 });

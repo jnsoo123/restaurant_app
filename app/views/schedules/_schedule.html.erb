@@ -15,7 +15,7 @@
               <td><%= sched.day %></td>
               <td><%= sched.opening %></td>
               <td><%= sched.closing %></td>
-              <td style="width: 150px;"><%= link_to t('.edit'), edit_schedule_path(sched.id), class: 'btn btn-warning', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), schedule_path(sched.id), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td style="width: 150px;"><%= link_to t('.edit'), edit_schedule_path(sched.id), class: 'btn btn-primary outline', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), schedule_path(sched.id), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
           <% end %>
         </tbody>

@@ -95,19 +95,15 @@
       <%= hidden_field_tag :latitude, value: "#{@restaurant.location.latitude}" %>
       <%= hidden_field_tag :longitude, value: "#{@restaurant.location.longitude}" %>
       <div class="col-md-12">
-        <%= f.submit t('.updateresto'), class: 'btn btn-primary center-block outline', style: ' ' %>
+        <%= f.submit t('.updateresto'), class: 'btn btn-primary center-block outline' %>
       </div>
     </div>
     
   <% end %>
 </div>
 
-<div style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px;">
-  
-</div>
-
 <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
-  <h4 class="pull-left" style="color: #6b6b6b;">Schedule</h4>
+  <h4 class="pull-left" style="color: #6b6b6b;">Schedules</h4>
   <%= link_to "#{icon('plus', "Add Schedule", style: 'margin-right: 10px;')}".html_safe, new_schedule_path(resto_id: @restaurant.id), class: 'time btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
 </div>
 
@@ -229,7 +225,7 @@
 
 <div style="width: 100%;">
   <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Not Happy?</h4>
-  <%= button_to "Delete Restaurant", restaurant_path(@restaurant), method: :delete, class: 'btn btn-warning', data: { confirm: 'Are you sure?' }%>
+  <%= button_to "Delete Restaurant", restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }%>
 </div>
 
 
