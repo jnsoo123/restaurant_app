@@ -1,15 +1,14 @@
-<div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('<%= asset_path('wall.jpg')%>') no-repeat center center;"></div>
+<div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('<%= asset_path('wall.jpg')%>') no-repeat center center;"></div>
 <div class="container search_container">
-  <div class="jumbotron jumbotron_search" style="padding: 150px 25px 0 25px; margin-bottom: -50px;">
-
-    <h1 class="text-center">Fudz Finder</h1>
+  <div class="jumbotron jumbotron_search" style="padding: 125px 25px 0 25px; margin-bottom: -50px;">
+    <h1 class="text-center" style="font-weight: 700; font-family: 'Poiret One', cursive; font-size: 100px;">Fudz Finder</h1>
     <p class="text-center">find fud for your appetite</p>
     <div style='text-align: center;'>
       <%= form_tag(restaurant_search_path, method: :get, id: 'search_form') do %>
         <div class="input-group">
           <%= text_field_tag :searchQuery, nil, class: "form-control search_field", placeholder: "Search for fudz/cuisine/dishes...", id: 'search_field', required: true %>
           <span class="input-group-btn">
-            <%= submit_tag "Go", class: "btn btn-default", style: 'height: 40px;'%>
+            <%= submit_tag "Search", class: "btn btn-default", style: 'height: 40px; background-color: #CF2228; color: #fff; border: 2px solid #CF2228;'%>
           </span>
         </div>
       <% end %>
@@ -49,5 +48,6 @@
           </div>
         </div>
     </div>
+    
   </div>
 </div>

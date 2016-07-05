@@ -4,7 +4,7 @@
         <div class="input-group">
           <%= text_field_tag :searchQuery, (@searchQuery.blank? ? nil : @searchQuery), class: "form-control search_field", placeholder: "Search for fudz/cuisine/dishes...", id: 'search_field', required: true %>
           <span class="input-group-btn">
-            <%= submit_tag "Go", class: "btn btn-default", style: 'height: 40px;'%>
+            <%= submit_tag "Search", class: "btn btn-default", style: 'height: 40px; background-color: #CF2228; color: #fff; border: 1px solid #CF2228;'%>
           </span>
         </div>
       <% end %>

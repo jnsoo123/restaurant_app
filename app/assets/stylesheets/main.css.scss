@@ -66,6 +66,9 @@ a {
 
 #top-nav {
   border-bottom: 2px solid #CF2228;
+  li a {
+    text-transform: uppercase;
+  }
   li.active {
     a {
       border-bottom: 2px solid #CF2228;
@@ -194,6 +197,12 @@ select.form-control {
     background-color: #CF2228!important;
     border-color: #CF2228!important;
   }
+}
+
+.btn-facebook {
+  border: 2px solid #3b5998;
+  color: #fff;
+  background-color: #3b5998;
 }
 
 .btn-primary.outline {
