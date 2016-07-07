@@ -31,9 +31,7 @@ class RestaurantsController < ApplicationController
     end
     
     if sort_type == 'ratings'
-  #    puts "@@@@@@@@@@@@@@@@#{@search_result.inspect}"
       @result = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: @search_result, status: 'Accepted')
-  #    puts "@@@@@@@@@@@@@@@@#{@result.inspect}"
     elsif sort_type == 'name'
       @result = Restaurant.order('name').where(id: @search_result, status: 'Accepted')
     elsif sort_type == 'price_low_to_high'
@@ -42,7 +40,9 @@ class RestaurantsController < ApplicationController
       @result = Restaurant.includes(:foods).order('foods.price desc').where(id: @search_result, status: 'Accepted')
     end
     if params[:location].present?
+    
       @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @result.map(&:id))
+
     end
     
     @searchQuery = params[:searchQuery]
