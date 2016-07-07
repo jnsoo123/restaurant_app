@@ -6,3 +6,37 @@
   }
 }
 
+#user-tabs {
+  li.active a {
+    border: none;
+    border-bottom: 2px solid #CF2228;
+    font-weight: 700;
+    color: #CF2228;
+  }
+  
+  li a {
+    color: #000;
+  }
+}
+
+.module {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.module > header {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 10px;
+}
+.module > header > h3 {
+  margin: 0;
+  color: white;
+  text-shadow: 0 1px 0 black;
+}
+
+* {
+  box-sizing: border-box;
+}

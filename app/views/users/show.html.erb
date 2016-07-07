@@ -15,32 +15,91 @@
   </div>
   
   <div class="row" style="margin-top: 20px; background-color: #fff; padding: 20px; margin-bottom: 60px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-    <h4>Fudline</h4>
-    <% unless @user.ratings.empty? %>
-      <% @user.ratings.order("created_at desc").each do |rate| %>
+    <ul id="user-tabs" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#fudline" aria-controls="fudline" role="tab" data-toggle="tab">Fudline</a></li>
+      <li role="presentation" class=""><a href="#reviewed" aria-controls="reviewed" role="tab" data-toggle="tab">Reviewed Restaurants</a></li>
+      <li role="presentation" class=""><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Uploaded Photos</a></li>
+    </ul>
+    
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="fudline" style="padding: 20px;">
+        <% unless @user.ratings.empty? %>
+          <% @user.ratings.order("created_at desc").each do |rate| %>
+            <div class="media">
+              <div class="media-left">
+                <%= image_tag(display_resto(rate.restaurant), width: 44, height: 44, class: 'img-circle') %>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading"><%= rate.restaurant.name %></h4>
+                <p style="color: #bbb"><%= rate.restaurant.address %></p>
+                <p>Rated <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>
+                <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
         <div class="media">
           <div class="media-left">
-            <%= image_tag(display_resto(rate.restaurant), width: 44, height: 44, class: 'img-circle') %>
+            <%= image_tag(display_user(@user), width: 44, height: 44, class: 'img-circle') %>
           </div>
           <div class="media-body">
-            <h4 class="media-heading"><%= rate.restaurant.name %></h4>
-            <p style="color: #bbb"><%= rate.restaurant.address %></p>
-            <p><%= @user.name %> rated <%= rate.rate%> star rating. <%= "Saying: #{rate.comment}" unless rate.comment.blank? %></p>
-            <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+            <h4 class="media-heading"><%= @user.name %></h4>
+            <p>Stared using Fudz Finder</p>
+            <p><%= distance_of_time_in_words_to_now(@user.created_at) %> ago</p>
           </div>
         </div>
-      <% end %>
-    <% end %>
-    <div class="media">
-      <div class="media-left">
-        <%= image_tag(display_user(@user), width: 44, height: 44, class: 'img-circle') %>
       </div>
-      <div class="media-body">
-        <h4 class="media-heading"><%= @user.name %></h4>
-        <p>Stared using Fudz Finder</p>
-        <p><%= distance_of_time_in_words_to_now(@user.created_at) %> ago</p>
+      <div role="tabpanel" class="tab-pane fade in" id="reviewed" style="padding: 20px;">
+        <% if @user.ratings.present? %>
+          <div class="row">
+            <% @user.ratings.each do |rating| %>  
+              <%= link_to rating.restaurant do %>
+                <div class="module col-md-4 col-sm-6 col-xs-12" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url('<%= asset_path(display_resto(rating.restaurant))  %>');background-repeat: no-repeat; background-position: center center; background-size: cover;">
+                  <header>
+                    <h3>
+                      <%= rating.restaurant.name %>
+                      <small style="color: #fff;">
+                        <% (rating.restaurant.ave_ratings.to_i).times do %>
+                          <%= icon('star') %>
+                        <% end %>
+                        <% unless rating.restaurant.ave_ratings % 1 == 0 %>
+                          <%= icon('star-half-o')%>
+                          <% (4 - rating.restaurant.ave_ratings.to_i).times do %>
+                            <%= icon('star-o') %>
+                          <% end %>
+                        <% else %>
+                          <% (5 - rating.restaurant.ave_ratings.to_i).times do %>
+                            <%= icon('star-o') %>
+                          <% end %>
+                        <% end %>
+                      </small>
+                    </h3>
+                  </header>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          
+        <% end %>
+        
+      </div>
+      <div role="tabpanel" class="tab-pane fade in" id="photos" style="padding: 20px;">
+        <div class="row pic-row" style = 'padding-left: 20px;'>
+          <% unless @user.pictures.empty? %>
+            <% @user.pictures.where(status: true).each do |picture| %>
+              <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+                <div class="col-md-3 col-sm-4 col-xs-6 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center;'>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <p style="margin-left: -5px;">No Photos.</p>
+          <% end %>
+        </div>
       </div>
     </div>
+    
   </div>
 </div>
 
