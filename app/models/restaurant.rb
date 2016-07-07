@@ -62,10 +62,6 @@ class Restaurant < ActiveRecord::Base
     foods.maximum(:price).to_i
   end
   
-  def hours
-    
-  end
-  
   def self.search_by_name(query)
     Restaurant.where("name LIKE ?","%#{query}%").map(&:id)
   end
