@@ -51,7 +51,7 @@ RSpec.describe FoodsController, type: :controller do
     
     describe "post #create" do
       before(:each) do
-        post :create, :food =>  FactoryGirl.attributes_for(:food, :name => "Bulgogi", :description => "meat",
+        xhr :post, :create, :food =>  FactoryGirl.attributes_for(:food, :name => "Bulgogi", :description => "meat",
         :price => 20, :cuisine_id => cuisine1.id, :restaurant_id => restaurant1.id), :resto_id => restaurant1.id
       end
       
@@ -64,14 +64,14 @@ RSpec.describe FoodsController, type: :controller do
       end
       
       it "renders owner restaurant edit page" do
-        expect(response).to redirect_to owner_resto_edit_path(id: restaurant1.id)
+        expect(response).to render_template('create')
       end
     end
     
     describe "delete #destroy" do
       before(:each) do
         @id = food1.id
-        delete :destroy, :id => food1.id
+        xhr :delete, :destroy, :id => food1.id
       end
       
       it "removes a food entry" do

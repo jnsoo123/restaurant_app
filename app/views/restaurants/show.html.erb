@@ -64,8 +64,8 @@
         <% end %>
       </div>
     </div>
-    <div class="pull-right" style="background-color: #fff;">
-      <div style="width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: 100% 100%">
+    <div class="pull-right">
+      <div style="width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
         <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px; color: green;') %></p>

@@ -142,7 +142,20 @@ a {
 
 footer{
   display:table-row;
-  height:1px
+  height:1px;
+  
+  .row{
+    text-align: center;
+  }
+  
+  [class^="icon-"], [class*=" icon-"] {
+      display: inline-block;
+      width: 100%;
+  }
+  
+  i{
+    text-align: center;
+  }
 }
 
 .floating_alert {

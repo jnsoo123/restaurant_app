@@ -31,5 +31,19 @@ RSpec.describe HomeController, type: :controller do
       cuisines.each { |cuisine| expect(cuisine).to eq(cuisine1)}
     end
   end
+  
+  describe "GET #about" do
+    it "returns renders about page" do
+      get :about
+      expect(response).to render_template('about')
+    end
+  end
+  
+  describe "GET #contact" do
+    it "returns renders about page" do
+      get :contact
+      expect(response).to render_template('contact')
+    end
+  end
 
 end

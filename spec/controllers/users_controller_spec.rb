@@ -67,27 +67,6 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template "users/admin/edit"
       end
     end
-    
-    describe "put #update" do
-      before(:each) do
-        @userAttributes = FactoryGirl.attributes_for(:user, :name => "Another User",
-        :username => "randomuser", :email => "random@email.com", :password => "secret", 
-        :password_confirmation => "secret", :location => "location", :profile_picture_url => "random",
-        :avatar => "avatar.jpg")
-
-        put :update, :id => user1.id, :user => @userAttributes
-        user1.reload
-      end
-      
-      it "updates the user" do
-        expect(User.find(user1.id).name).to eq("Another User")
-        expect(User.find(user1.id).name).not_to eq("Sam")
-      end
-      
-      it "renders the admin listing page" do
-        expect(response).to redirect_to administrator_path
-      end
-    end
   end
   
 end

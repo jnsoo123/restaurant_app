@@ -12,6 +12,9 @@ RSpec.describe RestaurantsController, type: :controller do
   let!(:food2){FactoryGirl.create(:food, :name => "Sisig", :price => 30, :cuisine_id => cuisine1.id,
                :restaurant_id => restaurant3.id)}
                
+  let!(:food3){FactoryGirl.create(:food, :name => "Sisig", :price => 20, :cuisine_id => cuisine1.id,
+                            :restaurant_id => restaurant2.id)}             
+               
 
   context "Logged in as user" do
     before(:each) do
@@ -19,16 +22,34 @@ RSpec.describe RestaurantsController, type: :controller do
     end
     
     describe "post#create" do
-      before(:each) do
-        post :create, :restaurant =>  FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-        :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-        :low_price_range => 10, :high_price_range => 20, :status => "Pending")
+      context "has no latitude params" do
+        before(:each) do
+          post :create, :restaurant =>  FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :low_price_range => 10, :high_price_range => 20, :status => "Pending")
+        end
+
+        it "creates a new restaurant" do
+          search = Restaurant.find_by(name: "New restaurant")
+          expect(search).not_to be nil
+          expect(search.name).to eq("New restaurant")
+        end
       end
       
-      it "creates a new restaurant" do
-        search = Restaurant.find_by(name: "New restaurant")
-        expect(search).not_to be nil
-        expect(search.name).to eq("New restaurant")
+      context "has latitude params" do
+        before(:each) do
+          post :create, :restaurant =>  FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :low_price_range => 10, :high_price_range => 20, :status => "Pending"), :latitude => 14.600528132327128, 
+          :longitude => 120.9610766172409
+        end
+        it "adds new location entry" do
+          expect(Location.count).to eq(1)
+        end
+        
+        it "has updated restaurant location " do
+          expect(assigns(:restaurant).location.address).not_to be nil
+        end
       end
     end
     
@@ -68,33 +89,56 @@ RSpec.describe RestaurantsController, type: :controller do
     end
     
     describe "delete#destroy" do
-      before(:each) do 
-        @id = restaurant3.id
-        delete :destroy, :id => restaurant3.id
-      end
       
-      it "removes restaurant entry" do
-        expect(Restaurant.exists?(@id)).to be false
+      context "Successful Deletion" do
+        before(:each) do 
+          @id = restaurant3.id
+          delete :destroy, :id => restaurant3.id
+        end
+      
+        it "removes restaurant entry" do
+          expect(Restaurant.exists?(@id)).to be false
+        end
       end
     end
     
     describe "put#update" do
-      before(:each) do
-        @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-        :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-        :low_price_range => 10, :high_price_range => 20, :status => "Pending")
+      
+      context "Successful Update" do
+        before(:each) do
+          @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :status => "Pending", :website => "website", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
+          :cover => fixture_file_upload('sisig.jpg', 'image/jpg'))
 
-        put :update, :id => restaurant2.id, :restaurant => @restoAttributes, :path => 'dashboard'
-        restaurant2.reload
+          put :update, :id => restaurant2.id, :restaurant => @restoAttributes
+          restaurant2.reload
+        end
+      
+        it "updates restaurant information" do
+          expect(restaurant2.name).not_to eq("RestoAcc")
+          expect(restaurant2.name).to eq("New restaurant")
+        end
+      
+        it "adds success message to flash" do
+          expect(flash[:success]).to match(/successfully updated/)
+        end
       end
       
-      it "updates restaurant information" do
-        expect(restaurant2.name).not_to eq("RestoAcc")
-        expect(restaurant2.name).to eq("New restaurant")
-      end
-      
-      it "adds success message to flash" do
-        expect(flash[:success]).to match(/successfully updated/)
+      context "Failed Update" do
+        before(:each) do
+          @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "",
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :status => "Pending", :website => "website", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
+          :cover => fixture_file_upload('sisig.jpg', 'image/jpg'))
+         
+          put :update, :id => restaurant2.id, :restaurant => @restoAttributes
+          restaurant2.reload
+        end
+        
+        it "notes the error in flash" do
+          expect(flash[:failure]).to match(/was not successfully updated/)
+        end
       end
     end
     
@@ -147,63 +191,6 @@ RSpec.describe RestaurantsController, type: :controller do
         expect(response).to render_template("edit")
       end
     end
-    
-    describe "put#update" do
-      context "rejected restaurant status" do
-        before(:each) do
-          @initial = Notification.count
-          @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-          :low_price_range => 10, :high_price_range => 20, :status => "Rejected")
-
-          put :update, :id => restaurant2.id, :restaurant => @restoAttributes
-          restaurant2.reload
-        end
-        
-        it "sends rejected email" do
-          expect{UserMailer.reject_email(restaurant2.user).deliver_now}.to change{ActionMailer::Base.deliveries.count}.by(1)
-        end
-      
-        it "adds notification to table for rejected" do
-          @initial = Notification.count
-          expect(@initial).to eq(1)
-        end
-      end
-      
-      context "accepted restaurant status" do
-        before(:each) do
-          @initial = Notification.count
-          @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-          :low_price_range => 10, :high_price_range => 20, :status => "Accepted")
-
-          put :update, :id => restaurant2.id, :restaurant => @restoAttributes
-          restaurant2.reload
-        end
-
-        it "sends accepted email" do
-          expect{UserMailer.accept_email(restaurant2.user).deliver_now}.to change{ActionMailer::Base.deliveries.count}.by(1)
-        end
-      
-        it "adds notification to table for accepted" do
-          @initial = Notification.count
-          expect(@initial).to eq(1)
-        end
-      end
-      
-      it "updates restaurant information" do
-        @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-        :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-        :low_price_range => 10, :high_price_range => 20, :status => "Pending")
-
-        put :update, :id => restaurant2.id, :restaurant => @restoAttributes
-        restaurant2.reload
-        
-        
-        expect(restaurant2.name).not_to eq("RestoAcc")
-        expect(restaurant2.name).to eq("New restaurant")
-      end
-    end
   end
   
   context "Not logged in users" do
@@ -212,16 +199,27 @@ RSpec.describe RestaurantsController, type: :controller do
     end
     
     describe "get#show" do
-      before(:each) do
-        get :show, :id => restaurant1.id
-      end
+      context "Display Restaurant Profile Page" do
+          before(:each) do
+            get :show, :id => restaurant2.id
+          end
       
-      it "shows the restaurant page" do
-        expect(response).to render_template("show")
-      end
+          it "shows the restaurant page" do
+            expect(response).to render_template("show")
+          end
       
-      it "returns the restaurant to show" do
-        expect(assigns(:restaurant).name).to eq(restaurant1.name)
+          it "returns the restaurant to show" do
+            expect(assigns(:restaurant).name).to eq(restaurant2.name)
+          end
+      end
+      context "Display 404 page" do
+          before(:each) do
+            get :show, :id => restaurant1.id
+          end
+      
+          it "shows the 404 page" do
+            expect(response).to render_template("errors/404")
+          end
       end
     end
     
@@ -233,9 +231,11 @@ RSpec.describe RestaurantsController, type: :controller do
           end
           
           it "shows the restaurant that matches the food without cuisine" do
-            expect(assigns(:result)).to include(restaurant1)
-            expect(assigns(:result)).not_to include(restaurant2)
-            expect(assigns(:result)).to include(restaurant3)
+            result = assigns(:result)
+            
+            expect(result).not_to include(restaurant1)
+            expect(result).to include(restaurant2)
+            expect(result).not_to include(restaurant3)
           end
         end
         
@@ -247,9 +247,11 @@ RSpec.describe RestaurantsController, type: :controller do
             end
 
             it "shows the restaurant matching food without price range and cuisine" do
-              expect(assigns(:result)).to include(restaurant1)
-              expect(assigns(:result)).not_to include(restaurant2)
-              expect(assigns(:result)).to include(restaurant3)
+              result = assigns(:result)
+            
+              expect(result).not_to include(restaurant1)
+              expect(result).to include(restaurant2)
+              expect(result).not_to include(restaurant3)
             end
           end
                
@@ -260,11 +262,14 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by rating by default" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                result = assigns(:result)
+            
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                                  
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -281,11 +286,13 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                result = assigns(:result)
+            
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.order('name').find(assigns(:search_result))
+                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -299,11 +306,13 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                result = assigns(:result)
+            
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -321,9 +330,11 @@ RSpec.describe RestaurantsController, type: :controller do
             end
 
             it "shows the restaurant matching food without price range and cuisine" do
-              expect(assigns(:result)).to include(restaurant1)
-              expect(assigns(:result)).not_to include(restaurant2)
-              expect(assigns(:result)).to include(restaurant3)
+              result = assigns(:result)
+            
+              expect(result).not_to include(restaurant1)
+              expect(result).to include(restaurant2)
+              expect(result).not_to include(restaurant3)
             end
           end
           
@@ -334,11 +345,13 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by rating by default" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                result = assigns(:result)
+            
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -354,11 +367,13 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                result = assigns(:result)
+            
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.order('name').find(assigns(:search_result))
+                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -372,11 +387,13 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                result = assigns(:result)
+            
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -394,9 +411,9 @@ RSpec.describe RestaurantsController, type: :controller do
           end
           
           it "shows the restaurant that matches the food with cuisine" do
-            expect(assigns(:result)).to include(restaurant1)
-            expect(assigns(:result)).not_to include(restaurant2)
-            expect(assigns(:result)).to include(restaurant3)
+            expect(assigns(:result)).not_to include(restaurant1)
+            expect(assigns(:result)).to include(restaurant2)
+            expect(assigns(:result)).not_to include(restaurant3)
           end
         end
         
@@ -408,9 +425,9 @@ RSpec.describe RestaurantsController, type: :controller do
             end
 
             it "shows the restaurant matching food without price range" do
-              expect(assigns(:result)).to include(restaurant1)
-              expect(assigns(:result)).not_to include(restaurant2)
-              expect(assigns(:result)).to include(restaurant3)
+              expect(assigns(:result)).not_to include(restaurant1)
+              expect(assigns(:result)).to include(restaurant2)
+              expect(assigns(:result)).not_to include(restaurant3)
             end
           end
                
@@ -421,11 +438,11 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range sorted by rating by default" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                expect(assigns(:result)).not_to include(restaurant1)
+                expect(assigns(:result)).to include(restaurant2)
+                expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -442,11 +459,11 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                expect(assigns(:result)).not_to include(restaurant1)
+                expect(assigns(:result)).to include(restaurant2)
+                expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.order('name').find(assigns(:search_result))
+                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -460,11 +477,11 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                expect(assigns(:result)).not_to include(restaurant1)
+                expect(assigns(:result)).to include(restaurant2)
+                expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -482,9 +499,9 @@ RSpec.describe RestaurantsController, type: :controller do
             end
 
             it "shows the restaurant matching food without price range" do
-              expect(assigns(:result)).to include(restaurant1)
-              expect(assigns(:result)).not_to include(restaurant2)
-              expect(assigns(:result)).to include(restaurant3)
+              expect(assigns(:result)).not_to include(restaurant1)
+              expect(assigns(:result)).to include(restaurant2)
+              expect(assigns(:result)).not_to include(restaurant3)
             end
           end
           
@@ -495,11 +512,11 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range sorted by rating by default" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                expect(assigns(:result)).not_to include(restaurant1)
+                expect(assigns(:result)).to include(restaurant2)
+                expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -515,11 +532,11 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                expect(assigns(:result)).not_to include(restaurant1)
+                expect(assigns(:result)).to include(restaurant2)
+                expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.order('name').find(assigns(:search_result))
+                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)
@@ -533,11 +550,11 @@ RSpec.describe RestaurantsController, type: :controller do
               end
 
               it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                expect(assigns(:result)).to include(restaurant1)
-                expect(assigns(:result)).not_to include(restaurant2)
-                expect(assigns(:result)).to include(restaurant3)
+                expect(assigns(:result)).not_to include(restaurant1)
+                expect(assigns(:result)).to include(restaurant2)
+                expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').find(assigns(:search_result))
+                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
                 restaurantList = assigns(:result)
                 restaurantList.zip(restaurantActual).each do |rList, aList|
                   expect(rList.id).to eq(aList.id)

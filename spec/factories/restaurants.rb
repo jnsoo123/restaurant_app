@@ -7,9 +7,10 @@ FactoryGirl.define do
     address "random address"
     contact "some contact"
     status "Pending"
-    low_price_range "9.99"
-    high_price_range "10.99"
     map "MyText"
+    website "website@website.com"
+    avatar { File.open("#{Rails.root}/spec/support/sisig.jpg") } 
+    cover { File.open("#{Rails.root}/spec/support/sisig.jpg") }
     user
   end
 end
