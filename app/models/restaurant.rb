@@ -28,13 +28,16 @@ class Restaurant < ActiveRecord::Base
     scheds = scheds.sort_by{ |k,v| k }.to_h
     
     today = DateTime.now
+    today_time = Time.now.to_a
 
     scheds.each do |key, value|
-      if !scheds.keys.include? today.wday
-        return "Closed"
-      else
+      if today.wday == key
         value.each do |val|
-          val.opening
+          open_time = DateTime.parse(Time.parse(val.opening).to_s).to_date
+          close_time = DateTime.parse(Time.parse(val.closing).to_s).to_date
+         if Date.today.between?(open_time, close_time)
+           return "Open"
+         end 
         end
       end
     end

@@ -19,10 +19,10 @@
       </div>
     </div>
     <div class="form-group">
-      <%= f.label "Opening Time" %>
+      <%= f.label "Closing Time" %>
       
       <div class='input-group timepicker'>
-          <%= f.text_field :opening, value: @schedule.closing, class: 'form-control', required: true%>
+          <%= f.text_field :closing, value: @schedule.closing, class: 'form-control', required: true%>
           <span class="input-group-addon">
             <%= icon('clock-o') %>
           </span>
