@@ -1,5 +1,5 @@
 <div id="reviews" class="container">
-  <h3><%= t('.recentreviews')%></h3>
+  <h3><%= t('.recentreviews')%><br><small>View recent reviews by our users</small></h3>
   <% unless @ratings.empty? %>
     <div class="row">
       <% @ratings.each do |rate| %>
@@ -22,7 +22,7 @@
                       <% end %>
                     </small>
                   </h4>
-                  <p><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= rate.comment %></p>
+                  <p style=" height: 50px;"><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= truncate(rate.comment, length: 190) %></p>
                   <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
                 </div>
               </div>

@@ -12,7 +12,7 @@
   </div>
 </div>
 <div class="container resto-container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px;">
-  <div class="row clearfix" style="margin-bottom: 20px;">
+  <div class="row clearfix">
     <div class="pull-left">
       <% unless @restaurant.location.blank? %>
         <iframe
@@ -26,178 +26,196 @@
         <h5 style="padding: 100px 0 20px 80px">Map Not Available</h5>
       <% end %>
       <div style="padding: 10px; margin-top: -5px;">
-        <h4>Restaurants Near You</h4>
-        <% if @restaurant.location.nearbys(5).present? %>
+        <h4>Restaurants near here</h4>
+        <% if @restaurant.location.nearbys(3).where.not(restaurant_id: nil).present? %>
           <div class="list-group nearbys" style="">
-            <% @restaurant.location.nearbys(5).each do |location| %>
-              <% if location.restaurant.status == 'Accepted' %>
-                <%= link_to location.restaurant, class: 'list-group-item' do %>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <div style="background-image: url('<%= asset_path(display_resto(location.restaurant))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
-                    </div>
-                    <div class="col-md-9">
-                      <%= location.restaurant.name %><br>
-                      <%= location.distance.round(2) %> miles away
-                    </div>
+            <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(8).each do |resto| %>
+              
+              <%= link_to resto, class: 'list-group-item', style: 'background-color: #f9f9f9;' do %>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
                   </div>
-                <% end %>
+                  <div class="col-md-9">
+                    <%= resto.name %><br>
+                    <small>
+                      <% (resto.ave_ratings.to_i).times do %>
+                        <%= icon('star') %>
+                      <% end %>
+                      <% unless resto.ave_ratings % 1 == 0 %>
+                        <%= icon('star-half-o')%>
+                        <% (4 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% else %>
+                        <% (5 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% end %>
+                      &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
+                    </small>
+                  </div>
+                </div>
               <% end %>
             <% end %>
           </div>
         <% else %>
-          No restaurant near you.
+          No restaurants found.
         <% end %>
       </div>
     </div>
     <div class="pull-right">
       <div style="width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       </div>
-      <div class="row" style="padding: 10px 20px 20px 20px;">
-        <div class="col-md-4">
-          <%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px;') %>
-        </div>
-        <div class="col-md-4">
-          <%= icon('phone', @restaurant.contact, style: 'margin-right: 10px;') %>
-        </div>
-        <div class="col-md-4">
-          <% unless @restaurant.website.blank? %>
-            <%= link_to @restaurant.website, "http://#{@restaurant.website}" %>
-          <% else %>
-            No website available
-          <% end %>
-        </div>
+      <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
+        <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px; color: green;') %></p>
+        <p><%= icon('phone', @restaurant.contact, style: 'margin-right: 10px; color: red;') %></p>
+        <% if @restaurant.website.present? %>
+          <p style="margin-bottom: 0;"><%= icon('globe', link_to(@restaurant.website, "http://#{@restaurant.website}"), style: 'margin-right: 10px; color: dodgerblue;')%></p>
+        <% else %>
+          <p style="margin-bottom: 0;"><%= icon('globe', "Website not available", style: 'margin-right: 10px; color: dodgerblue;')%></p>
+        <% end %>
       </div>
-      <div style="padding: 10px;">
-        <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('cutlery', 'Menu', style: 'margin-right: 10px;')%></h3>
-        <div class="row" style="margin-bottom: 30px;">
-          <% unless @restaurant.foods.blank? %>
-            <% @restaurant.foods.each_with_index do |food, index| %>
-              <div class="col-md-1" style="height: 50px;">
-                <span style="font-size: 30px;"><%= index+1 %></span>
-              </div>
-              <div class="col-md-9" style="height: 50px;">
-                <h3 style="margin: 0;"><%= food.name %></h3>
-                <p><%= food.description %></p>
-              </div>
-              <div class="col-md-2" style="height: 50px; padding: 5px; margin-bottom: 20px;">
-                <div class="pull-right" style="margin-right: 10px; margin-top: 5px;">
-                  <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #333333;" class="label label-default">P <%= food.price %></span>
+      <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
+        <p><%= icon('clock-o', " Open every: ", style: 'margin-right: 11px;')%></p>
+      </div>
+      <div style=" ">
+        <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
+          <h3 style=" color: #676767; padding-bottom: 30px; margin: 0;">Menu</h3>
+          <div class="row">
+            <% unless @restaurant.foods.blank? %>
+              <% @restaurant.foods.each do |food| %>
+                <div style="padding-bottom: 20px;">
+                  <div class="col-md-9" style="height: 25px;">
+                    <h4 style="margin: 0;"><%= food.name %><br><small><%= food.description%></small></h4>
+                  </div>
+                  <div class="col-md-3" style="height: 50px; padding: 5px; margin-bottom: 20px;">
+                    <div class="pull-right" style="margin-right: 10px; margin-top: 5px;">
+                      <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #333333;" class="label label-default">P <%= food.price %></span>
+                    </div>
+                  </div>
                 </div>
+                
+              <% end %>
+            <% else %>
+              <h3 style="margin-left: 13px;">No menu available.</h3>
+            <% end %>
+          </div>
+        </div>
+        
+        <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
+          <div class="clearfix" style="">
+            <h3 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
+            <div class="fileUpload btn btn-default pull-right">
+              <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{'Add Photos' if user_signed_in? }")%></span>
+              <%= form_for(@picture) do |f| %> 
+                <% if user_signed_in? %>
+                  <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+                <% else %>
+                  <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
+                <% end %>
+                <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+                <% end %>
+            </div>
+          </div>
 
+
+          <div id="picture-part" style="padding: 0 20px 20px 20px;">
+            <div class="row pic-row" style = 'padding-left: 20px;'>
+              <% unless @restaurant.pictures.empty? %>
+                <% @restaurant.pictures.where(status: true).each do |picture| %>
+                <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+                  <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); 
+                    background-repeat: no-repeat; background-size: cover; background-position: center;'>
+                  </div>
+                   <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+
+        
+        <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
+          <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, 'Review')}", style: 'margin-right: 8px;')%></h3>
+
+          <% unless @restaurant.ratings.empty? %>
+            <% @restaurant.ratings.each do |rate| %>
+              <div class="media" style="padding: 10px; margin-bottom: 10px;">
+                <div class="media-left" style="padding: 0 25px 10px 10px;">
+                  <%= image_tag(display_user(rate.user), width: 64, height: 64, class: 'img-circle') %>
+                </div>
+                <div class="media-body" style="max-width: 575px;">
+                  <h4 class="media-heading">
+                    <%= link_to rate.user.name, rate.user %>
+                    <small>
+                      <% rate.rate.times do %>
+                        <%= icon('star')%>
+                      <% end %>
+                      <% (5-rate.rate).times do %>
+                        <%= icon('star-o')%>
+                      <% end %>
+                      <% if current_user === rate.user %>
+                        <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
+                      <% end %>
+                    </small>
+                  </h4>
+                  <p><%= rate.comment %></p>
+                  <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+                </div>
               </div>
             <% end %>
           <% else %>
-            <h3 style="margin-left: 13px;">No menu available.</h3>
+            <div style="height: 75px;">
+              <h3>No Reviews yet.</h3>
+            </div>
           <% end %>
-        </div>
 
-        <div class="clearfix">
-          <h3 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
-          <div class="fileUpload btn btn-default pull-right">
-            <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{'Add Photos' if user_signed_in? }")%></span>
-            <%= form_for(@picture) do |f| %> 
-              <% if user_signed_in? %>
-                <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
-              <% else %>
-                <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
-              <% end %>
-              <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-              <% end %>
-          </div>
-        </div>
-
-
-        <div id="picture-part">
-          <div class="row pic-row" style = 'padding-left: 20px;'>
-            <% unless @restaurant.pictures.empty? %>
-              <% @restaurant.pictures.where(status: true).each do |picture| %>
-              <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
-                <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); 
-                  background-repeat: no-repeat; background-size: cover; background-position: center;'>
-                </div>
-                 <% end %>
-              <% end %>
+          <% if user_signed_in? %>
+            <% unless @restaurant.ratings.find_by(user_id: current_user.id) || @restaurant.user === current_user %>
+              <div style="margin-bottom: 20px;">
+                <button class="btn btn-danger btn-hide-click" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;">Write a Review</button>
+              </div>
             <% end %>
-          </div>
-        </div>
-
-        <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, 'Review')}", style: 'margin-right: 8px;')%></h3>
-
-        <% unless @restaurant.ratings.empty? %>
-          <% @restaurant.ratings.each do |rate| %>
-            <div class="media" style="padding: 10px; margin-bottom: 10px;">
-              <div class="media-left" style="padding: 0 25px 10px 10px;">
-                <%= image_tag(display_user(rate.user), width: 64, height: 64, class: 'img-circle') %>
-              </div>
-              <div class="media-body" style="max-width: 600px;">
-                <h4 class="media-heading">
-                  <%= link_to rate.user.name, rate.user %>
-                  <small>
-                    <% rate.rate.times do %>
-                      <%= icon('star')%>
-                    <% end %>
-                    <% (5-rate.rate).times do %>
-                      <%= icon('star-o')%>
-                    <% end %>
-                    <% if current_user === rate.user %>
-                      <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
-                    <% end %>
-                  </small>
-                </h4>
-                <p><%= rate.comment %></p>
-                <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          <div style="height: 75px;">
-            <h3>No Reviews yet.</h3>
-          </div>
-        <% end %>
-
-        <% if user_signed_in? %>
-          <% unless @restaurant.ratings.find_by(user_id: current_user.id) || @restaurant.user === current_user %>
+          <% else %>
             <div style="margin-bottom: 20px;">
-              <button class="btn btn-danger btn-hide-click" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;">Write a Review</button>
+              <button class="btn btn-danger" disabled="disabled" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;">Sign in to write a review</button>
             </div>
           <% end %>
-        <% else %>
-          <div style="margin-bottom: 20px;">
-            <button class="btn btn-primary outline" disabled="disabled" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;">Sign in to write a review</button>
+
+
+          <div id="review_part" class="collapse" style="margin-bottom: 20px;">
+
+            <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('pencil', 'Rate This Restaurant', style: 'margin-right: 8px;')%></h3>
+            <%= form_for(@rating) do |f| %>
+              <div class="">
+                <fieldset class="rating">
+                  <%= f.radio_button :rate, 5, id: 'star5' %>
+                  <%= label_tag :star5, "", class: 'full', title: '5 Stars' %>
+                  <%= f.radio_button :rate, 4, id: 'star4'  %>
+                  <%= label_tag :star4, "", class: 'full', title: '4 Stars' %>
+                  <%= f.radio_button :rate, 3, id: 'star3'  %>
+                  <%= label_tag :star3, "", class: 'full', title: '3 Stars' %>
+                  <%= f.radio_button :rate, 2, id: 'star2'  %>
+                  <%= label_tag :star2, "", class: 'full', title: '2 Stars' %>
+                  <%= f.radio_button :rate, 1, id: 'star1'  %>
+                  <%= label_tag :star1, "", class: 'full', title: '1 Star' %>
+                </fieldset>
+              </div>
+
+              <div class="form-group">
+                <%= f.text_area :comment, class: 'form-control', rows: 7, placeholder: 'Comment' %>
+              </div>
+              <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+              <div class="actions">
+                <%= f.submit "Add Review", class: 'btn btn-danger' %>
+              </div>
+            <% end %>
+
           </div>
-        <% end %>
-
-
-        <div id="review_part" class="collapse" style="margin-bottom: 20px;">
-
-          <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('pencil', 'Rate This Restaurant', style: 'margin-right: 8px;')%></h3>
-          <%= form_for(@rating) do |f| %>
-            <div class="">
-              <fieldset class="rating">
-                <%= f.radio_button :rate, 5, id: 'star5' %>
-                <%= label_tag :star5, "", class: 'full', title: '5 Stars' %>
-                <%= f.radio_button :rate, 4, id: 'star4'  %>
-                <%= label_tag :star4, "", class: 'full', title: '4 Stars' %>
-                <%= f.radio_button :rate, 3, id: 'star3'  %>
-                <%= label_tag :star3, "", class: 'full', title: '3 Stars' %>
-                <%= f.radio_button :rate, 2, id: 'star2'  %>
-                <%= label_tag :star2, "", class: 'full', title: '2 Stars' %>
-                <%= f.radio_button :rate, 1, id: 'star1'  %>
-                <%= label_tag :star1, "", class: 'full', title: '1 Star' %>
-              </fieldset>
-            </div>
-
-            <div class="form-group">
-              <%= f.text_area :comment, class: 'form-control', rows: 7, placeholder: 'Comment' %>
-            </div>
-            <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-            <div class="actions">
-              <%= f.submit "Add Review", class: 'btn btn-danger' %>
-            </div>
-          <% end %>
-
         </div>
+        
       </div>
     </div>
   </div>

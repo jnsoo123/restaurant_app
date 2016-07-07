@@ -8,7 +8,7 @@
   <% end %>
 </div>
 <div style="background-color: #222; padding: 5px 20px;">
-  <span style="font-size: 15px; color: #fff;">Uploader: <%= link_to @picture.user.username, user_path(@picture.user), style: 'color: #fff;' %></span>
+  <span style="font-size: 15px; color: #fff;">Uploader: <%= link_to @picture.user.name, user_path(@picture.user), style: 'color: #fff;' %></span>
 </div>
 <div style="background-color: #222; padding: 5px 20px 10px 20px;">
   <span style="font-size: 15px; color: #fff;">Date Uploaded: <%= @picture.created_at.strftime("%B %d, %Y") %></span>
