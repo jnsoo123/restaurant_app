@@ -131,17 +131,17 @@
         <thead>
           <tr style="background-color: #404040;">
             <th>#</th>
-            <th>Username</th>
+            <th style="width: 85px;">Name</th>
             <th>Rate</th>
             <th>Comment</th>
-            <th>Date</th>
+            <th style="width: 100px;">Date</th>
           </tr>
         </thead>
         <tbody>
           <% @ratings.each_with_index do |rate, index| %>
             <tr>
               <td><%= index+1 %></td>
-              <td><%= link_to rate.user.username, user_path(rate.user) %></td>
+              <td><%= link_to rate.user.name, user_path(rate.user) %></td>
               <td><%= rate.rate %></td>
               <td><%= rate.comment %></td>
               <td><%= rate.created_at.strftime("%B %d, %Y") %></td>
