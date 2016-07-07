@@ -107,7 +107,41 @@ RSpec.describe PicturesController, type: :controller do
         end
       end
     end
-
+    
+    describe "put#update" do
+      before(:each) do
+        post :create, :picture =>  FactoryGirl.attributes_for(:picture, :restaurant_id => restaurant1.id,
+        :pic => fixture_file_upload('sisig.jpg', 'image/jpg'), :user_id => user2.id)
+        
+        @picture1 = Picture.last
+        
+        put :update, :id => @picture1.id, :picture =>  FactoryGirl.attributes_for(:picture, :restaurant_id => restaurant1.id,
+        :pic => fixture_file_upload('sisig.jpg', 'image/jpg'), :status => true)
+        @picture1.reload
+      end
+      
+      it "is approved by the owner" do
+        expect(@picture1.status).to be true
+      end
+    end
+    
+    describe "delete#destroy" do
+      before(:each) do
+        post :create, :picture =>  FactoryGirl.attributes_for(:picture, :restaurant_id => restaurant1.id,
+        :pic => fixture_file_upload('sisig.jpg', 'image/jpg'), :user_id => user2.id)
+        
+        @picture1 = Picture.last
+        delete :destroy, :id => @picture1.id
+      end
+      
+      it "is deleted by the owner" do
+        expect(Picture.exists?(@picture1.id)).to be false
+      end
+      
+      it "sets the success flash" do
+        expect(flash[:success]).to match(/Image was deleted/)
+      end
+    end
     
   end
  

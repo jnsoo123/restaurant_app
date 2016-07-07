@@ -14,6 +14,18 @@ RSpec.describe RestaurantsController, type: :controller do
                
   let!(:food3){FactoryGirl.create(:food, :name => "Sisig", :price => 20, :cuisine_id => cuisine1.id,
                             :restaurant_id => restaurant2.id)}             
+                            
+  let!(:location1){FactoryGirl.create(:location, :address => "Manila", :latitude => 14.5995124, :longitude => 120.9842195)}
+  
+  let!(:location3){FactoryGirl.create(:location, :address => "Yet Another Address", :latitude => 70.5995124, 
+                                      :longitude => 120.9842195, :restaurant_id => restaurant1.id)}                
+  
+  let!(:location4){FactoryGirl.create(:location, :address => "Some Address", :latitude => 14.5995125, 
+                                      :longitude => 120.9842195, :restaurant_id => restaurant2.id)}
+  
+  let!(:location5){FactoryGirl.create(:location, :address => "Another Address", :latitude => 50.5995124, 
+                                      :longitude => 120.9842195, :restaurant_id => restaurant3.id)}                                      
+                            
                
 
   context "Logged in as user" do
@@ -44,7 +56,7 @@ RSpec.describe RestaurantsController, type: :controller do
           :longitude => 120.9610766172409
         end
         it "adds new location entry" do
-          expect(Location.count).to eq(1)
+          expect(Location.count).to eq(5)
         end
         
         it "has updated restaurant location " do
@@ -193,11 +205,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
   
-  context "Not logged in users" do
-    describe "get#index" do
-      it "displays index page"
-    end
-    
+  context "Not logged in users" do    
     describe "get#show" do
       context "Display Restaurant Profile Page" do
           before(:each) do
@@ -240,7 +248,6 @@ RSpec.describe RestaurantsController, type: :controller do
         end
         
         context "without price_range" do     
-          
           describe "shows results of user without price range" do
             before(:each) do
               get :search, :searchQuery => 'sisig'
@@ -254,82 +261,181 @@ RSpec.describe RestaurantsController, type: :controller do
               expect(result).not_to include(restaurant3)
             end
           end
-               
-          context "without sort" do
-            describe "shows result of user without sorting method" do
+              
+          context "without location" do
+            describe "shows result of user without location" do
               before(:each) do
                 get :search, :searchQuery => 'sisig'
               end
-
-              it "shows the restaurant matching food without price range, cuisine sorted by rating by default" do
+              
+              it "shows the restaurant matching food without price range, cuisine, location, sorted by rating by default" do
                 result = assigns(:result)
             
                 expect(result).not_to include(restaurant1)
                 expect(result).to include(restaurant2)
                 expect(result).not_to include(restaurant3)
+              end
+            end
+            
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig'
+                end
+
+                it "shows the restaurant matching food without price range, location, cuisine sorted by rating by default" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
                                   
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
-          end
           
-          context "with sort" do
+            context "with sort" do
             
-            describe "shows result of user sorted by name" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'name'
-              end
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name'
+                end
 
-              it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                result = assigns(:result)
+                it "shows the restaurant matching food without price range, location, cuisine sorted by name" do
+                  result = assigns(:result)
             
-                expect(result).not_to include(restaurant1)
-                expect(result).to include(restaurant2)
-                expect(result).not_to include(restaurant3)
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
-              end
-            end 
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
             
-            describe "shows results of user sorted by price" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high'
-              end
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high'
+                end
 
-              it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                result = assigns(:result)
+                it "shows the restaurant matching food without price range, location, cuisine sorted by name" do
+                  result = assigns(:result)
             
-                expect(result).not_to include(restaurant1)
-                expect(result).to include(restaurant2)
-                expect(result).not_to include(restaurant3)
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
+          end       
+               
+          context "with location" do
+            describe "shows result of user with location" do
+              before(:each) do
+                get :search, :searchQuery => 'sisig', :location => location1.id
+              end
+              
+              it "shows the restaurant matching food without price range, cuisine, sorted by rating by default" do
+                result = assigns(:result)
+                          
+                expect(result).not_to include(restaurant1)
+                expect(result).to include(restaurant2)
+                expect(result).not_to include(restaurant3)
+              end
+            end
+            
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range, cuisine sorted by rating by default" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                                  
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          
+            context "with sort" do
+            
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range, location, cuisine sorted by name" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range, location, cuisine sorted by name" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end  
+               
           end
         end
         
         context "with price_range" do
           
-          describe "shows results of user without price range" do
+          describe "shows results of user with price range" do
             before(:each) do
               get :search, :searchQuery => 'sisig', :price_range => '10,30'
             end
 
-            it "shows the restaurant matching food without price range and cuisine" do
+            it "shows the restaurant matching food with price range" do
               result = assigns(:result)
             
               expect(result).not_to include(restaurant1)
@@ -338,66 +444,164 @@ RSpec.describe RestaurantsController, type: :controller do
             end
           end
           
-          context "without sort" do
-            describe "shows result of user without sorting method" do
+          context "with location" do
+            
+            describe "shows result of user with location" do
               before(:each) do
-                get :search, :searchQuery => 'sisig', :price_range => '10,30'
+                get :search, :searchQuery => 'sisig', :location => location1.id
               end
-
-              it "shows the restaurant matching food without price range, cuisine sorted by rating by default" do
+              
+              it "shows the restaurant matching food with price range and location" do
                 result = assigns(:result)
             
                 expect(result).not_to include(restaurant1)
                 expect(result).to include(restaurant2)
                 expect(result).not_to include(restaurant3)
+              end
+            end
+            
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :price_range => '10,30', :location => location1.id
+                end
+
+                it "shows the restaurant matching food with price range, cuisine sorted by rating by default" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          
+            context "with sort" do
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :price_range => '10,30', :location => location1.id
+                end
+
+                it "shows the restaurant matching food with price range, cuisine sorted by name" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :price_range => '10,30', :location => location1.id
+                end
+
+                it "shows the restaurant matching food with price range, cuisine sorted by name" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
           end
           
-          context "with sort" do
-            describe "shows result of user sorted by name" do
+          context "without location" do
+            
+            describe "shows result of user with location" do
               before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'name', :price_range => '10,30'
+                get :search, :searchQuery => 'sisig'
               end
-
-              it "shows the restaurant matching food without price range, cuisine sorted by name" do
+              
+              it "shows the restaurant matching food with price range and location" do
                 result = assigns(:result)
             
                 expect(result).not_to include(restaurant1)
                 expect(result).to include(restaurant2)
                 expect(result).not_to include(restaurant3)
-                
-                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
               end
-            end 
+            end
             
-            describe "shows results of user sorted by price" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :price_range => '10,30'
-              end
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :price_range => '10,30'
+                end
 
-              it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                result = assigns(:result)
+                it "shows the restaurant matching food with price range, cuisine sorted by rating by default" do
+                  result = assigns(:result)
             
-                expect(result).not_to include(restaurant1)
-                expect(result).to include(restaurant2)
-                expect(result).not_to include(restaurant3)
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          
+            context "with sort" do
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :price_range => '10,30'
+                end
+
+                it "shows the restaurant matching food with price range, cuisine sorted by name" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :price_range => '10,30'
+                end
+
+                it "shows the restaurant matching food with price range, cuisine sorted by name" do
+                  result = assigns(:result)
+            
+                  expect(result).not_to include(restaurant1)
+                  expect(result).to include(restaurant2)
+                  expect(result).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
           end
@@ -418,7 +622,6 @@ RSpec.describe RestaurantsController, type: :controller do
         end
         
         context "without price_range" do     
-          
           describe "shows results of user without price range" do
             before(:each) do
               get :search, :searchQuery => 'sisig', :cuisine => cuisine1.id
@@ -430,70 +633,134 @@ RSpec.describe RestaurantsController, type: :controller do
               expect(assigns(:result)).not_to include(restaurant3)
             end
           end
-               
-          context "without sort" do
-            describe "shows result of user without sorting method" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :cuisine => cuisine1.id
-              end
 
-              it "shows the restaurant matching food without price range sorted by rating by default" do
-                expect(assigns(:result)).not_to include(restaurant1)
-                expect(assigns(:result)).to include(restaurant2)
-                expect(assigns(:result)).not_to include(restaurant3)
+          context "without location" do
+
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :cuisine => cuisine1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by rating by default" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          
+            context "with sort" do
+            
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :cuisine => cuisine1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :cuisine => cuisine1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
           end
           
-          context "with sort" do
-            
-            describe "shows result of user sorted by name" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'name', :cuisine => cuisine1.id
-              end
+          context "with location" do
 
-              it "shows the restaurant matching food without price range sorted by name" do
-                expect(assigns(:result)).not_to include(restaurant1)
-                expect(assigns(:result)).to include(restaurant2)
-                expect(assigns(:result)).not_to include(restaurant3)
-                
-                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
-              end
-            end 
-            
-            describe "shows results of user sorted by price" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :cuisine => cuisine1.id
-              end
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :cuisine => cuisine1.id, :location => location1.id
+                end
 
-              it "shows the restaurant matching food without price range sorted by name" do
-                expect(assigns(:result)).not_to include(restaurant1)
-                expect(assigns(:result)).to include(restaurant2)
-                expect(assigns(:result)).not_to include(restaurant3)
+                it "shows the restaurant matching food without price range sorted by rating by default" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          
+            context "with sort" do
+            
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :cuisine => cuisine1.id, :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :cuisine => cuisine1.id, :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
           end
         end
         
         context "with price_range" do
-          
-          describe "shows results of user without price range" do
+          describe "shows results of user with price range" do
             before(:each) do
               get :search, :searchQuery => 'sisig', :price_range => '10,30', :cuisine => cuisine1.id
             end
@@ -505,63 +772,126 @@ RSpec.describe RestaurantsController, type: :controller do
             end
           end
           
-          context "without sort" do
-            describe "shows result of user without sorting method" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :price_range => '10,30', :cuisine => cuisine1.id
-              end
+          context "without location" do
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :price_range => '10,30', :cuisine => cuisine1.id
+                end
 
-              it "shows the restaurant matching food without price range sorted by rating by default" do
-                expect(assigns(:result)).not_to include(restaurant1)
-                expect(assigns(:result)).to include(restaurant2)
-                expect(assigns(:result)).not_to include(restaurant3)
+                it "shows the restaurant matching food without price range sorted by rating by default" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          
+            context "with sort" do
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :price_range => '10,30', :cuisine => cuisine1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :price_range => '10,30', :cuisine => cuisine1.id
+                end
+
+                it "shows the restaurant matching food without price range, cuisine sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
           end
           
-          context "with sort" do
-            describe "shows result of user sorted by name" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'name', :price_range => '10,30', :cuisine => cuisine1.id
-              end
+          context "with location" do
+            context "without sort" do
+              describe "shows result of user without sorting method" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :price_range => '10,30', :cuisine => cuisine1.id, :location => location1.id
+                end
 
-              it "shows the restaurant matching food without price range sorted by name" do
-                expect(assigns(:result)).not_to include(restaurant1)
-                expect(assigns(:result)).to include(restaurant2)
-                expect(assigns(:result)).not_to include(restaurant3)
+                it "shows the restaurant matching food without price range sorted by rating by default" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
                 
-                restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
-              end
-            end 
-            
-            describe "shows results of user sorted by price" do
-              before(:each) do
-                get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :price_range => '10,30', :cuisine => cuisine1.id
-              end
-
-              it "shows the restaurant matching food without price range, cuisine sorted by name" do
-                expect(assigns(:result)).not_to include(restaurant1)
-                expect(assigns(:result)).to include(restaurant2)
-                expect(assigns(:result)).not_to include(restaurant3)
-                
-                restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
-                restaurantList = assigns(:result)
-                restaurantList.zip(restaurantActual).each do |rList, aList|
-                  expect(rList.id).to eq(aList.id)
-                end 
+                  restaurantActual = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
               end
             end
-          end
+          
+            context "with sort" do
+              describe "shows result of user sorted by name" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'name', :price_range => '10,30', :cuisine => cuisine1.id, :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.order('name').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end 
+            
+              describe "shows results of user sorted by price" do
+                before(:each) do
+                  get :search, :searchQuery => 'sisig', :sort => 'price_low_to_high', :price_range => '10,30', :cuisine => cuisine1.id, :location => location1.id
+                end
+
+                it "shows the restaurant matching food without price range, cuisine sorted by name" do
+                  expect(assigns(:result)).not_to include(restaurant1)
+                  expect(assigns(:result)).to include(restaurant2)
+                  expect(assigns(:result)).not_to include(restaurant3)
+                
+                  restaurantActual = Restaurant.includes(:foods).order('foods.price').where(id: assigns(:search_result), status: 'Accepted')
+                  restaurantList = assigns(:result)
+                  restaurantList.zip(restaurantActual).each do |rList, aList|
+                    expect(rList.id).to eq(aList.id)
+                  end 
+                end
+              end
+            end
+          end   
+             
         end
       end
     end
