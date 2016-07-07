@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :set_schedule, only: [:edit, :update, :destroy]
   respond_to :html
-  respond_to :js, only: [:new, :edit, :create]
+  respond_to :js, only: [:new, :edit, :create, :destroy]
 
   def new
     @days = []
@@ -46,7 +46,8 @@ class SchedulesController < ApplicationController
   def destroy
     if @schedule.destroy
       flash[:success] = 'Schedule successfully deleted!'
-      respond_with(@schedule, location: owner_resto_edit_path(@schedule.restaurant))
+      @schedules = @schedule.restaurant.schedules
+      respond_with(@schedules)
     else
       flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 
       @schedule.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
