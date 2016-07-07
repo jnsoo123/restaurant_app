@@ -52,12 +52,7 @@
                       <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
                       
                        <p class="list-group-item-text" style="margin-top: 10px;">
-                          <%= label_tag :hours, "Open Hours: "%>
-                          <% if Schedule.where(restaurant_id: resto.id).count > 0%>
-                            <%= resto.sched %>
-                          <% else %>
-                            No Available Schedule
-                          <% end %>
+                          <%= truncate(resto.sched, length: 50) %>
                        </p>
                       
                     </div>

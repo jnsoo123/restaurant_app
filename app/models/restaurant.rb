@@ -23,35 +23,36 @@ class Restaurant < ActiveRecord::Base
     scheds = schedules.group_by{|s| [s.opening, s.closing]}
     @hours = ""
     scheds.each do |key,value| 
-      @all_day = []
-      value.each do |val|
-        @all_day << val.day unless @all_day.include? val.day
-      end
-      days = []
-      @all_day.uniq.each do |day|
-        days << DateTime.parse(day).wday
-      end
-      
-      days.each_with_index do |val, index|
-        index + 1 < days.count ? upper = days[index+1] : upper = val+1
-        if val != 0 && val+1 != upper
-          days.insert(index+1, 0)    
+        @all_day = []
+        value.each do |val|
+          @all_day << val.day unless @all_day.include? val.day
         end
-      end
-      days = days.split(0)
-      days.each do |day|
-        if day.first != day.last
-          @hours << "#{key[0]} - #{key[1]} (#{Date::ABBR_DAYNAMES[day.first]} - #{Date::ABBR_DAYNAMES[day.last]}) "
-        else
-          if days.count == 1
-            @hours << "#{key[0]} - #{key[1]} #{Date::ABBR_DAYNAMES[day.first]} "
+        days = []
+        @all_day.uniq.each do |day|
+          days << DateTime.parse(day).wday
+        end
+      
+        days.each_with_index do |val, index|
+          index + 1 < days.count ? upper = days[index+1] : upper = val+1
+          if val != 0 && val+1 != upper
+            days.insert(index+1, 0)    
+          end
+        end
+        days = days.split(0)
+        days.each do |day|
+          if day.first != day.last
+            @hours << "#{key[0]} - #{key[1]} (#{Date::ABBR_DAYNAMES[day.first]} - #{Date::ABBR_DAYNAMES[day.last]}) "
           else
-            @hours << ", #{Date::ABBR_DAYNAMES[day.first]} "
+            if days.count == 1
+              @hours << "#{key[0]} - #{key[1]} #{Date::ABBR_DAYNAMES[day.first]} "
+            else
+              @hours << ", #{Date::ABBR_DAYNAMES[day.first]} "
+            end
           end
         end
       end
-    end
-    return @hours
+    return @hours if @hours.present?
+    return "Not Available"
   end
   
   def min_price
