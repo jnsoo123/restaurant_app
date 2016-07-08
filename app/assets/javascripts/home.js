@@ -1,4 +1,23 @@
-$(document).on("ready page:change", function() {
+$(document).on("ready page:load", function() {
+  
+  
+  var slideShowDivs = $('.bg')
+  var currentID = 0;
+  var slideShowTimeout = 5000;
+  $(document).ready(function() {
+      for (var i = 1; i < slideShowDivs.length; i++) $(slideShowDivs[i]).hide();
+      setTimeout(slideShowChange, slideShowTimeout);
+  });
+  function slideShowChange() {
+      var nextID = currentID + 1;
+      if (nextID >= slideShowDivs.length) nextID = 0;
+      $(slideShowDivs[currentID]).stop(true).fadeOut(1200);
+      $(slideShowDivs[nextID]).stop(true).fadeIn(1200, function() {
+          setTimeout(slideShowChange, slideShowTimeout);
+      });
+      currentID = nextID;
+  }
+  
   $(".owl-carousel").owlCarousel({
     singleItem: true
   });
@@ -49,4 +68,6 @@ $(document).on("ready page:change", function() {
       }
     });
   });
+  
+
 });
