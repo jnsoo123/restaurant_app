@@ -9,7 +9,7 @@ class Restaurant < ActiveRecord::Base
   has_many :schedules, dependent: :destroy
   has_many :cuisines, through: :foods
   has_one :location
-  validates :name, :description, :address, :contact, :user, presence: true
+  validates :name, :contact, :user, presence: true
 
   def ave_ratings
     unless ratings.empty?
@@ -51,7 +51,6 @@ class Restaurant < ActiveRecord::Base
     mappings = {["Sunday"] => 0, ["Monday"] => 1, ["Tuesday"] => 2, ["Wednesday"] => 3, ["Thursday"] => 4, ["Friday"] => 5, ["Saturday"] => 6}
     scheds = scheds.map {|k, v| [mappings[k], v] }.to_h
     scheds = scheds.sort_by{ |k,v| k }.to_h
-
     scheds.each do |key, value|
       @hours << "#{Date::DAYNAMES[key]} "
       value.each_with_index do |val, index|
@@ -63,8 +62,10 @@ class Restaurant < ActiveRecord::Base
       end
     end
 
-    return @hours if @hours.present?
-    return "Not Available"
+#    return @hours if @hours.present?
+#    return "Not Available"
+    
+    return scheds
   end
   
   def min_price

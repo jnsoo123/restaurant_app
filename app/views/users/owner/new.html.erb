@@ -1,82 +1,81 @@
-<div style="width: 100%;">
-  <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.createtitle')%></h4>
-</div>
+<div style="width: 70%" class="center-block">
+  <div style="width: 100%;">
+    <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.createtitle')%></h4>
+  </div>
 
 
-<div style="margin-bottom: 50px;">
-  <%= form_for(@restaurant, url: restaurants_path(path: 'dashboard')) do |f| %>
-    <% if @restaurant.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@restaurant.errors.count, "error") %> prohibited this task from being saved:</h2>
-        <ul>
-          <% @restaurant.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
+  <div style="margin-bottom: 50px;">
+    <%= form_for(@restaurant, url: restaurants_path(path: 'dashboard')) do |f| %>
+      <% if @restaurant.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@restaurant.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @restaurant.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="">
+        <div class="">
+          <div class="form-group">
+            <%= f.label :name, t('.name') %>
+            <%= f.text_field :name, class: 'form-control', required: true %>
+          </div>
+        </div>
+        <div class="">
+          <div class="form-group">
+            <%= f.label :address, t('.address') %>
+            <%= f.text_area :address, class: 'form-control', required: true  %>
+          </div>
+          <div class="form-group">
+            <%= f.label t('.contact') %>
+            <%= f.text_field :contact, class: 'form-control', required: true  %>
+          </div>
+        </div>
+        <div class="" style="margin-bottom: 20px;">
+          <p>Click the map to set up your restaurant's location</p>
+          <div id="map" style="height: 400px;"></div>
+          <script>
+
+            var map;
+            var marker;
+
+            function initMap() {
+              var metromanila = {lat: 14.597537989987021, lng: 120.98281860351562};
+
+              map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: metromanila
+              });
+              map.addListener('click', function(event) {
+                marker.setPosition(event.latLng);
+                console.log(marker.getPosition().lat())
+                console.log(marker.getPosition().lng())
+                $("#latitude").val(marker.getPosition().lat())
+                $("#longitude").val(marker.getPosition().lng())
+              });
+              addMarker(metromanila);
+            }
+            function addMarker(location) {
+              marker = new google.maps.Marker({
+                position: location,
+                map: map
+              });
+            }
+          </script>
+          <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
+          </script>
+        </div>
+        <%= hidden_field_tag :latitude %>
+        <%= hidden_field_tag :longitude %>
+
+        <div class="">
+          <%= f.submit t('.registerresto'), class: 'btn btn-primary center-block', style: 'width: 100%; height: 40px;' %>
+        </div>
       </div>
+
     <% end %>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :name, t('.name') %>
-          <%= f.text_field :name, class: 'form-control', required: true %>
-        </div>
-        <div class="form-group">
-          <%= f.label :description, t('.description') %>
-          <%= f.text_area :description, class: 'form-control', required: true  %>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :address, t('.address') %>
-          <%= f.text_area :address, class: 'form-control', required: true  %>
-        </div>
-        <div class="form-group">
-          <%= f.label t('.contact') %>
-          <%= f.text_field :contact, class: 'form-control', required: true  %>
-        </div>
-      </div>
-      <div class="col-md-12" style="margin-bottom: 20px;">
-        <p>Click the map to set up your restaurant's location</p>
-        <div id="map" style="height: 400px;"></div>
-        <script>
-
-          var map;
-          var marker;
-
-          function initMap() {
-            var metromanila = {lat: 14.597537989987021, lng: 120.98281860351562};
-
-            map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 14,
-              center: metromanila
-            });
-            map.addListener('click', function(event) {
-              marker.setPosition(event.latLng);
-              console.log(marker.getPosition().lat())
-              console.log(marker.getPosition().lng())
-              $("#latitude").val(marker.getPosition().lat())
-              $("#longitude").val(marker.getPosition().lng())
-            });
-            addMarker(metromanila);
-          }
-          function addMarker(location) {
-            marker = new google.maps.Marker({
-              position: location,
-              map: map
-            });
-          }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
-        </script>
-      </div>
-      <%= hidden_field_tag :latitude %>
-      <%= hidden_field_tag :longitude %>
-      
-      <div class="col-md-12">
-        <%= f.submit t('.registerresto'), class: 'btn btn-primary center-block', style: 'width: 100%; height: 40px;' %>
-      </div>
-    </div>
-    
-  <% end %>
+  </div>
 </div>
+

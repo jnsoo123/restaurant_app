@@ -1,19 +1,9 @@
 <%= render 'restaurants/searchbar' %>
 
-<div class="container" style="max-width: 1000px; padding: 0;">
-  <div class="row">
-    <div class="col-md-2">
-      <div style="background-image: url('<%= asset_path(display_resto(@restaurant)) %>'); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div>
-    </div>
-    <div class="col-md-10">
-      <span style="font-size: 35px;"><%= @restaurant.name %></span><br>
-      <span><%= @restaurant.description %></span>
-    </div>
-  </div>
-</div>
-<div class="container resto-container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px;">
-  <div class="row clearfix">
-    <div class="pull-left">
+
+<div class="container resto-container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px; padding: 0;">
+  <div class="row" style="margin: 0; padding: 0;">
+    <div id="sidebar" class="col-md-3 col-sm-4 col-xs-12" style="margin: 0; padding: 0;">
       <% unless @restaurant.location.blank? %>
         <iframe
           width="600"
@@ -31,7 +21,7 @@
           <div class="list-group nearbys" style="">
             <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(8).each do |resto| %>
               
-              <%= link_to resto, class: 'list-group-item', style: 'background-color: #f9f9f9;' do %>
+              <%= link_to resto, class: 'list-group-item', style: 'background-color: #f9f9f9; margin: 5px 0 5px 0;' do %>
                 <div class="row">
                   <div class="col-md-3">
                     <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
@@ -63,11 +53,46 @@
           No restaurants found.
         <% end %>
       </div>
+      <div style="padding: 10px; margin-top: -5px;">
+        <h4>Top Rated Restaurants</h4>
+          <div class="list-group nearbys" style="">
+            <% Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(8).each do |resto| %>
+              
+            <%= link_to resto, class: 'list-group-item', style: 'background-color: #f9f9f9; margin: 5px 0 5px 0;' do %>
+                <div class="row" style="">
+                  <div class="col-md-3">
+                    <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
+                  </div>
+                  <div class="col-md-9">
+                    <%= resto.name %><br>
+                    <small>
+                      <% (resto.ave_ratings.to_i).times do %>
+                        <%= icon('star') %>
+                      <% end %>
+                      <% unless resto.ave_ratings % 1 == 0 %>
+                        <%= icon('star-half-o')%>
+                        <% (4 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% else %>
+                        <% (5 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% end %>
+                      &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
+                    </small>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+      </div>
     </div>
-    <div class="pull-right">
-      <div style="width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="col-md-9 col-sm-8 col-xs-12" style="margin: 0; padding: 0;">
+      <div class="module" style="max-width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
+        <p style="font-size: 30px;"><%= @restaurant.name %></p>
         <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px; color: green;') %></p>
         <p><%= icon('phone', @restaurant.contact, style: 'margin-right: 10px; color: red;') %></p>
         <% if @restaurant.website.present? %>
@@ -77,21 +102,62 @@
         <% end %>
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
-        <p><%= icon('clock-o', " Open every: ", style: 'margin-right: 11px;')%></p>
+        <h4><%= icon('clock-o', "Hours", style: 'margin-right: 8px;')%></h4>
+        <hr style="margin-top: 5px;">
+        <% @restaurant.sched.each do |day, sched| %>
+        <div class="row">
+          <% case day %>
+          <% when 0 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Sunday</p>
+            </div>
+          <% when 1 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Monday</p>
+            </div>
+          <% when 2 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Tuesday</p>
+            </div>
+          <% when 3 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Wednesday</p>
+            </div>
+          <% when 4 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Thursday</p>
+            </div>
+          <% when 5 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Friday</p>
+            </div>
+          <% when 6 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Saturday</p>
+            </div>
+          <% end %>
+          <div class="col-md-6">
+            <%= sched[0].opening %> - <%= sched[0].closing %>
+          </div>
+        </div>
+        
+        <% end %>
       </div>
+      
+      
       <div style=" ">
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-          <h3 style=" color: #676767; padding-bottom: 30px; margin: 0;">Menu</h3>
+          <h4 style=" color: #676767; padding-bottom: 30px; margin: 0;"><%= icon('cutlery', " Menu", style: 'margin-right: 10px; font-weight: 700;') %></h4>
           <div class="row">
             <% unless @restaurant.foods.blank? %>
               <% @restaurant.foods.each do |food| %>
                 <div style="padding-bottom: 20px;">
-                  <div class="col-md-9" style="height: 25px;">
+                  <div class="col-md-9 col-sm-9 col-xs-9" style="height: 25px;">
                     <h4 style="margin: 0;"><%= food.name %><br><small><%= food.description%></small></h4>
                   </div>
-                  <div class="col-md-3" style="height: 50px; padding: 5px; margin-bottom: 20px;">
-                    <div class="pull-right" style="margin-right: 10px; margin-top: 5px;">
-                      <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #333333;" class="label label-default">P <%= food.price %></span>
+                  <div class="col-md-3 col-sm-3 col-xs-3 text-right" style="height: 50px; padding: 5px; margin-bottom: 20px;">
+                    <div class="" style="margin-right: 10px; margin-top: 5px;">
+                      <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #CF2228;" class="label label-default">P <%= food.price %></span>
                     </div>
                   </div>
                 </div>
@@ -105,8 +171,8 @@
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
           <div class="clearfix" style="">
-            <h3 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h3>
-            <div class="fileUpload btn btn-default pull-right">
+            <h4 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h4>
+            <div class="fileUpload btn btn-danger pull-right">
               <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{'Add Photos' if user_signed_in? }")%></span>
               <%= form_for(@picture) do |f| %> 
                 <% if user_signed_in? %>
@@ -115,7 +181,7 @@
                   <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
                 <% end %>
                 <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-                <% end %>
+              <% end %>
             </div>
           </div>
 
@@ -124,11 +190,10 @@
             <div class="row pic-row" style = 'padding-left: 20px;'>
               <% unless @restaurant.pictures.empty? %>
                 <% @restaurant.pictures.where(status: true).each do |picture| %>
-                <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
-                  <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); 
-                    background-repeat: no-repeat; background-size: cover; background-position: center;'>
-                  </div>
-                   <% end %>
+                  <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+                    <div class="col-md-3 col-sm-6 col-xs-6 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; border: 4px solid #fff; border-radius: 15px;'>
+                    </div>
+                  <% end %>
                 <% end %>
               <% end %>
             </div>
@@ -138,7 +203,7 @@
 
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-          <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, 'Review')}", style: 'margin-right: 8px;')%></h3>
+          <h4 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, 'Review')}", style: 'margin-right: 8px;')%></h4>
 
           <% unless @restaurant.ratings.empty? %>
             <% @restaurant.ratings.each do |rate| %>
