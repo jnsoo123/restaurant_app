@@ -35,12 +35,13 @@ class SchedulesController < ApplicationController
   end
   
   def update
-    if @schedule.update(schedule_params)
+    if Schedule.check_overlapping?(schedule_params) && @schedule.update(schedule_params)
       flash[:success] = "Schedule successfully updated!"
       respond_with(@schedule, location: owner_resto_edit_path(@schedule.restaurant))
     else
       flash[:failure] = "<dl><dt>Your schedule was not successfully updated because:</dt>" 
       @schedule.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
+      flash[:failure] << "<dd>Overlapping Schedules</dd>" unless Schedule.check_overlapping?(schedule_params)
       flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@schedule.restaurant)
     end

@@ -4,7 +4,6 @@ class Schedule < ActiveRecord::Base
   validates :restaurant, :day, :opening, :closing, presence: true
   
   def self.check_overlapping?(parameters)
-    
     day_checker = Schedule.where(day: parameters[:day])
     time_test_opening = Time.parse(parameters[:opening])
     time_test_closing = Time.parse(parameters[:closing])
