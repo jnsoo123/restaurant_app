@@ -20,7 +20,28 @@ class Restaurant < ActiveRecord::Base
   end
   
   def is_open?
+    scheds = schedules.group_by{|s| [s.day]}
+    @hours = ""
+
+    mappings = {["Sunday"] => 0, ["Monday"] => 1, ["Tuesday"] => 2, ["Wednesday"] => 3, ["Thursday"] => 4, ["Friday"] => 5, ["Saturday"] => 6}
+    scheds = scheds.map {|k, v| [mappings[k], v] }.to_h
+    scheds = scheds.sort_by{ |k,v| k }.to_h
     
+    today = DateTime.now
+    today_time = Time.now.to_a
+
+    scheds.each do |key, value|
+      if today.wday == key
+        value.each do |val|
+          open_time = DateTime.parse(Time.parse(val.opening).to_s).to_date
+          close_time = DateTime.parse(Time.parse(val.closing).to_s).to_date
+         if Date.today.between?(open_time, close_time)
+           return "Open"
+         end 
+        end
+      end
+    end
+    return "Closed"
   end
   
   def sched
@@ -30,13 +51,16 @@ class Restaurant < ActiveRecord::Base
     mappings = {["Sunday"] => 0, ["Monday"] => 1, ["Tuesday"] => 2, ["Wednesday"] => 3, ["Thursday"] => 4, ["Friday"] => 5, ["Saturday"] => 6}
     scheds = scheds.map {|k, v| [mappings[k], v] }.to_h
     scheds = scheds.sort_by{ |k,v| k }.to_h
-
-#    scheds.each do |key, value|
-#      @hours << "#{Date::DAYNAMES[key]} "
-#      value.each do |val| 
-#        @hours << "#{val.opening} - #{val.closing}"
-#      end
-#    end
+    scheds.each do |key, value|
+      @hours << "#{Date::DAYNAMES[key]} "
+      value.each_with_index do |val, index|
+        if value.count > 1 && index < value.count-1
+          @hours << "#{val.opening} - #{val.closing}, "
+        else
+          @hours << "#{val.opening} - #{val.closing} "
+        end
+      end
+    end
 
 #    return @hours if @hours.present?
 #    return "Not Available"
