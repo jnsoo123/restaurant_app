@@ -14,7 +14,7 @@ class SchedulesController < ApplicationController
   def create
     @schedule = Schedule.new(schedule_params)
     @schedule.restaurant = current_user.restaurants.find(params[:resto_id])
-    if @schedule.save
+    if Schedule.check_overlapping?(schedule_params) && @schedule.save
       flash[:success] = "Schedule successfully added!"
       @schedules = @schedule.restaurant.schedules
       respond_with(@schedules)
@@ -22,6 +22,8 @@ class SchedulesController < ApplicationController
       flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 
       @schedule.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
+      
+      @schedules = @schedule.restaurant.schedules
       respond_with(@schedule)
     end
   end
