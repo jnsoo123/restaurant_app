@@ -17,5 +17,4 @@ RSpec.describe User, type: :model do
     expect(user1.check_notification).to match(/<span class='label label-danger' style='margin-left: 10px;'>New<\/span>/)
   end
   
-  
 end

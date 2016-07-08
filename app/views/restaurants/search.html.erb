@@ -51,7 +51,7 @@
                       <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
                       
                        <p class="list-group-item-text" style="margin-top: 10px;">
-                          <%= resto.is_open? %>
+                          <%= resto.is_open?(DateTime.now) %>
                        </p>
                       
                     </div>
