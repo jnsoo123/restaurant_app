@@ -19,29 +19,28 @@ class Restaurant < ActiveRecord::Base
     end
   end
   
-  def is_open?
+  def is_open?(current)
     scheds = schedules.group_by{|s| [s.day]}
     @hours = ""
 
     mappings = {["Sunday"] => 0, ["Monday"] => 1, ["Tuesday"] => 2, ["Wednesday"] => 3, ["Thursday"] => 4, ["Friday"] => 5, ["Saturday"] => 6}
     scheds = scheds.map {|k, v| [mappings[k], v] }.to_h
     scheds = scheds.sort_by{ |k,v| k }.to_h
-    
-    today = DateTime.now
-    today_time = Time.now.to_a
+
+    today_time = current.to_time
 
     scheds.each do |key, value|
-      if today.wday == key
+      if current.wday == key
         value.each do |val|
-          open_time = DateTime.parse(Time.parse(val.opening).to_s).to_date
-          close_time = DateTime.parse(Time.parse(val.closing).to_s).to_date
-         if Date.today.between?(open_time, close_time)
-           return "Open"
-         end 
+          open_time = Time.parse(val.opening)
+          close_time = Time.parse(val.closing)
+          
+          close_time = close_time + 24.hours if Time.at(open_time.to_i) > (Time.at(close_time.to_i))
+          return true if (open_time..close_time).cover? today_time
         end
       end
     end
-    return "Closed"
+    return false
   end
   
   def sched

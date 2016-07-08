@@ -38,7 +38,7 @@
                       <p class="list-group-item-text" style="margin-top: 20px;"><%= icon('map-marker', truncate(resto.address, length: 45), style: 'margin-right: 12px;') %></p>
                       <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
                       <p class="list-group-item-text" style="margin-top: 10px;">
-                          <%= resto.is_open? %>
+                          <%= resto.is_open?(DateTime.now) %>
                       </p>
                       
                     </div>
