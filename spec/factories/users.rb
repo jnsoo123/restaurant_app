@@ -13,6 +13,6 @@ FactoryGirl.define do
     password_confirmation 'secret'
     location 'this is my location'
     profile_picture_url 'random/image'
-    avatar 'random.jpg'
+    avatar { File.open("#{Rails.root}/spec/support/sisig.jpg") } 
   end
 end
