@@ -61,10 +61,6 @@ class Restaurant < ActiveRecord::Base
         end
       end
     end
-
-#    return @hours if @hours.present?
-#    return "Not Available"
-    
     return scheds
   end
   

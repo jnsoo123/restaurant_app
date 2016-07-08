@@ -3,7 +3,6 @@ FactoryGirl.define do
     sequence :name do |n|
       "Restaurant#{n}"
     end
-    description "random text"
     address "random address"
     contact "some contact"
     status "Pending"
