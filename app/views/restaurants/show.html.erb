@@ -92,7 +92,7 @@
       <div class="module" style="max-width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
-        <p style="font-size: 30px;"><%= @restaurant.name %></p>
+        <p style="font-size: 30px;"><%= @restaurant.name %> <%= social_share_button_tag(@restaurant.name, url: request.original_url) %></p>
         <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px; color: green;') %></p>
         <p><%= icon('phone', @restaurant.contact, style: 'margin-right: 10px; color: red;') %></p>
         <% if @restaurant.website.present? %>
@@ -164,7 +164,7 @@
                 
               <% end %>
             <% else %>
-              <h3 style="margin-left: 13px;">No menu available.</h3>
+              <h4 style="margin-left: 13px;">No menu available.</h4>
             <% end %>
           </div>
         </div>
@@ -200,6 +200,10 @@
           </div>
         </div>
         
+        <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
+          <h4><%= icon('rss', ' Owner Posts', style: 'margin-right: 8px;') %></h4>
+        </div>
+        
 
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
@@ -233,7 +237,7 @@
             <% end %>
           <% else %>
             <div style="height: 75px;">
-              <h3>No Reviews yet.</h3>
+              <h4>No Reviews yet.</h4>
             </div>
           <% end %>
 

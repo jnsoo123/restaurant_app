@@ -58,6 +58,7 @@ gem 'carrierwave'
 gem 'mailcatcher'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'omniauth-facebook'
+gem 'social-share-button'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

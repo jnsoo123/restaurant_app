@@ -25,5 +25,6 @@
 //= require bootstrap-datetimepicker
 //= require bootstrap-sprockets
 //= require owl.carousel
+//= require social-share-button
 //= require turbolinks
 //= require_tree .

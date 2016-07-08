@@ -86,7 +86,7 @@ a {
   border-radius: 0px;
   border: 0;
   border-bottom: 2px solid #CF2228;
-  + .bg + .container {
+  + .bg + .bg + .bg + .bg + .bg + .bg + .container {
     padding-top:50px
   }
   li.active {
@@ -266,6 +266,5 @@ select.form-control {
   -moz-border-radius: 0px !important;
   border-radius: 0px !important; 
 }
-
 
 
