@@ -100,7 +100,10 @@ Devise.setup do |config|
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 11
-
+  
+  if Rails.env.development? 
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE 
+  end
   # Set up a pepper to generate the hashed password.
   # config.pepper = 'ee159b427bc28b240069224db2ea8ddb949b2b5ec0a3361be7ec7a4fbb8edddc72ef457a7f8c79e2a5b565b82704d04340035f4d61e14558e48c9c8a13c0b281'
 
