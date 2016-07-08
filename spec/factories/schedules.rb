@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :schedule do
-    day "MyString"
-    opening "MyString"
-    closing "MyString"
+    day "Monday"
+    opening "12:00 AM"
+    closing "1:00 PM"
     restaurant nil
   end
 end

@@ -29,6 +29,7 @@ class SchedulesController < ApplicationController
   def edit
     @days = []
     Date::DAYNAMES.each_with_index { |x, i| @days << [x, x] }
+    puts @days
   end
   
   def update
@@ -45,7 +46,6 @@ class SchedulesController < ApplicationController
   
   def destroy
     if @schedule.destroy
-      flash[:success] = 'Schedule successfully deleted!'
       @schedules = @schedule.restaurant.schedules
       respond_with(@schedules)
     else

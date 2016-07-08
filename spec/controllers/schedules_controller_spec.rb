@@ -5,6 +5,7 @@ RSpec.describe SchedulesController, type: :controller do
   
   let!(:user1){FactoryGirl.create(:user, :name => "Dave", :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoAcc", :status => "Accepted", :user_id => user1.id)}
+  let!(:schedule1){FactoryGirl.create(:schedule, :day => 'Monday', :opening => "8:00 PM", :closing => "11:00 PM", :restaurant_id => restaurant1.id)}
   
   before(:each) do
     sign_in user1
@@ -17,12 +18,12 @@ RSpec.describe SchedulesController, type: :controller do
       end
       
       it "creates a new instance of schedules for that restaurant" do
-        food = assigns(:food)
-        expect(food.restaurant).to eq(restaurant1)
-        expect(food.name).to be nil
-        expect(food.description).to be nil
-        expect(food.price).to be nil
-        expect(food.restaurant_id).not_to be nil
+        schedule = assigns(:schedule)
+        expect(schedule.restaurant).to eq(restaurant1)
+        expect(schedule.opening).to be nil
+        expect(schedule.closing).to be nil
+        expect(schedule.day).to be nil
+        expect(schedule.restaurant_id).not_to be nil
       end
       
       it "renders new template" do
@@ -32,30 +33,30 @@ RSpec.describe SchedulesController, type: :controller do
     
     describe "get #edit" do
       before(:each) do
-       xhr :get, :edit, :id => food1.id
+       xhr :get, :edit, :id => schedule1.id
       end
       
       it "renders edit template" do
         expect(response).to render_template('edit')
       end
       
-      it "passes food entry" do
-        expect(assigns(:food)).to eq(food1)
+      it "passes schedule entry" do
+        expect(assigns(:schedule)).to eq(schedule1)
       end
     end
     
     describe "post #create" do
       before(:each) do
-        xhr :post, :create, :food =>  FactoryGirl.attributes_for(:food, :name => "Bulgogi", :description => "meat",
-        :price => 20, :cuisine_id => cuisine1.id, :restaurant_id => restaurant1.id), :resto_id => restaurant1.id
+        xhr :post, :create, :schedule =>  FactoryGirl.attributes_for(:schedule, :opening => '10:00 AM', 
+        :closing => "12:00 AM", :day => 'Tuesday'), :resto_id => restaurant1.id
       end
       
-      it "creates a new food" do
-        expect(Food.count).to eq(2)
+      it "creates a new schedule" do
+        expect(Schedule.count).to eq(2)
       end
       
-      it "creates a new food with description meat" do
-        expect(Food.find_by(name: "Bulgogi").description).to eq("meat")
+      it "creates a new schedule with opening time 10:00 AM" do
+        expect(Schedule.find_by(day: "Tuesday").opening).to eq("10:00 AM")
       end
       
       it "renders owner restaurant edit page" do
@@ -65,34 +66,31 @@ RSpec.describe SchedulesController, type: :controller do
     
     describe "delete #destroy" do
       before(:each) do
-        @id = food1.id
-        xhr :delete, :destroy, :id => food1.id
+        @id = schedule1.id
+        xhr :delete, :destroy, :id => schedule1.id
       end
       
-      it "removes a food entry" do
-        expect(Food.exists?(@id)).to be false
+      it "removes a schedule entry" do
+        expect(Schedule.exists?(@id)).to be false
       end
       
-      it "food count should be 0" do
-        expect(Food.count).to eq(0)
+      it "schedule count should be 0" do
+        expect(Schedule.count).to eq(0)
       end
     end
     
     describe "put #update" do
       before(:each) do
-        @foodAttributes = FactoryGirl.attributes_for(:food, :name => "Bulgogi", :description => "meat",
-        :price => 20, :cuisine_id => cuisine1.id, :restaurant_id => restaurant1.id)
+        @scheduleAttributes = FactoryGirl.attributes_for(:schedule, :day => 'Friday', :opening => "7:00 AM", :closing => "3:00 PM", :restaurant_id => restaurant1.id)
 
-        put :update, :id => food1.id, :food => @foodAttributes
-        food1.reload
+        put :update, :id => schedule1.id, :schedule => @scheduleAttributes
+        schedule1.reload
       end
       
-      it "should update food values" do
-        expect(food1.name).to eq("Bulgogi")
-        expect(food1.description).to eq("meat")
-        expect(food1.price).to eq(20)
-        expect(food1.cuisine.name).to eq("Korean")
-        expect(food1.restaurant.name).to eq("RestoHouse")
+      it "should update schedule values" do
+        expect(schedule1.day).to eq("Friday")
+        expect(schedule1.opening).to eq("7:00 AM")
+        expect(schedule1.closing).to eq("3:00 PM")
       end
     end
   end

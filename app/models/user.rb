@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:facebook]
   validates :name, :username, presence: true
   validates :username, uniqueness: true
+  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i
   
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy
