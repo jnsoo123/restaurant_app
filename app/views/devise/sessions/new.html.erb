@@ -40,7 +40,7 @@
           </div>
         </div>
         <p class="text-center">or</p>
-        <%= link_to "#{icon('facebook-official', " Login with Facebook", style: 'margin-right: 10px;')}".html_safe, user_omniauth_authorize_path(:facebook), class: 'btn btn-facebook', style: 'width: 100%; height: 46px; padding-top: 12px;' %>
+        <%= link_to "#{icon('facebook-official', " Login with Facebook", style: 'margin-right: 10px;')}".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-facebook', style: 'width: 100%; height: 46px; padding-top: 12px;' %>
         <%= link_to t('.forgotpass'), new_password_path(resource_name) %><br />
       </div>
     <% end %>

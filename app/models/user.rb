@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :omniauthable, :omniauth_providers => [:facebook]
   validates :name, :username, presence: true
   validates :username, uniqueness: true
   
@@ -12,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :notifications
   
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
   
   def check_notification
     if notifications.where(status: false).count > 0
@@ -23,10 +22,13 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
-#      user.password = Devise.friendly_token[0,20]
-      user.username = auth.info.name.split(' ').join('')
-      user.name = auth.info.name   # assuming the user model has a name
-      user.avatar = auth.info.image # assuming the user model has an image
+      user.password = Devise.friendly_token[0,20]
+      user.username = auth.info.name.split(' ').join('').downcase
+      user.name = auth.info.name  # assuming the user model has a name
+      user.remote_avatar_url = auth.info.image.gsub('http://','https://')
+      puts "@@@@@@@####### @@@@@@@@####### #{user.name}"
+      puts "@@@@@@@####### @@@@@@@@####### #{auth.info.image}"
+      puts "@@@@@@@####### @@@@@@@@####### #{user.remote_avatar_url}"
     end
   end
   

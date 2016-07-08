@@ -1,12 +1,6 @@
 <%= render 'restaurants/searchbar' %>
 
-<div class="container" style="max-width: 1000px; padding: 0; margin-top: 20px;">
-  <div class="row">
-    <div class="col-md-2 col-sm-2 col-xs-12">
-      <div class="center-block" style="background-image: url('<%= asset_path(display_resto(@restaurant)) %>'); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div>
-    </div>
-  </div>
-</div>
+
 <div class="container resto-container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px; padding: 0;">
   <div class="row" style="margin: 0; padding: 0;">
     <div id="sidebar" class="col-md-3 col-sm-4 col-xs-12" style="margin: 0; padding: 0;">
@@ -108,8 +102,49 @@
         <% end %>
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
-        <p><%= icon('clock-o', @restaurant.sched, style: 'margin-right: 11px;')%></p>
+        <h4><%= icon('clock-o', "Hours", style: 'margin-right: 8px;')%></h4>
+        <hr style="margin-top: 5px;">
+        <% @restaurant.sched.each do |day, sched| %>
+        <div class="row">
+          <% case day %>
+          <% when 0 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Sunday</p>
+            </div>
+          <% when 1 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Monday</p>
+            </div>
+          <% when 2 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Tuesday</p>
+            </div>
+          <% when 3 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Wednesday</p>
+            </div>
+          <% when 4 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Thursday</p>
+            </div>
+          <% when 5 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Friday</p>
+            </div>
+          <% when 6 %>
+            <div class="col-md-6 col-xs-6 col-sm-6">
+              <p>Saturday</p>
+            </div>
+          <% end %>
+          <div class="col-md-6">
+            <%= sched[0].opening %> - <%= sched[0].closing %>
+          </div>
+        </div>
+        
+        <% end %>
       </div>
+      
+      
       <div style=" ">
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
           <h4 style=" color: #676767; padding-bottom: 30px; margin: 0;"><%= icon('cutlery', " Menu", style: 'margin-right: 10px; font-weight: 700;') %></h4>
@@ -117,11 +152,11 @@
             <% unless @restaurant.foods.blank? %>
               <% @restaurant.foods.each do |food| %>
                 <div style="padding-bottom: 20px;">
-                  <div class="col-md-9" style="height: 25px;">
+                  <div class="col-md-9 col-sm-9 col-xs-9" style="height: 25px;">
                     <h4 style="margin: 0;"><%= food.name %><br><small><%= food.description%></small></h4>
                   </div>
-                  <div class="col-md-3" style="height: 50px; padding: 5px; margin-bottom: 20px;">
-                    <div class="pull-right" style="margin-right: 10px; margin-top: 5px;">
+                  <div class="col-md-3 col-sm-3 col-xs-3 text-right" style="height: 50px; padding: 5px; margin-bottom: 20px;">
+                    <div class="" style="margin-right: 10px; margin-top: 5px;">
                       <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #CF2228;" class="label label-default">P <%= food.price %></span>
                     </div>
                   </div>
@@ -156,7 +191,7 @@
               <% unless @restaurant.pictures.empty? %>
                 <% @restaurant.pictures.where(status: true).each do |picture| %>
                   <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
-                    <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; border: 4px solid #fff; border-radius: 15px;'>
+                    <div class="col-md-3 col-sm-6 col-xs-6 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; border: 4px solid #fff; border-radius: 15px;'>
                     </div>
                   <% end %>
                 <% end %>
