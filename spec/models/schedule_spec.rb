@@ -16,12 +16,12 @@ RSpec.describe Schedule, type: :model do
   describe "checks for overlapping values" do
     it "should return false since overlapping" do
         expect(Schedule.check_overlapping?(FactoryGirl.attributes_for(:schedule, :opening => '10:00 AM', 
-        :closing => "12:00 PM", :day => 'Friday'))).to be false
+        :closing => "12:00 PM", :day => 'Friday'), restaurant1)).to be false
     end
     
     it "should return true since not overlapping" do
         expect(Schedule.check_overlapping?(FactoryGirl.attributes_for(:schedule, :opening => '1:00 AM', 
-        :closing => "8:00 AM", :day => 'Friday'))).to be true
+        :closing => "8:00 AM", :day => 'Friday'), restaurant1)).to be true
     end
   end
 end
