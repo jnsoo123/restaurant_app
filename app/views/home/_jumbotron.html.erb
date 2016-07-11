@@ -1,8 +1,6 @@
-
-
+<div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall11.jpeg')%>') no-repeat center center;"></div>
+<div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall12.jpeg')%>') no-repeat center center;"></div>
 <div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall2.jpeg')%>') no-repeat center center;"></div>
-<div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall3.jpeg')%>') no-repeat center center;"></div>
-<div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall4.jpeg')%>') no-repeat center center;"></div>
 <div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall5.jpeg')%>') no-repeat center center;"></div>
 <div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall6.jpeg')%>') no-repeat center center;"></div>
 <div class="bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<%= asset_path('wall7.jpeg')%>') no-repeat center center;"></div>
@@ -10,6 +8,7 @@
   <div class="jumbotron jumbotron_search" style="padding: 125px 25px 0 25px; margin-bottom: -50px;">
     <h1 class="text-center" style="font-weight: 700; font-family: 'Poiret One', cursive; font-size: 100px;">Fudz Finder</h1>
     <p class="text-center">find fud for your appetite</p>
+    
     <div style='text-align: center;'>
       <%= form_tag(restaurant_search_path, method: :get, id: 'search_form') do %>
         <div class="input-group">

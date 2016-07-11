@@ -3,7 +3,7 @@ $(document).on("ready page:load", function() {
   
   var slideShowDivs = $('.bg')
   var currentID = 0;
-  var slideShowTimeout = 5000;
+  var slideShowTimeout = 10000;
   $(document).ready(function() {
       for (var i = 1; i < slideShowDivs.length; i++) $(slideShowDivs[i]).hide();
       setTimeout(slideShowChange, slideShowTimeout);
@@ -11,8 +11,8 @@ $(document).on("ready page:load", function() {
   function slideShowChange() {
       var nextID = currentID + 1;
       if (nextID >= slideShowDivs.length) nextID = 0;
-      $(slideShowDivs[currentID]).stop(true).fadeOut(1200);
-      $(slideShowDivs[nextID]).stop(true).fadeIn(1200, function() {
+      $(slideShowDivs[currentID]).stop(true).fadeOut(400);
+      $(slideShowDivs[nextID]).stop(true).fadeIn(400, function() {
           setTimeout(slideShowChange, slideShowTimeout);
       });
       currentID = nextID;
@@ -42,7 +42,7 @@ $(document).on("ready page:load", function() {
       parallax();
   });
   
-  $('.home-nav').affix({offset: {top: 620}});
+  $('.home-nav').affix({offset: {top: 600}});
   $('.home-nav').on('affixed.bs.affix', function(){
     var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
     $(this).addClass('animated slideInDown').one(animationEnd, function(){
@@ -69,5 +69,4 @@ $(document).on("ready page:load", function() {
     });
   });
   
-
 });

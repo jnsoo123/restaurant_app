@@ -303,6 +303,9 @@ GEM
     skinny (0.2.4)
       eventmachine (~> 1.0.0)
       thin (>= 1.5, < 1.7)
+    social-share-button (0.3.1)
+      coffee-rails
+      sass-rails
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -378,6 +381,7 @@ DEPENDENCIES
   sdoc
   selenium-webdriver
   shoulda-matchers
+  social-share-button
   sqlite3
   therubyracer
   turbolinks
