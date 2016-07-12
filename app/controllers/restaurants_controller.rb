@@ -58,6 +58,7 @@ class RestaurantsController < ApplicationController
     else
       @picture = Picture.new
       @rating = Rating.new
+      @posts = @restaurant.posts.limit(3).order('created_at desc')
     end
   end
 
@@ -70,6 +71,7 @@ class RestaurantsController < ApplicationController
     @foods = @restaurant.foods
     @ratings = @restaurant.ratings
     @schedules = @restaurant.schedules
+    @posts = @restaurant.posts
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
   end

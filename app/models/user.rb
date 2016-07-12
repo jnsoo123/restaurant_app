@@ -3,13 +3,15 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   validates :name, :username, presence: true
   validates :username, uniqueness: true
-  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i
+  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, on: :update
   
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy
   has_many :ratings
   has_many :pictures
   has_many :notifications
+  has_many :likes
+  has_many :replies
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]

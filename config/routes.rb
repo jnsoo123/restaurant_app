@@ -25,6 +25,12 @@ Rails.application.routes.draw do
   resources :ratings
   resources :schedules
   resources :users
+  resources :posts
+  resources :replies
+  
+  post 'likes' => 'likes#create', as: :likes
+  delete 'likes' => 'likes#destroy', as: :delete_like
+  
   
   get 'users/:id' => 'users#show', as: :user_profile
 

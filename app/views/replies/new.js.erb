@@ -1,0 +1,31 @@
+var media = 
+    `
+      <div class="media">
+        <div class="media-left" style="padding: 0 15px 10px 10px;">
+          <div style="background: url('<%= asset_path(display_user(current_user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>
+        </div>
+        <div class="media-body" style="padding: 4px;">
+          <% if @reply.post.present? %>
+            <%= form_for(@reply, url: replies_path(post: @reply.post.id), method: :post, remote: true) do |f| %>
+              <div class="form-group">
+                <%= f.text_field :comment, class: 'form-control', placeholder: 'Write a reply', autofocus: true %>
+              </div>
+            <% end %>
+          <% else %>
+            <%= form_for(@reply, url: replies_path(rate: @reply.rating.id), method: :post, remote: true) do |f| %>
+              <div class="form-group">
+                <%= f.text_field :comment, class: 'form-control', placeholder: 'Write a reply', autofocus: true %>
+              </div>
+            <% end %>
+          <% end %>
+            
+        </div>
+      </div>
+    `;
+<% if @reply.post.present? %>
+  $("#post_reply_<%= @reply.post.id %>").html(media);
+<% else %>
+  $("#rating_reply_<%= @reply.rating.id %>").html(media);
+<% end %>
+
+
