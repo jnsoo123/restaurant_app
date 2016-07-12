@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'owner/notifications' => 'notifications#index', as: :notifications
   delete 'owner/notifications/:id' => 'notifications#destroy', as: :delete_notification
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
+  post 'restaurants/ratings/more/:id' => 'ratings#show_more', as: :show_more_rating
+  post 'restaurants/post/more/:id' => 'posts#show_more', as: :show_more_post
   
   get 'home/about' => 'home#about', as: :about_page
   get 'home/contact' => 'home#contact', as: :contact_page

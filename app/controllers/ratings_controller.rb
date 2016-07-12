@@ -1,7 +1,7 @@
 class RatingsController < ApplicationController
   
   respond_to :html
-  respond_to :js, only: :edit
+  respond_to :js, only: [:edit, :show_more]
   before_action :set_rating, only: [:edit, :update]
   before_action :authorize, only: [:index]
   
@@ -12,6 +12,14 @@ class RatingsController < ApplicationController
     else      
       @ratings, @order = Rating.sort(params[:search_category], params[:search_order]) 
     end
+  end
+  
+  def show_more
+    @all = params[:more]
+    puts "############ #{@all.class}"
+    @restaurant = Restaurant.find(params[:id]) unless params[:user].present?
+    @user = User.find(params[:id]) if params[:user].present?
+    respond_with(@all)
   end
   
   def create

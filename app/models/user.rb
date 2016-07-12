@@ -7,11 +7,11 @@ class User < ActiveRecord::Base
   
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy
-  has_many :ratings
-  has_many :pictures
-  has_many :notifications
-  has_many :likes
-  has_many :replies
+  has_many :ratings, dependent: :destroy
+  has_many :pictures, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :replies, dependent: :destroy
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]

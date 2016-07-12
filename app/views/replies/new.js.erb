@@ -1,6 +1,6 @@
 var media = 
     `
-      <div class="media">
+      <div class="media" style="padding-left: 21px;">
         <div class="media-left" style="padding: 0 15px 10px 10px;">
           <div style="background: url('<%= asset_path(display_user(current_user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>
         </div>
@@ -15,6 +15,9 @@ var media =
             <%= form_for(@reply, url: replies_path(rate: @reply.rating.id), method: :post, remote: true) do |f| %>
               <div class="form-group">
                 <%= f.text_field :comment, class: 'form-control', placeholder: 'Write a reply', autofocus: true %>
+                <% if @user.present? %>
+                  <%= f.hidden_field :user, value: "#{@user.id}" %>
+                <% end %>
               </div>
             <% end %>
           <% end %>

@@ -1,6 +1,8 @@
 
-<% if @posts.present? %>
-  $('#announcement_area').html("<%= j render 'posts/announcement', posts: @posts%>")
-<% else %>
+<% if @restaurant.present? %>
+  $('#announcement_area').html("<%= j render 'posts/announcement', restaurant: @restaurant %>")
   $('#reviews_area').html("<%= j render('ratings/rating', restaurant: @restaurant) %>")
+  <% if @user.present? %>
+    $('#user_reviews_area').html("<%= j render('users/reviews', user: @user) %>")
+  <% end %>
 <% end %>

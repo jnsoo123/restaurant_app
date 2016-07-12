@@ -1,26 +1,18 @@
 <% unless @restaurant.ratings.empty? %>
   <% @restaurant.ratings.each do |rate| %>
-    <div class="media" style="padding: 10px; margin: 0px;">
-      <div class="media-left" style="padding: 0 25px 10px 10px;">
-        <%= image_tag(display_user(rate.user), width: 64, height: 64, class: 'img-circle') %>
+    <div class="media">
+      <div class="media-left">
+        <%= image_tag(display_user(rate.user), width: 44, height: 44, class: 'img-circle') %>
       </div>
       <div class="media-body" style="max-width: 575px;">
         <h4 class="media-heading">
-          <%= link_to rate.user.name, rate.user %>
+          <%= link_to rate.user.name, rate.user %> 
           <small>
-            <% rate.rate.times do %>
-              <%= icon('star')%>
-            <% end %>
-            <% (5-rate.rate).times do %>
-              <%= icon('star-o')%>
-            <% end %>
-            <% if current_user === rate.user %>
-              <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
-            <% end %>
+            - <%= distance_of_time_in_words_to_now(rate.created_at) %> ago
           </small>
         </h4>
-        <p><small><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</small></p>
-        <p><%= rate.comment %></p>
+        <p style="color: #bbb;"><small><%= pluralize(rate.user.ratings.count, "Review") %></small></p>
+        <p>Rated <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>
         <p>
           <% if rate.user_liked?(current_user) %>
             <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, 'Unlike'))}".html_safe, delete_like_path(user: current_user.id, rating: rate.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
@@ -31,9 +23,18 @@
         </p>
       </div>
     </div>
+    <div class="media" style="padding: 0px 50px; margin: 0px;">
+      <% if rate.replies.count > 3 %>
+        <% if @all == "true" %>
+          <%= link_to "View Less #{icon('caret-up')}".html_safe, show_more_rating_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+        <% else %>
+          <%= link_to "View All (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+        <% end %>
+      <% end %>
+    </div>
     <% if rate.replies.present? %>
-      <% rate.replies.last(3).each do |reply| %>
-        <div class="media" style="padding: 10px 50px 10px 50px; margin: 0px;">
+      <% (@all == "true" ? rate.replies : rate.replies.last(3)).each do |reply| %>
+        <div class="media" style="padding: 10px 50px 10px 53px; margin: 0px;">
           <div class="media-left">
             <div style="background: url('<%= asset_path(display_user(reply.user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>
           </div>

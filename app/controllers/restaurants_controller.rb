@@ -58,7 +58,6 @@ class RestaurantsController < ApplicationController
     else
       @picture = Picture.new
       @rating = Rating.new
-      @posts = @restaurant.posts.limit(3).order('created_at desc')
     end
   end
 

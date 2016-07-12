@@ -6,6 +6,7 @@ class RepliesController < ApplicationController
     @reply = Reply.new
     @reply.post = Post.find(params[:post]) if params[:post].present?
     @reply.rating = Rating.find(params[:rate]) if params[:rate].present?
+    @user = User.find(params[:user]) if params[:user].present?
     puts "@@@@@@@@@ #{params[:rate]}"
     respond_with(@reply)
   end
@@ -16,10 +17,10 @@ class RepliesController < ApplicationController
     @reply.post = Post.find(params[:post]) if params[:post].present?
     @reply.rating = Rating.find(params[:rate]) if params[:rate].present?
     if @reply.save
-      @posts = @reply.post.restaurant.posts.order('created_at desc').limit(3) if params[:post].present?
       @restaurant = @reply.rating.restaurant if params[:rate].present?
-      respond_with(@posts) if params[:post.present?]
-      respond_with(@restaurant) if params[:rate].present?
+      @restaurant = @reply.post.restaurant if params[:post].present?
+      @user = User.find(params[:reply][:user]) if params[:reply][:user].present?
+      respond_with(@restaurant)
     end
   end
   

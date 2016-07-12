@@ -1,8 +1,8 @@
-<% if @posts.present? %>
-  <% @posts.each do |post| %>
+<% if @restaurant.posts.present? %>
+  <% @restaurant.posts.order('created_at desc').limit(3).each do |post| %>
     <div class="media" style="padding: 10px; margin: 0px;">
-      <div class="media-left" style="padding: 0 25px 10px 10px;">
-        <div style="background: url('<%= asset_path(display_resto(post.restaurant)) %>'); background-size: cover; background-position: center center; width: 64px; height: 64px;" class="img-circle"></div>
+      <div class="media-left">
+        <div style="background: url('<%= asset_path(display_resto(post.restaurant)) %>'); background-size: cover; background-position: center center; width: 44px; height: 44px;" class="img-circle"></div>
       </div>
       <div class="media-body" style="max-width: 575px;">
         <h4 class="media-heading">
@@ -20,9 +20,18 @@
         
       </div>
     </div>
+    <div class="media" style="padding: 0px 50px; margin: 0px;">
+      <% if post.replies.count > 3 %>
+        <% if @all == "true" %>
+          <%= link_to "View Less #{icon('caret-up')}".html_safe, show_more_post_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+        <% else %>
+          <%= link_to "View All (#{post.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_post_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+        <% end %>
+      <% end %>
+    </div>
     <% if post.replies.present? %>
-      <% post.replies.last(3).each do |reply| %>
-        <div class="media" style="padding: 10px 50px 10px 50px; margin: 0px;">
+      <% (@all == "true" ? post.replies : post.replies.last(3)).each do |reply| %>
+        <div class="media" style="padding: 10px 50px 10px 63px; margin: 0px;">
           <div class="media-left">
             <div style="background: url('<%= asset_path(display_user(reply.user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>
           </div>

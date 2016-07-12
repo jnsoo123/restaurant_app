@@ -10,6 +10,7 @@ class LikesController < ApplicationController
     if @like.save
       @posts = @like.post.restaurant.posts.order('created_at desc').limit(3) if params[:post_id].present?
       @restaurant = @like.rating.restaurant if params[:rate_id].present?
+      @user = User.find(params[:user_page]) if params[:user_page].present?
       respond_with(@posts) if params[:post_id].present?
       respond_with(@restaurant) if params[:rate_id].present?
     end
@@ -21,8 +22,7 @@ class LikesController < ApplicationController
     if @like.destroy
       @posts = @like.post.restaurant.posts.order('created_at desc').limit(3) if params[:post].present?
       @restaurant = @like.rating.restaurant if params[:rating].present?
-      puts "@@@@@@@@@@@ #{params[:post]}"
-      puts "@@@@@@@@@@@ #{params[:rating]}"
+      @user = User.find(params[:user_page]) if params[:user_page].present?
       respond_with(@posts) if params[:post].present?
       respond_with(@restaurant) if params[:rating].present?
     end

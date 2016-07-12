@@ -12,7 +12,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.restaurant = current_user.restaurants.find(params[:resto_id])
     if @post.save
-      @posts = @post.restaurant.posts
+      @restaurant = @post.restaurant
       respond_with(@posts)
     else
       
@@ -36,6 +36,12 @@ class PostsController < ApplicationController
       @posts = @post.restaurant.posts
       respond_with(@posts)
     end
+  end
+  
+  def show_more
+    @all = params[:more]
+    @restaurant = Restaurant.find(params[:id])
+    respond_with(@all)
   end
   
   private
