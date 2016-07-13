@@ -7,7 +7,6 @@ class RepliesController < ApplicationController
     @reply.post = Post.find(params[:post]) if params[:post].present?
     @reply.rating = Rating.find(params[:rate]) if params[:rate].present?
     @user = User.find(params[:user]) if params[:user].present?
-    puts "@@@@@@@@@ #{params[:rate]}"
     respond_with(@reply)
   end
   
