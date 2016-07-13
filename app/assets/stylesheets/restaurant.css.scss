@@ -137,7 +137,17 @@ ul.filters {
     display: none;
   }
 }
-
+.btn.btn-like-comment[disabled] {
+  -o-transition:color .4s ease-out, background .4s ease-in;
+  -ms-transition:color .4s ease-out, background .4s ease-in;
+  -moz-transition:color .4s ease-out, background .4s ease-in;
+  -webkit-transition:color .4s ease-out, background .4s ease-in;
+  transition:color .4s ease-out, background .4s ease-in;
+  &:hover {
+    color: gray;
+    background-color: #ddd;
+  }
+}
 
 .btn.btn-like-comment {
   background-color: whitesmoke;

@@ -6,4 +6,5 @@ $(document).on("ready page:change", function() {
   $('.btn-hide-click').click(function(){
     $(this).hide();
   });
+  $('[data-toggle="tooltip"]').tooltip();
 });

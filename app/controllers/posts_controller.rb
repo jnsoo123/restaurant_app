@@ -1,5 +1,6 @@
 class PostsController < ApplicationController 
   before_action :set_post, only: [:edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: :show_more
   respond_to :js
   
   def new 
@@ -12,7 +13,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.restaurant = current_user.restaurants.find(params[:resto_id])
     if @post.save
-      @restaurant = @post.restaurant
+      @posts = @post.restaurant.posts
       respond_with(@posts)
     else
       
