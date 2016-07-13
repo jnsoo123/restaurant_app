@@ -1,0 +1,4 @@
+<% unless @post.errors.any? %>
+  $('#myModal').modal("hide")
+  $('#post_area').html("<%= j render('posts/post', post: @post) %>")
+<% end %>  

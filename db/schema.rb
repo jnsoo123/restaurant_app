@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708003344) do
+ActiveRecord::Schema.define(version: 20160711073334) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 20160708003344) do
   add_index "foods", ["cuisine_id"], name: "index_foods_on_cuisine_id"
   add_index "foods", ["restaurant_id"], name: "index_foods_on_restaurant_id"
 
+  create_table "likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "rating_id"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "likes", ["post_id"], name: "index_likes_on_post_id"
+  add_index "likes", ["rating_id"], name: "index_likes_on_rating_id"
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
+
   create_table "locations", force: :cascade do |t|
     t.string   "address"
     t.float    "latitude"
@@ -81,6 +93,15 @@ ActiveRecord::Schema.define(version: 20160708003344) do
   add_index "pictures", ["restaurant_id"], name: "index_pictures_on_restaurant_id"
   add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
 
+  create_table "posts", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "restaurant_id"
+    t.text     "comment"
+  end
+
+  add_index "posts", ["restaurant_id"], name: "index_posts_on_restaurant_id"
+
   create_table "ratings", force: :cascade do |t|
     t.integer  "rate"
     t.text     "comment"
@@ -92,6 +113,19 @@ ActiveRecord::Schema.define(version: 20160708003344) do
 
   add_index "ratings", ["restaurant_id"], name: "index_ratings_on_restaurant_id"
   add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
+
+  create_table "replies", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "rating_id"
+    t.integer  "post_id"
+    t.text     "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "replies", ["post_id"], name: "index_replies_on_post_id"
+  add_index "replies", ["rating_id"], name: "index_replies_on_rating_id"
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id"
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"

@@ -98,6 +98,15 @@
 </div>
 
 <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
+  <h4 class="pull-left" style="color: #6b6b6b;">Announcements / Posts</h4>
+  <%= link_to "#{icon('plus', "Add Posts", style: 'margin-right: 10px;')}".html_safe, new_post_path(resto_id: @restaurant.id), class: 'btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
+</div>
+
+<div id="post_area">
+  <%= render 'posts/post'%>
+</div>
+
+<div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
   <h4 class="pull-left" style="color: #6b6b6b;">Schedules</h4>
   <%= link_to "#{icon('plus', "Add Schedule", style: 'margin-right: 10px;')}".html_safe, new_schedule_path(resto_id: @restaurant.id), class: 'time btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
 </div>

@@ -1,8 +1,14 @@
 class Rating < ActiveRecord::Base
   belongs_to :restaurant
   belongs_to :user
+  has_many :likes
+  has_many :replies
   
   validates :rate, :user, :restaurant, presence: true
+  
+  def user_liked?(user)
+    likes.where(user: user).present?
+  end
   
   def self.sort(sort_value, order)  
       if sort_value == 'Rating'

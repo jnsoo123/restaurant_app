@@ -101,73 +101,77 @@
           <p style="margin-bottom: 0;"><%= icon('globe', "Website not available", style: 'margin-right: 10px; color: dodgerblue;')%></p>
         <% end %>
       </div>
-      <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
-        <h4><%= icon('clock-o', "Hours", style: 'margin-right: 8px;')%></h4>
-        <hr style="margin-top: 5px;">
-        <% @restaurant.sched.each do |day, sched| %>
-        <div class="row">
-          <% case day %>
-          <% when 0 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Sunday</p>
+      <% if @restaurant.sched.present? %>
+        <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
+          <h4><%= icon('clock-o', "Hours", style: 'margin-right: 8px;')%></h4>
+          <hr style="margin-top: 5px;">
+          <% @restaurant.sched.each do |day, sched| %>
+          <div class="row">
+            <% case day %>
+            <% when 0 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Sunday</p>
+              </div>
+            <% when 1 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Monday</p>
+              </div>
+            <% when 2 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Tuesday</p>
+              </div>
+            <% when 3 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Wednesday</p>
+              </div>
+            <% when 4 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Thursday</p>
+              </div>
+            <% when 5 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Friday</p>
+              </div>
+            <% when 6 %>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <p>Saturday</p>
+              </div>
+            <% end %>
+            <div class="col-md-6">
+              <%= sched[0].opening %> - <%= sched[0].closing %>
             </div>
-          <% when 1 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Monday</p>
-            </div>
-          <% when 2 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Tuesday</p>
-            </div>
-          <% when 3 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Wednesday</p>
-            </div>
-          <% when 4 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Thursday</p>
-            </div>
-          <% when 5 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Friday</p>
-            </div>
-          <% when 6 %>
-            <div class="col-md-6 col-xs-6 col-sm-6">
-              <p>Saturday</p>
-            </div>
-          <% end %>
-          <div class="col-md-6">
-            <%= sched[0].opening %> - <%= sched[0].closing %>
           </div>
+
+          <% end %>
         </div>
-        
-        <% end %>
-      </div>
+      <% end %>
       
       
       <div style=" ">
-        <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-          <h4 style=" color: #676767; padding-bottom: 30px; margin: 0;"><%= icon('cutlery', " Menu", style: 'margin-right: 10px; font-weight: 700;') %></h4>
-          <div class="row">
-            <% unless @restaurant.foods.blank? %>
-              <% @restaurant.foods.each do |food| %>
-                <div style="padding-bottom: 20px;">
-                  <div class="col-md-9 col-sm-9 col-xs-9" style="height: 25px;">
-                    <h4 style="margin: 0;"><%= food.name %><br><small><%= food.description%></small></h4>
-                  </div>
-                  <div class="col-md-3 col-sm-3 col-xs-3 text-right" style="height: 50px; padding: 5px; margin-bottom: 20px;">
-                    <div class="" style="margin-right: 10px; margin-top: 5px;">
-                      <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #CF2228;" class="label label-default">P <%= food.price %></span>
+        <% if @restaurant.foods.present? %>
+          <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
+            <h4 style=" color: #676767; padding-bottom: 30px; margin: 0;"><%= icon('cutlery', " Menu", style: 'margin-right: 10px; font-weight: 700;') %></h4>
+            <div class="row">
+              <% unless @restaurant.foods.blank? %>
+                <% @restaurant.foods.each do |food| %>
+                  <div style="padding-bottom: 20px;">
+                    <div class="col-md-9 col-sm-9 col-xs-9" style="height: 25px;">
+                      <h4 style="margin: 0;"><%= food.name %><br><small><%= food.description%></small></h4>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-right" style="height: 50px; padding: 5px; margin-bottom: 20px;">
+                      <div class="" style="margin-right: 10px; margin-top: 5px;">
+                        <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #CF2228;" class="label label-default">P <%= food.price %></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                
+
+                <% end %>
+              <% else %>
+                <h4 style="margin-left: 13px;">No menu available.</h4>
               <% end %>
-            <% else %>
-              <h4 style="margin-left: 13px;">No menu available.</h4>
-            <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
           <div class="clearfix" style="">
@@ -201,45 +205,22 @@
         </div>
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-          <h4><%= icon('rss', ' Owner Posts', style: 'margin-right: 8px;') %></h4>
+          <h4><%= icon('rss', ' News / Announcements', style: 'margin-right: 8px;') %></h4>
+          <div id="announcement_area">
+            <%= render 'posts/announcement' %>
+          </div>
         </div>
         
 
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
           <h4 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, 'Review')}", style: 'margin-right: 8px;')%></h4>
-
-          <% unless @restaurant.ratings.empty? %>
-            <% @restaurant.ratings.each do |rate| %>
-              <div class="media" style="padding: 10px; margin-bottom: 10px;">
-                <div class="media-left" style="padding: 0 25px 10px 10px;">
-                  <%= image_tag(display_user(rate.user), width: 64, height: 64, class: 'img-circle') %>
-                </div>
-                <div class="media-body" style="max-width: 575px;">
-                  <h4 class="media-heading">
-                    <%= link_to rate.user.name, rate.user %>
-                    <small>
-                      <% rate.rate.times do %>
-                        <%= icon('star')%>
-                      <% end %>
-                      <% (5-rate.rate).times do %>
-                        <%= icon('star-o')%>
-                      <% end %>
-                      <% if current_user === rate.user %>
-                        <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
-                      <% end %>
-                    </small>
-                  </h4>
-                  <p><%= rate.comment %></p>
-                  <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <div style="height: 75px;">
-              <h4>No Reviews yet.</h4>
-            </div>
-          <% end %>
+          
+          <div id="reviews_area">
+            <%= render 'ratings/rating'%>
+          </div>
+          
+          
 
           <% if user_signed_in? %>
             <% unless @restaurant.ratings.find_by(user_id: current_user.id) || @restaurant.user === current_user %>

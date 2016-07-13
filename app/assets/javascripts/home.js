@@ -1,13 +1,12 @@
-$(document).on("ready page:load", function() {
+$(document).on("ready page:change", function() {
   
   
   var slideShowDivs = $('.bg')
   var currentID = 0;
   var slideShowTimeout = 10000;
-  $(document).ready(function() {
-      for (var i = 1; i < slideShowDivs.length; i++) $(slideShowDivs[i]).hide();
-      setTimeout(slideShowChange, slideShowTimeout);
-  });
+  for (var i = 1; i < slideShowDivs.length; i++) $(slideShowDivs[i]).hide();
+  setTimeout(slideShowChange, slideShowTimeout);
+  
   function slideShowChange() {
       var nextID = currentID + 1;
       if (nextID >= slideShowDivs.length) nextID = 0;

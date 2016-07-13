@@ -25,19 +25,9 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade in active" id="fudline" style="padding: 20px;">
         <% unless @user.ratings.empty? %>
-          <% @user.ratings.order("created_at desc").each do |rate| %>
-            <div class="media">
-              <div class="media-left">
-                <%= image_tag(display_resto(rate.restaurant), width: 44, height: 44, class: 'img-circle') %>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading"><%= rate.restaurant.name %></h4>
-                <p style="color: #bbb"><%= rate.restaurant.address %></p>
-                <p>Rated <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>
-                <p><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
-              </div>
-            </div>
-          <% end %>
+          <div id="user_reviews_area">
+            <%= render 'users/reviews'%>
+          </div>
         <% end %>
         <div class="media">
           <div class="media-left">
