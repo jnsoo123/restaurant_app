@@ -97,6 +97,17 @@ a {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+  }
+  .navbar .navbar-collapse {
+    text-align: center;
+  }
+}
+
 .search_container a {
   color: #fff;
   &:hover {
@@ -110,29 +121,29 @@ a {
   }
 }
       /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -100px;
-      }
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -100px;
+}
 
-      /* Set the fixed height of the footer here */
-      #footer {
-        height: 100px;
-        background-color: #fff;
-      }
+/* Set the fixed height of the footer here */
+#footer {
+  height: 100px;
+  background-color: #fff;
+}
 
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
-        #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-      }
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 .search_field, .search_button {
   height: 40px;
   border-radius: 5px;
@@ -267,4 +278,10 @@ select.form-control {
   border-radius: 0px !important; 
 }
 
+#nprogress .bar{
+  background: #CF2228;
+}
 
+#nprogress .peg {
+  box-shadow: 0 0 10px #CF2228, 0 0 5px #CF2228;
+}
