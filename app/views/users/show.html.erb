@@ -45,10 +45,10 @@
           <div class="row">
             <% @user.ratings.each do |rating| %>  
               <%= link_to rating.restaurant do %>
-                <div class="module col-md-4 col-sm-6 col-xs-12" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url('<%= asset_path(display_resto(rating.restaurant))  %>');background-repeat: no-repeat; background-position: center center; background-size: cover; border: 4px solid #fff; border-radius: 20px;">
+                <div class="module col-md-4 col-sm-6 col-xs-12 hvr-grow" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url('<%= asset_path(display_resto(rating.restaurant))  %>');background-repeat: no-repeat; background-position: center center; background-size: cover; border: 4px solid #fff; border-radius: 20px;">
                   <header>
                     <h3>
-                      <%= rating.restaurant.name %>
+                      <%= rating.restaurant.name %><br>
                       <small style="color: #fff;">
                         <% (rating.restaurant.ave_ratings.to_i).times do %>
                           <%= icon('star') %>

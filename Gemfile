@@ -51,6 +51,7 @@ gem 'jquery-atwho-rails'
 gem 'owlcarousel-rails'
 gem 'bootstrap-slider-rails'
 gem 'hover-rails'
+gem 'nprogress-rails'
 #gem 'wow-rails'
 
 

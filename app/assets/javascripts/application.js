@@ -25,6 +25,14 @@
 //= require bootstrap-datetimepicker
 //= require bootstrap-sprockets
 //= require owl.carousel
+//= require nprogress
+//= require nprogress-turbolinks
 //= require social-share-button
 //= require turbolinks
 //= require_tree .
+
+NProgress.configure({
+  showSpinner: false,
+  ease: 'ease',
+  speed: 500
+});
