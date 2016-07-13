@@ -15,6 +15,16 @@ RSpec.describe Schedule, type: :model do
 
   it {is_expected.to belong_to :restaurant}
   
+  describe "check time value" do
+    it "should return true since opening after closing" do
+      expect(Schedule.check_time?("3:00 AM", "2:00 AM")).to be true
+    end
+    
+    it "should return false since opening before closing" do
+      expect(Schedule.check_time?("3:00 AM", "4:00 AM")).to be false
+    end
+  end
+  
   describe "checks for overlapping values" do
     it "should return false since overlapping" do
         expect(Schedule.check_overlapping?(schedule2, restaurant1)).to be false
