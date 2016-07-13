@@ -48,7 +48,7 @@ RSpec.describe SchedulesController, type: :controller do
     describe "post #create" do
       before(:each) do
         xhr :post, :create, :schedule =>  FactoryGirl.attributes_for(:schedule, :opening => '10:00 AM', 
-        :closing => "12:00 AM", :day => 'Tuesday'), :resto_id => restaurant1.id
+        :closing => "12:00 PM", :day => 'Tuesday'), :resto_id => restaurant1.id
       end
       
       it "creates a new schedule" do

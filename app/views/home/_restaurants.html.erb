@@ -3,7 +3,7 @@
 <div id="restaurants" class="container" style="margin-top: 20px;">
   <h3><%= t('.topresto')%><br><small>Find the best restaurants in the world right here</small></h3>
   
-  <%= "THESE ARE #{Restaurant.count}" %>
+  <% puts "IS THIS EMPTY: #{@restaurants.empty?}" %>
   
     <% unless @restaurants.empty? %>
       <div class="list-group restos">
