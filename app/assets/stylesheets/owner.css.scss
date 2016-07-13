@@ -21,6 +21,10 @@
 
     .navbar, .navbar-default
     {
+      .navbar-header{
+        background-color: #cf2228;
+//        margin-bottom: 20px;
+      }
       max-width:300px;
       margin-right: 0;
       margin-left: 0;
@@ -32,6 +36,10 @@
       background-color: #404040;
       border: none;
       border-radius: 0;
+      li.active a{
+        background-color: #292929!important;
+        border-left: 2px solid #cf2228;
+      }
       a {
         color: #fff!important;
       }

@@ -30,6 +30,7 @@ module ApplicationHelper
   end
   
   def filter_active_class(path, main = false)
+    puts "@@@@@@@@@@@@ #{path}"
     if main
       "active"
     else
