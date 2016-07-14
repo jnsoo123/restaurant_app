@@ -107,7 +107,7 @@
   <footer id="footer" style="background-color: whitesmoke; color: #676767; border-top: 2px solid #CF2228;">
     <div class="container" style="max-width: 800px; padding: 30px;">
       <div class="row" style="margin-bottom: 30px;">
-        <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
             Fudz Finder
           </div>
@@ -115,13 +115,12 @@
             <ul class="list-unstyled">
               <li><%= link_to "Home", home_path %></li>
               <li><%= link_to "Login", new_user_session_path %></li>
-              <li><%= link_to "Register", new_user_registration_path %></li>
-              <li><%= link_to "Restaurants", restaurants_path %></li>
+              <li><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
               <li><%= link_to "Cuisines", cuisines_path %></li>
             </ul>
           </div>
         </div>
-        <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
             About
           </div>
@@ -132,17 +131,18 @@
             </ul>
           </div>
         </div>
-        <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
             Get Started
           </div>
           <div class="footer_body">
             <ul class="list-unstyled">
               <li><%= link_to "Make a Resto", new_restaurant_path %></li>
+              <li><%= link_to "Sign up Today", new_user_registration_path %></li>
             </ul>
           </div>
         </div>
-        <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
             Language
           </div>
@@ -162,6 +162,11 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="container" style="max-width: 600px; border-top: 1px solid #ccc; padding: 20px 0 50px 0;">
+      <div class="text-center">
+        &copy; Soolfie, Inc.
       </div>
     </div>
   </footer>  

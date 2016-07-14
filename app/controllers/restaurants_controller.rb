@@ -48,7 +48,7 @@ class RestaurantsController < ApplicationController
     @searchQuery = params[:searchQuery]
     @price_range = params[:price_range] unless params[:price_range].nil?
     @main_active = true if sort_type == 'ratings'
-    
+    @result = @result.page params[:page]
     respond_with(@result)
   end
 

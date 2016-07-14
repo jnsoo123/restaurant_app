@@ -155,13 +155,13 @@
               <% unless @restaurant.foods.blank? %>
                 <% @restaurant.foods.each do |food| %>
                   
-                  <div class="col-md-6 col-sm-6">
+                  <div class="col-md-6 col-sm-6" style="margin-bottom: 10px;">
                     <div class="clearfix" style="font-weight: bold; font-size: 15px;">
                       <div class="pull-left">
                         <%= food.name %>
                       </div>
                       <div class="pull-right">
-                        P <%= food.price.round(2) %>
+                        <%= number_to_currency(food.price, precision: 2, unit: "P") %>
                       </div>
                     </div>
                     <div>
