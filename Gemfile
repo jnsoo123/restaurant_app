@@ -54,7 +54,6 @@ gem 'hover-rails'
 gem 'nprogress-rails'
 #gem 'wow-rails'
 
-
 gem 'carrierwave'
 gem 'mailcatcher'
 gem 'rails-i18n', '~> 4.0.0'
