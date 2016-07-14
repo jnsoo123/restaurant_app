@@ -28,6 +28,10 @@
     <div class="col-md-9 search_result">
       
       <% unless @result.blank? %>
+        <div style="padding: 0 20px 20px 15px; font-size: 15px; font-weight: bold; color: #CF2228;">
+          <%= page_entries_info @result, :entry_name => 'result' %>
+        </div>
+        
         <div class="list-group restos">
           <% @result.each do |resto| %>
             <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 hvr-grow">
@@ -77,6 +81,9 @@
         <%= link_to "See all restaurants", restaurant_search_path(searchQuery: ""), class: 'btn btn-primary center-block', style: 'width: 200px;' %>
         <h4 class="text-center"></h4>
       <% end %>
+      <div class="pull-right">
+        <%= paginate @result %>
+      </div>
     </div>
   </div>
 </div>

@@ -115,7 +115,6 @@
             <ul class="list-unstyled">
               <li><%= link_to "Home", home_path %></li>
               <li><%= link_to "Login", new_user_session_path %></li>
-              <li><%= link_to "Register", new_user_registration_path %></li>
               <li><%= link_to "Restaurants", restaurants_path %></li>
               <li><%= link_to "Cuisines", cuisines_path %></li>
             </ul>
@@ -139,6 +138,7 @@
           <div class="footer_body">
             <ul class="list-unstyled">
               <li><%= link_to "Make a Resto", new_restaurant_path %></li>
+              <li><%= link_to "Sign up Today", new_user_registration_path %></li>
             </ul>
           </div>
         </div>
@@ -162,6 +162,11 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="container" style="max-width: 600px; border-top: 1px solid #ccc; padding: 20px 0 50px 0;">
+      <div class="text-center">
+        &copy; Soolfie, Inc.
       </div>
     </div>
   </footer>  

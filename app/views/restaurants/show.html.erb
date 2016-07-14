@@ -161,7 +161,7 @@
                         <%= food.name %>
                       </div>
                       <div class="pull-right">
-                        P <%= food.price.round(2) %>
+                        <%= number_to_currency(food.price, precision: 2, unit: "P") %>
                       </div>
                     </div>
                     <div>
