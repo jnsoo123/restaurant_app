@@ -223,6 +223,11 @@ select.form-control {
     background-color: #28447e;
     border: 2px solid #28447e;
   }
+  &:focus {
+    border: 2px solid #3b5998;
+    color: #fff;
+    background-color: #3b5998;
+  }
 }
 
 .btn-primary.outline {
