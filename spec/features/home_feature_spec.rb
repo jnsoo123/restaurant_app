@@ -189,48 +189,100 @@ feature "Home Interface" do
     end
   end
   
-  # context "Search" do
-  #   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Some Restaurant", :user_id => owner1.id, :status => 'Accepted')}
-  #   let!(:restaurant2){FactoryGirl.create(:restaurant, :name => "Another Restaurant", :user_id => owner1.id, :status => 'Accepted')}
-  #   let!(:food1){FactoryGirl.create(:food, :name => "Sisig", :cuisine_id => cuisine1.id, :restaurant_id => restaurant1.id)}
-  #   let!(:food2){FactoryGirl.create(:food, :name => "Sisig", :cuisine_id => cuisine1.id, :restaurant_id => restaurant2.id)}
-  #   let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
-  #   let!(:location2){FactoryGirl.create(:location, :address => "Manila", :restaurant => restaurant2)}
-  #
-  #   before(:each) do
-  #     visit home_path
-  #     fill_in 'Search for fudz/cuisine/dishes...', with: "Sisig"
-  #     click_button "Search"
-  #   end
-  #
-  #   scenario "Displays restaurants with food sisig", js: true do
-  #     within(:css, ".restos") do
-  #       sleep 10
-  #
-  #
-  #       expect(first('.list-group-item-heading')).to have_content("#{restaurant1.name}")
-  #     end
-  #   end
-  # end
+  context "Search"  do
+    let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Some Restaurant", :user_id => owner1.id, :status => 'Accepted')}
+    let!(:restaurant2){FactoryGirl.create(:restaurant, :name => "Another Restaurant", :user_id => owner1.id, :status => 'Accepted')}
+    let!(:food1){FactoryGirl.create(:food, :name => "Sisig", :cuisine_id => cuisine1.id, :restaurant_id => restaurant1.id, :price => 30)}
+    let!(:food2){FactoryGirl.create(:food, :name => "Sisig", :cuisine_id => cuisine1.id, :restaurant_id => restaurant2.id, :price => 40)}
+    let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
+    let!(:location2){FactoryGirl.create(:location, :address => "Manila", :restaurant => restaurant2)}
+    
+    let!(:location3){FactoryGirl.create(:location, :address => "Makati")}
+    let!(:location4){FactoryGirl.create(:location, :address => "Manila")}
+
+    before(:each) do
+      visit home_path
+      fill_in 'Search for fudz/cuisine/dishes...', with: "Sisig"
+    end
+
+    context "Search without options" do
+      before(:each) do
+        find(:xpath, '//*[@id="search_form"]/div/span/input').click
+      end
+
+      scenario "Displays restaurants with food sisig default order by rating" do
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[2]/a/div/div[2]/div/h4')).to have_content("#{restaurant2.name}")
+      end
+      
+      scenario "Display restaurants by alphabetical order" do
+        find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[1]/div[2]/div[2]/ul/li[2]/a').click
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant2.name}")
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[2]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")        
+      end
+      
+      scenario "Display restaurants order by price low to high" do
+        find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[1]/div[2]/div[2]/ul/li[3]/a').click
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[2]/a/div/div[2]/div/h4')).to have_content("#{restaurant2.name}")        
+      end
+      
+      scenario "Display restaurants order by price high to low" do
+        find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[1]/div[2]/div[2]/ul/li[4]/a').click
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant2.name}")
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[2]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")        
+      end
+    end
+    
+    # context "Search with options", js: true do
+    #   before(:each) do
+    #     sleep 5
+    #     find(:xpath, '//*[@id="wrap"]/div[1]/div[7]/div/div/div/div/div/a').click
+    #     sleep 100
+    #   end
+    #
+    #   scenario "Search with place" do
+    #     select "Makati", from: "location"
+    #     find(:xpath, '//*[@id="filter_search_button"]').click
+    #   end
+    # end
+  end
+  
+  # context "Sign Up", js: true do
+#     before(:each) do
+#       click_link "Sign up Today"
+#       fill_in 'user[name]', with: "Joe"
+#       fill_in 'user[username]', with: "joe123"
+#       fill_in 'user[location]', with: "Quezon"
+#       fill_in 'user[email]', with: "test@test.com"
+#       fill_in 'user[password]', with: "secret"
+#       fill_in 'user[password_confirmation]', with: "secret"
+#       click_button "Sign Up"
+#     end
+#
+#     scenario "Logged in successfully" do
+#       expect(page).to have_content("JOE")
+#     end
+#
+#     # scenario "Logged out successfully", js: true do
+#     #   click_link('Joe')
+#     #
+#     #
+#     #   sleep 20
+#     #   click_link('Sign Out')
+#     #   expect(page).not_to have_content("JOE")
+#     # end
+#     #
+#   end
   
   context "Language" do
     scenario "changes the language to russian", js: true do
       #sleep 10
       click_button "dropdownMenu2"
-      within(:css, 'dropdown-menu') do
-        find("li:nth-child(2) > a").click
-      end
+      sleep 10
+      find(:xpath, '//*[@id="footer"]/div/div/div[4]/div[2]/div/ul/li[1]/a').click
       expect(page).to have_content("Около")
-    #  expect(page).to have_css('#dropdownMenu2')
-    #   page.evaluate_script('$("#dropdownMenu2").trigger("click")')
-    #   sleep 10
-    #  find_button('#dropdownMenu2').click
-      # within(:css, '.dropup') do
-      #   find_button('#dropdownMenu2').click
-      # end
- #     expect(page).to have_xpath('//*[@id="footer"]/div[1]/div/div[6]/div/ul/li[2]/a')
- #     find('#footer > div.container > div > div.col-lg-1.col-md-1.col-xs-12.col-sm-6 > div > ul > li:nth-child(2) > a').click
- #     expect(page).to have_content("Около")
+
     end
     #footer > div > div > div:nth-child(4) > div.footer_body > div > ul > li:nth-child(2) > a
     #footer > div.container > div > div.col-lg-1.col-md-1.col-xs-12.col-sm-6 > div > ul > li:nth-child(1) > a
