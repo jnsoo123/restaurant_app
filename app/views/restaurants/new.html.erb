@@ -25,7 +25,8 @@
 
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
-                  center: metromanila
+                  center: metromanila,
+                  scrollwheel: false
                 });
                 map.addListener('click', function(event) {
                   marker.setPosition(event.latLng);

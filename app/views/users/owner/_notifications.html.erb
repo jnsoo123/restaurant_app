@@ -2,19 +2,21 @@
   <h4 class="pull-left" style="color: #6b6b6b;">My Messages</h4>
 </div>
 <% unless @notifications.blank? %>
+  <div style="padding: 0 0 20px 0;">
+    <%= page_entries_info @notifications, :entry_name => 'Message' %>
+  </div>
+  
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr style="background-color: #404040;">
-          <th>#</th>
           <th>Message</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% @notifications.each_with_index do |noti, index| %>
+        <% @notifications.each do |noti| %>
           <tr>
-            <td><%= index+1 %></td>
             <td class="notification_messages">
               <p><%= noti.message.html_safe %></p>
               <small style="color: #bbb"><%= noti.created_at.strftime("%B %d, %Y")%></small>
@@ -24,6 +26,9 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+  <div class="pull-right">
+    <%= paginate @notifications, window: 2 %>
   </div>
 <% else %>
   <h3>No messages.</h3>

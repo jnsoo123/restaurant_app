@@ -21,7 +21,7 @@
           <div class="list-group nearbys" style="">
             <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(8).each do |resto| %>
               
-              <%= link_to resto, class: 'list-group-item', style: 'background-color: #f9f9f9; margin: 5px 0 5px 0;' do %>
+              <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
                 <div class="row">
                   <div class="col-md-3">
                     <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
@@ -58,7 +58,7 @@
           <div class="list-group nearbys" style="">
             <% Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(8).each do |resto| %>
               
-            <%= link_to resto, class: 'list-group-item', style: 'background-color: #f9f9f9; margin: 5px 0 5px 0;' do %>
+            <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
                 <div class="row" style="">
                   <div class="col-md-3">
                     <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>

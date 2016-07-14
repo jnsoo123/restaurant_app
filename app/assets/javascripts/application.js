@@ -10,8 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require bootstrap
 //= require jquery
+//= require bootstrap-sprockets
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.atwho
@@ -23,7 +23,6 @@
 //= require bootstrap-slider
 //= require moment
 //= require bootstrap-datetimepicker
-//= require bootstrap-sprockets
 //= require owl.carousel
 //= require nprogress
 //= require nprogress-turbolinks

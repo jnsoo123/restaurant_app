@@ -13,7 +13,7 @@
                     <div class="clearfix" style="background-image: url('<%= asset_path(display_resto(resto)) %>'); background-repeat: no-repeat; height: 175px; width: 96%; background-position: center; background-size: auto 100%;"></div>
                   </div>
                   <div class="col-md-7 col-sm-8 col-xs-8" style="padding: 20px;">
-                    <div class="pull-left">
+                    <div class="">
                       <h4 class="list-group-item-heading">
                         <%= resto.name %>
                       </h4>
@@ -36,7 +36,7 @@
                       <p class="list-group-item-text" style="margin-top: 20px;">
                         <%= icon('info', "<span class='label label-#{(resto.is_open?(DateTime.now) ? 'success' : 'danger')}'> #{(resto.is_open?(DateTime.now) ? 'Open Now' : 'Closed')}</span>".html_safe, style: 'margin-left: 2px; margin-right: 14px;') %>
                       </p>
-                      <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('map-marker', truncate(resto.address, length: 45), style: 'margin-right: 12px;') %></p>
+                      <p class="list-group-item-text ellipsified" style="margin-top: 10px;"><span class=""><%= icon('map-marker', resto.address, style: 'margin-right: 12px;') %></span></p>
                       <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
                       
                     </div>

@@ -24,7 +24,7 @@
                       </small>
                     </h4>
                     <p style=" height: 50px; color: #676767;"><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= truncate(rate.comment, length: 190) %></p>
-                    <p style="color: #676767;"><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
+                    <p style="color: #676767; margin-bottom: 0;"><%= rate.likes.count %> <%= icon('heart') %> &nbsp;&nbsp;&nbsp; <%= rate.replies.count %> <%= icon('comments-o') %><br><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
                   </div>
                 </div>
               </div>

@@ -75,7 +75,8 @@
 
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
-                  center: init_location
+                  center: init_location,
+                  scrollwheel: false
                 });
                 map.addListener('click', function(event) {
                   marker.setPosition(event.latLng);
@@ -240,7 +241,7 @@
   <div role="tabpanel" class="tab-pane fade in" id="unhappy">
     <div style="width: 100%;">
       <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Not Happy?</h4>
-      <%= button_to "Delete Restaurant", restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }%>
+      <%= button_to "Delete Restaurant", restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This will delete your restaurant and all of its data.' }%>
     </div>
   </div>  
 </div>

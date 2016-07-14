@@ -8,6 +8,7 @@ class NotificationsController < ApplicationController
   
   def index
     @notifications.update_all(status: true)
+    @notifications = @notifications.page params[:page]
     respond_with(@notifications, template: 'users/owner/notifications')
   end
   

@@ -126,6 +126,7 @@ Devise.setup do |config|
   # before confirming their account.
   # config.confirm_within = 3.days
 
+  config.omniauth :facebook, '518668981672509', '962611746529111ef996cdb0a9f1f896', scope: 'email, public_profile', info_fields: 'name, email', display: 'popup', secure_image_url: true, image_size: 'large'
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in

@@ -159,41 +159,6 @@ a {
     }
   }
 }
-
-/* Lastly, apply responsive CSS fixes as necessary */
-//@media (max-width: 767px) {
-//  #footer {
-//    margin-left: -20px;
-//    margin-right: -20px;
-//    padding-left: 20px;
-//    padding-right: 20px;
-//  }
-//}
-//.search_field, .search_button {
-//  height: 40px;
-//  border-radius: 5px;
-//}
-
-//#wrap {display:table;width:100%}
-//
-//footer{
-//  display:table-row;
-//  height:1px;
-//  
-//  .row{
-//    text-align: center;
-//  }
-//  
-//  [class^="icon-"], [class*=" icon-"] {
-//      display: inline-block;
-//      width: 100%;
-//  }
-//  
-//  i{
-//    text-align: center;
-//  }
-//}
-
 .floating_alert {
     position: absolute;
     top: 60px;
@@ -315,4 +280,12 @@ select.form-control {
 
 #nprogress .peg {
   box-shadow: 0 0 10px #e86a6e, 0 0 5px #e86a6e;
+}
+
+
+.ellipsified {
+    display: block;
+    overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
+    white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
+    text-overflow: ellipsis; /* convert the long text to ellipsis */
 }

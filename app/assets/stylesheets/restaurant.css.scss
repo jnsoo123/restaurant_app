@@ -132,11 +132,26 @@ ul.filters {
   }
 }
 
+#sidebar {
+  .list-group {
+    .list-group-item {
+      background-color: #f9f9f9;
+      border-radius: 0;
+      &:hover {
+        color: #fff;
+        background-color: #CF2228;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 992px) {
   #sidebar {
     display: none;
   }
 }
+
+
 .btn.btn-like-comment[disabled] {
   -o-transition:color .4s ease-out, background .4s ease-in;
   -ms-transition:color .4s ease-out, background .4s ease-in;

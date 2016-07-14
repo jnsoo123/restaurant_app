@@ -17,7 +17,7 @@
                       <%= post.restaurant.name %>
                     </h4>
                     <p style="height: 50px; color: #676767;"><%= post.comment %></p>
-                    <p style="color: #676767;"><%= distance_of_time_in_words_to_now(post.created_at)%> ago</p>
+                    <p style="color: #676767; margin-bottom: 0;"><%= post.likes.count %> <%= icon('heart') %> &nbsp;&nbsp;&nbsp; <%= post.replies.count %> <%= icon('comments-o') %><br><%= distance_of_time_in_words_to_now(post.created_at)%> ago</p>
                   </div>
                 </div>
               </div>
