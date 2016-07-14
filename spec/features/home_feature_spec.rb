@@ -234,55 +234,65 @@ feature "Home Interface" do
       end
     end
     
-    # context "Search with options", js: true do
-    #   before(:each) do
-    #     sleep 5
-    #     find(:xpath, '//*[@id="wrap"]/div[1]/div[7]/div/div/div/div/div/a').click
-    #     sleep 100
-    #   end
-    #
-    #   scenario "Search with place" do
-    #     select "Makati", from: "location"
-    #     find(:xpath, '//*[@id="filter_search_button"]').click
-    #   end
-    # end
+    context "Search with options", js: true do
+      before(:each) do
+        find(:xpath, '//*[@id="wrap"]/div[1]/div[7]/div/div/div/div/div/a').click
+      end
+      
+      scenario "Search with place" do
+        select "Makati", from: "location"
+        find(:xpath, '//*[@id="filter_search_button"]').click
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")
+        expect(page).not_to have_content("#{restaurant2.name}")
+      end
+      
+      scenario "Search with cuisine" do
+        select "Korean", from: "cuisine"
+        find(:xpath, '//*[@id="filter_search_button"]').click
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")
+      end
+      
+      scenario "Search with price" do
+        find('.slider').drag_by(10, 0)
+        sleep 2
+        find(:xpath, '//*[@id="filter_search_button"]').click
+        expect(find(:xpath, '//*[@id="wrap"]/div[1]/div[2]/div/div[2]/div[2]/div[1]/a/div/div[2]/div/h4')).to have_content("#{restaurant1.name}")
+        expect(page).not_to have_content("#{restaurant2.name}")
+      end
+    end
   end
   
-  # context "Sign Up", js: true do
-#     before(:each) do
-#       click_link "Sign up Today"
-#       fill_in 'user[name]', with: "Joe"
-#       fill_in 'user[username]', with: "joe123"
-#       fill_in 'user[location]', with: "Quezon"
-#       fill_in 'user[email]', with: "test@test.com"
-#       fill_in 'user[password]', with: "secret"
-#       fill_in 'user[password_confirmation]', with: "secret"
-#       click_button "Sign Up"
-#     end
-#
-#     scenario "Logged in successfully" do
-#       expect(page).to have_content("JOE")
-#     end
-#
-#     # scenario "Logged out successfully", js: true do
-#     #   click_link('Joe')
-#     #
-#     #
-#     #   sleep 20
-#     #   click_link('Sign Out')
-#     #   expect(page).not_to have_content("JOE")
-#     # end
-#     #
-#   end
+  context "Sign Up", js: true do
+    before(:each) do
+      click_link "Sign up Today"
+      fill_in 'user[name]', with: "Joe"
+      fill_in 'user[username]', with: "joe123"
+      fill_in 'user[location]', with: "Quezon"
+      fill_in 'user[email]', with: "test@test.com"
+      fill_in 'user[password]', with: "secret"
+      fill_in 'user[password_confirmation]', with: "secret"
+      click_button "Sign Up"
+    end
+
+    scenario "Logged in successfully" do
+      expect(page).to have_content("JOE")
+    end
+
+    scenario "Logged out successfully" do
+      click_link('Joe')
+      sleep 5
+      click_link('Sign Out')
+      expect(page).not_to have_content("JOE")
+    end
+  end
   
   context "Language" do
     scenario "changes the language to russian", js: true do
       #sleep 10
       click_button "dropdownMenu2"
-      sleep 10
-      find(:xpath, '//*[@id="footer"]/div/div/div[4]/div[2]/div/ul/li[1]/a').click
-      expect(page).to have_content("Около")
-
+      find(:xpath, '//*[@id="footer"]/div/div/div[4]/div[2]/div/ul/li[2]/a').click
+      expect(page).to have_content("ДОМ")
     end
     #footer > div > div > div:nth-child(4) > div.footer_body > div > ul > li:nth-child(2) > a
     #footer > div.container > div > div.col-lg-1.col-md-1.col-xs-12.col-sm-6 > div > ul > li:nth-child(1) > a
@@ -296,6 +306,16 @@ feature "Home Interface" do
       fill_in 'Username', :with => user1.username
       fill_in 'password', :with => user1.password
       click_button('Login')
+    end
+    
+    context "User Profile" do
+      scenario "display user profile page" do
+        click_link('Dave')
+        sleep 2
+        click_link('My Profile')
+        expect(page).to have_content("Fudline")
+        expect(page).to have_content("@dave123")
+      end
     end
     
     context "Make a Resto" do
