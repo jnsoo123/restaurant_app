@@ -106,41 +106,41 @@
           <h4><%= icon('clock-o', "Hours", style: 'margin-right: 8px;')%></h4>
           <hr style="margin-top: 5px;">
           <% @restaurant.sched.each do |day, sched| %>
-          <div class="row">
-            <% case day %>
-            <% when 0 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Sunday</p>
+            <div class="clearfix" style="padding: 0 75px;">
+              <% case day %>
+              <% when 0 %>
+                <div class="pull-left">
+                  <p>Sunday</p>
+                </div>
+              <% when 1 %>
+                <div class="pull-left">
+                  <p>Monday</p>
+                </div>
+              <% when 2 %>
+                <div class="pull-left">
+                  <p>Tuesday</p>
+                </div>
+              <% when 3 %>
+                <div class="pull-left">
+                  <p>Wednesday</p>
+                </div>
+              <% when 4 %>
+                <div class="pull-left">
+                  <p>Thursday</p>
+                </div>
+              <% when 5 %>
+                <div class="pull-left">
+                  <p>Friday</p>
+                </div>
+              <% when 6 %>
+                <div class="pull-left">
+                  <p>Saturday</p>
+                </div>
+              <% end %>
+              <div class="pull-right">
+                <%= sched[0].opening %> - <%= sched[0].closing %>
               </div>
-            <% when 1 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Monday</p>
-              </div>
-            <% when 2 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Tuesday</p>
-              </div>
-            <% when 3 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Wednesday</p>
-              </div>
-            <% when 4 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Thursday</p>
-              </div>
-            <% when 5 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Friday</p>
-              </div>
-            <% when 6 %>
-              <div class="col-md-6 col-xs-6 col-sm-6">
-                <p>Saturday</p>
-              </div>
-            <% end %>
-            <div class="col-md-6">
-              <%= sched[0].opening %> - <%= sched[0].closing %>
             </div>
-          </div>
 
           <% end %>
         </div>
@@ -154,17 +154,20 @@
             <div class="row">
               <% unless @restaurant.foods.blank? %>
                 <% @restaurant.foods.each do |food| %>
-                  <div style="padding-bottom: 20px;">
-                    <div class="col-md-9 col-sm-9 col-xs-9" style="height: 25px;">
-                      <h4 style="margin: 0;"><%= food.name %><br><small><%= food.description%></small></h4>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-right" style="height: 50px; padding: 5px; margin-bottom: 20px;">
-                      <div class="" style="margin-right: 10px; margin-top: 5px;">
-                        <span style="padding: 7px; font-size: 15px; border-radius: 0; background-color: #CF2228;" class="label label-default">P <%= food.price %></span>
+                  
+                  <div class="col-md-6 col-sm-6">
+                    <div class="clearfix" style="font-weight: bold; font-size: 15px;">
+                      <div class="pull-left">
+                        <%= food.name %>
+                      </div>
+                      <div class="pull-right">
+                        P <%= food.price.round(2) %>
                       </div>
                     </div>
-                  </div>
-
+                    <div>
+                      <%= food.description %>
+                    </div>
+                  </div> 
                 <% end %>
               <% else %>
                 <h4 style="margin-left: 13px;">No menu available.</h4>
@@ -204,12 +207,16 @@
           </div>
         </div>
         
-        <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-          <h4><%= icon('rss', ' News / Announcements', style: 'margin-right: 8px;') %></h4>
-          <div id="announcement_area">
-            <%= render 'posts/announcement' %>
+        <% if @restaurant.posts.present? %>
+        
+          <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
+            <h4><%= icon('rss', ' News / Announcements', style: 'margin-right: 8px;') %></h4>
+            <div id="announcement_area">
+              <%= render 'posts/announcement' %>
+            </div>
           </div>
-        </div>
+        
+        <% end %>
         
 
         

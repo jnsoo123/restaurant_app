@@ -126,48 +126,73 @@ a {
   height: auto !important;
   height: 100%;
   /* Negative indent footer by it's height */
-  margin: 0 auto -100px;
+  margin: 0 auto -400px;
 }
 
 /* Set the fixed height of the footer here */
 #footer {
-  height: 100px;
-  background-color: #fff;
+
+  .container {
+    .row{
+      .footer_title {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 30px;
+      }
+      .footer_body {
+        ul li{
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #footer {
+    .container {
+      text-align: center;
+      ul {
+        margin-bottom: 30px;
+      }
+    }
+  }
 }
 
 /* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  #footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-.search_field, .search_button {
-  height: 40px;
-  border-radius: 5px;
-}
+//@media (max-width: 767px) {
+//  #footer {
+//    margin-left: -20px;
+//    margin-right: -20px;
+//    padding-left: 20px;
+//    padding-right: 20px;
+//  }
+//}
+//.search_field, .search_button {
+//  height: 40px;
+//  border-radius: 5px;
+//}
 
-#wrap {display:table;width:100%}
-
-footer{
-  display:table-row;
-  height:1px;
-  
-  .row{
-    text-align: center;
-  }
-  
-  [class^="icon-"], [class*=" icon-"] {
-      display: inline-block;
-      width: 100%;
-  }
-  
-  i{
-    text-align: center;
-  }
-}
+//#wrap {display:table;width:100%}
+//
+//footer{
+//  display:table-row;
+//  height:1px;
+//  
+//  .row{
+//    text-align: center;
+//  }
+//  
+//  [class^="icon-"], [class*=" icon-"] {
+//      display: inline-block;
+//      width: 100%;
+//  }
+//  
+//  i{
+//    text-align: center;
+//  }
+//}
 
 .floating_alert {
     position: absolute;
@@ -227,6 +252,11 @@ select.form-control {
   border: 2px solid #3b5998;
   color: #fff;
   background-color: #3b5998;
+  &:hover {
+    color: #fff;
+    background-color: #28447e;
+    border: 2px solid #28447e;
+  }
 }
 
 .btn-primary.outline {

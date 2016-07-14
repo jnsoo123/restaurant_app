@@ -6,7 +6,7 @@
         <% @cuisines.each do |cuisine| %>
         <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
             <div class="col-md-4 col-sm-6 col-xs-6 hvr-grow" style="margin-bottom: 30px;">
-              <div class="module" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.0)), url('<%= cuisine.avatar.url %>');background-repeat: no-repeat; background-position: center center; background-size: cover; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.7); margin: 0px;">
+              <div class="module_cuisine" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.0)), url('<%= cuisine.avatar.url %>');background-repeat: no-repeat; background-position: center center; background-size: cover; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.7); margin: 0px;">
                 <header>
                   <h3 class="text-center" style="background: rgba(0,0,0,0.7); padding: 5px;">
                     <%= cuisine.name %>

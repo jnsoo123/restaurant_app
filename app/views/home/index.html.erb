@@ -3,6 +3,7 @@
 <% end %>
 <%= render 'restaurants' %>
 <%= render 'cuisines' %>
+<%= render 'news' %>
 <%= render 'reviews' %>
 <% if user_signed_in? %>
   <% unless current_user.restaurants.present? %>

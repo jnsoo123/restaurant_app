@@ -1,0 +1,36 @@
+<div id="news" class="container">
+  <h3>Recent Announcements<br><small>Check out the latest news / announcements sent by restaurants</small></h3>
+  
+  <% if @posts.present? %>
+    <div class="row">
+      <% @posts.each do |post| %>
+        <%= link_to restaurant_path(post.restaurant) do %>
+          <div class="col-md-6 hvr-grow">
+            <div class="panel panel-default" style="border-radius: 0px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1), 0 6px 20px 0 rgba(0,0,0,0.3);">
+              <div class="panel-body">
+                <div class="media" style="padding: 10px;">
+                  <div class="media-left" style="padding: 0 25px 10px 10px;">
+                    <%= image_tag(display_resto(post.restaurant), width: 64, height: 64, class: 'img-circle')%>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <%= post.restaurant.name %>
+                    </h4>
+                    <p style="height: 50px; color: #676767;"><%= post.comment %></p>
+                    <p style="color: #676767;"><%= distance_of_time_in_words_to_now(post.created_at)%> ago</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <ul class="list-group">
+      <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
+        <h3 class="text-center" style="padding-top: 50px">No Announcements yet.</h3>
+      </li>
+    </ul>
+  <% end %>
+</div>
