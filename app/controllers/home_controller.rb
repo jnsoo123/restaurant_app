@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     @cuisines = Cuisine.joins(:foods).group("foods.cuisine_id").order("count(foods.cuisine_id) desc").limit(4)
 #    @cuisines = Cuisine.all.limit(8)
     @ratings = Rating.order(created_at: :desc).limit(4)
-    @posts = Post.order(created_at: :desc).limit(4)
+    @posts = Post.where(restaurant_id: Restaurant.where(status: "Accepted").map(&:id)).order(created_at: :desc)
   end
   
   def about

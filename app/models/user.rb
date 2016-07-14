@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   validates :name, :username, presence: true
   validates :username, uniqueness: true
-  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, on: :update
+  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, on: :update, if: :no_avatar?
   
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy
@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
+  
+  def no_avatar?
+    avatar.nil?
+  end
   
   def check_notification
     if notifications.where(status: false).count > 0

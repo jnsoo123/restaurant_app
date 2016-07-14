@@ -1,6 +1,3 @@
-<h2>Forgot your password?</h2>
-
-
 
 
 <div id="loginform" class="container" style="margin-bottom: 35px;">
@@ -12,15 +9,22 @@
       <%= devise_error_messages! %>
 
       <div class="form-group">
-        <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Enter your Email' %>
       </div>
 
       <div class="actions">
-        <%= f.submit "Send me reset password instructions" %>
+        <%= f.submit "Send me reset password instructions", class: 'btn btn-primary', style: 'width: 100%; margin-bottom: 10px;' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= link_to t('.login'), new_user_session_path, class: 'btn btn-primary', style: 'width: 100%;'%>
+          </div>
+          <div class="col-md-6">
+            <%= link_to t('.signup'), new_user_registration_path, class: 'btn btn-primary outline', style: 'width: 100%;'%>
+          </div>
+        </div>
+        <p class="text-center">or</p>
+        <%= link_to "#{icon('facebook-official', " Login with Facebook", style: 'margin-right: 10px;')}".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-facebook', style: 'width: 100%; height: 46px; padding-top: 12px;' %>
       </div>
     <% end %>
-
-    <%= render "devise/shared/links" %>
   </div>
 </div>
