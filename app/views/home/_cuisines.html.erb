@@ -1,14 +1,16 @@
-<div id="cuisines" class="container wow bounceInUp">
+<div id="cuisines" class="container wow bounceInUp" style="margin-bottom: 20px;">
   <h3><%= t('.popular')%><br><small>Explore popular cuisines in the world</small></h3>
     <% unless @cuisines.empty? %>
       <% @cuisines.each do |cuisine| %>
         <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
-          <div class="module col-md-3 col-sm-6 col-xs-6 hvr-grow" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url('<%= cuisine.avatar.url %>');background-repeat: no-repeat; background-position: center center; background-size: cover; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.7); margin: 10px;">
-            <header>
-              <h3 class="text-center">
-                <%= cuisine.name %>
-              </h3>
-            </header>
+          <div class=" col-md-3 col-sm-6 col-xs-6 hvr-grow">
+            <div class="module_cuisine" style="background: linear-gradient( to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.0)), url('<%= cuisine.avatar.url %>');background-repeat: no-repeat; background-position: center center; background-size: cover; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.7); margin: 0;">
+              <header>
+                <h3 class="text-center" style="background: rgba(0,0,0,0.7); padding: 5px; font-weight: 100;">
+                  <%= cuisine.name %>
+                </h3>
+              </header>
+            </div>
           </div>
         <% end %>
       <% end %>
@@ -21,3 +23,4 @@
       </ul>
     <% end %>
 </div>
+
