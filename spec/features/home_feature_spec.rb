@@ -71,7 +71,7 @@ feature "Home Interface" do
     
     scenario "Display Restaurant with Cuisine in Search Page" do
       within(:css, "div#cuisines") do
-        first('a').click
+        find('a').click
       end
       within(:css, ".restos") do
         expect(find('.list-group-item-heading')).to have_content("#{restaurant1.name}")
@@ -95,11 +95,12 @@ feature "Home Interface" do
     end
     
     scenario "Display Restaurant Profile with Review" do
-      within(:css, "div#reviews") do
-        within(:css, ".media-heading") do
-          first('a').click
+      within(:css, "#reviews") do
+        within(:css, ".row") do
+          find('a').click
         end
       end
+      
       expect(page.has_css?('.social-share-button')).to be true
       expect(page.has_css?('.module')).to be true
       expect(page.has_css?('div#picture-part')).to be true
@@ -114,21 +115,23 @@ feature "Home Interface" do
   context "Navigation" do
     context "About" do
       scenario "displays about page" do
-        click_link("About")
+        click_link("About Us")
         expect(page).to have_content("About Developers")
       end
     end
   
     context "Contact" do
       scenario "displays contact page" do
-        click_link("Contact")
+        click_link("Contact Us")
         expect(page).to have_content("Contact Us")
       end
     end
   
-    context "Get Started" do
+    context "Make a Resto" do
       scenario "display login page" do
-        click_link("Get Started")
+        within(:css, '#footer') do
+          click_link "Make a Resto"
+        end
         expect(page).to have_content("Login")
         expect(page).to have_content("Sign Up")
         expect(page).to have_content("Login with Facebook")
@@ -150,7 +153,6 @@ feature "Home Interface" do
       let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
       
       before(:each) do
-        visit home_path
         click_link("All Cuisines")
       end
       
@@ -174,8 +176,9 @@ feature "Home Interface" do
       let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
       
       before(:each) do
-        visit home_path
-        click_link 'Restaurants'
+        within(:css, '.navbar-right') do
+          click_link 'Restaurants'
+        end
       end
       
       scenario "Display All Restaurants" do
@@ -213,10 +216,14 @@ feature "Home Interface" do
   context "Language" do
     scenario "changes the language to russian", js: true do
       #sleep 10
-      click_button "Language"
+      click_button "dropdownMenu2"
+      within(:css, 'dropdown-menu') do
+        find("li:nth-child(2) > a").click
+      end
+      expect(page).to have_content("Около")
     #  expect(page).to have_css('#dropdownMenu2')
     #   page.evaluate_script('$("#dropdownMenu2").trigger("click")')
-       sleep 10
+    #   sleep 10
     #  find_button('#dropdownMenu2').click
       # within(:css, '.dropup') do
       #   find_button('#dropdownMenu2').click
@@ -225,20 +232,25 @@ feature "Home Interface" do
  #     find('#footer > div.container > div > div.col-lg-1.col-md-1.col-xs-12.col-sm-6 > div > ul > li:nth-child(2) > a').click
  #     expect(page).to have_content("Около")
     end
+    #footer > div > div > div:nth-child(4) > div.footer_body > div > ul > li:nth-child(2) > a
     #footer > div.container > div > div.col-lg-1.col-md-1.col-xs-12.col-sm-6 > div > ul > li:nth-child(1) > a
   end
-   
+
   context "Logged in" do
     before(:each) do
-      click_link('Login')
+      within(:css, '.navbar-right') do
+        click_link "Login"
+      end
       fill_in 'Username', :with => user1.username
       fill_in 'password', :with => user1.password
       click_button('Login')
     end
     
-    context "Get Started" do
+    context "Make a Resto" do
       scenario "displays create restaurant page" do
-        click_link("Get Started")
+        within(:css, '#footer') do
+          click_link "Make a Resto"
+        end
         expect(page).to have_content("Enter your restaurant's information")
       end
     end
