@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :set_schedule, only: [:edit, :update, :destroy]
   respond_to :html
-  respond_to :js, only: [:new, :edit, :create, :destroy]
+  respond_to :js, only: [:new, :edit, :create, :destroy, :update]
 
   def new
     @days = []
@@ -23,15 +23,18 @@ class SchedulesController < ApplicationController
         if Schedule.check_time?(schedule_params[:opening], schedule_params[:closing])
           flash[:failure] = 'Opening time must be before closing time'
         else
-          flash[:failure] = 'Overlapping Schedules'
+          flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 
+          @err = "<dd>Overlapping Schedules</dd>"
+          flash[:failure] << "</dl>"
         end
       end
+      @schedules = @schedule.restaurant.schedules.page params[:page]
       respond_with(@schedules)
     else
       flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 
       @schedule.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-      @schedules = @schedule.restaurant.schedules
+      @schedules = @schedule.restaurant.schedules.page params[:page]
       respond_with(@schedule)
     end
   end
@@ -47,22 +50,19 @@ class SchedulesController < ApplicationController
     sched_attributes = @schedule.attributes
     if @schedule.update(schedule_params) && Schedule.check_overlapping?(@schedule, @schedule.restaurant)
       flash[:success] = "Schedule successfully updated!"
-      respond_with(@schedule, location: owner_resto_edit_path(@schedule.restaurant))
+      @schedules = @schedule.restaurant.schedules.page params[:page]
+      respond_with(@schedules)
     else
       @schedule.update(sched_attributes)
-      unless Schedule.check_overlapping?(sched, sched.restaurant)
-        flash[:failure] = "<dl><dt>Your schedule was not successfully updated because:</dt>" 
-        @schedule.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-        flash[:failure] << "<dd>Overlapping Schedules</dd>" 
-        flash[:failure] << "</dl>"
+      if Schedule.check_overlapping?(sched, sched.restaurant)
+        @err = "Overlapping Schedule"
       end
-      redirect_to owner_resto_edit_path(@schedule.restaurant)
     end
   end
   
   def destroy
     if @schedule.destroy
-      @schedules = @schedule.restaurant.schedules
+      @schedules = @schedule.restaurant.schedules.page params[:page]
       respond_with(@schedules)
     else
       flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 

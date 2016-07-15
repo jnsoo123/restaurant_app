@@ -1,0 +1,17 @@
+<div class="row pic-row" style = 'padding-left: 20px;'>
+  <% unless @restaurant.pictures.empty? %>
+    <% (@all == 'true' ? @restaurant.pictures.where(status: true) : @restaurant.pictures.where(status: true).first(8)).each do |picture| %>
+      <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+        <div class="col-md-3 col-sm-6 col-xs-6 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; border: 4px solid #fff; border-radius: 15px;'>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+<% unless @restaurant.pictures.count < 9%>
+  <% if @all == 'true' %>
+    <%= link_to 'View Less', show_more_picture_path(@restaurant, more: false), class: 'text-center center-block', style: 'background-color: whitesmoke; padding: 10px 0;', method: :post, remote: true %>
+  <% else %>
+    <%= link_to 'View All', show_more_picture_path(@restaurant, more: true), class: 'text-center center-block', style: 'background-color: whitesmoke; padding: 10px 0;', method: :post, remote: true %>
+  <% end %>
+<% end %>

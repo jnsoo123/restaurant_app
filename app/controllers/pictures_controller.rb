@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
   before_action :set_picture, only: [:update, :destroy, :show]
   skip_before_action :authenticate_user!, only: :show
   respond_to :html
-  respond_to :js, only: :show
+  respond_to :js, only: [:show, :show_more]
   
   
   def create
@@ -56,6 +56,12 @@ class PicturesController < ApplicationController
       flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@picture.restaurant)
     end
+  end
+  
+  def show_more 
+    @all = params[:more]
+    @restaurant = Restaurant.find(params[:id])
+    respond_with(@all)
   end
   
   private

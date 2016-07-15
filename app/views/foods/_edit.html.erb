@@ -3,7 +3,7 @@
   <h4 class="modal-title" id="myModalLabel"><%= t('.editdish')%></h4>
 </div>
 <div class="modal-body">
-  <%= form_for(@food, url: food_path(@food.id), method: :put) do |f| %>
+  <%= form_for(@food, url: food_path(@food.id), method: :put, remote: true) do |f| %>
     <div class="form-group">
       <%= f.label t('.dish') %>
       <%= f.text_field :name, class: 'form-control', placeholder: t('.dishname'), required: true%>
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
       <%= f.label :price, t('.price')%>
-      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true%>
+      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true, min: 1%>
     </div>
     <div class="form-group">
       <%= f.label t('.selectcuisine')%>

@@ -3,7 +3,9 @@
   <h4 class="modal-title" id="myModalLabel">Edit Schedule</h4>
 </div>
 <div class="modal-body">
-  <%= form_for(@schedule, url: schedule_path(@schedule.id), method: :put) do |f| %>
+  <div id="sched_alert_area">
+  </div>
+  <%= form_for(@schedule, url: schedule_path(@schedule.id), method: :put, remote: true) do |f| %>
     <div class="form-group">
       <%= f.label "Available Day: " %><br/>
       <%= f.select :day, options_for_select(@days, @schedule.day), {prompt: 'Select a day from the week'}, class: 'form-control', required: true %>

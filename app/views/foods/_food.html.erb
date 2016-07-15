@@ -1,10 +1,10 @@
 
+
 <% unless @foods.empty? %>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
           <tr style="background-color: #404040;">
-            <th>#</th>
             <th><%= t('.dish')%></th>
             <th><%= t('.description')%></th>
             <th><%= t('.cuisine')%></th>
@@ -13,9 +13,8 @@
           </tr>
         </thead>
         <tbody>
-          <% @foods.each_with_index do |food, index| %>
+          <% @foods.each do |food| %>
             <tr>
-              <td><%= index+1 %></td>
               <td><%= food.name %></td>
               <td><%= food.description %></td>
               <td><%= food.cuisine.name %></td>
@@ -26,6 +25,6 @@
         </tbody>
       </table>
     </div>
-  <% else %>
-    No Dishes.
+<% else %>
+  No foods found. Enter dishes to your restaurant so that it can be searched through advance search
   <% end %>
