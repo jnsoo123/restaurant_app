@@ -96,15 +96,7 @@ feature "User Interface" do
           end
         end
         
-        scenario "Add post", js: true do
-          click_link "Add Posts"
-          find("#post_comment").set("THIS IS SOME RANDOM POST")
-          find_button("Create Post").click
-          expect(page).to have_css("table")
-          expect(page).to have_content("THIS IS SOME RANDOM POST")
-        end
-        
-        context "Existing Post" do
+        context "Post Operations" do
           before(:each) do
             click_link "Add Posts"
             find("#post_comment").set("THIS IS SOME RANDOM POST")
@@ -112,12 +104,19 @@ feature "User Interface" do
             click_link "Announcements / Posts"
           end
           
-          scenario "Edit post", js: true do
-            click_link "Edit"
-            find("#post_comment").set("THIS IS SOME RANDOM POST")
-            find_button("Edit Post / Announcement").click
+          scenario "Add post", js: true do
             expect(page).to have_css("table")
             expect(page).to have_content("THIS IS SOME RANDOM POST")
+          end
+        
+          scenario "Edit post", js: true do
+            click_link "Edit"
+            sleep 3
+            find("#post_comment").set("THIS IS NOT SOME RANDOM POST")
+            find_button("Edit Post / Announcement").click
+            click_link "Announcements / Posts"
+            expect(page).to have_css("table")
+            expect(page).to have_content("THIS IS NOT SOME RANDOM POST")
           end
         
           scenario "Delete post", js: true do
@@ -143,7 +142,7 @@ feature "User Interface" do
           end
         end
        
-        context "Schedule Operations" do
+        context "Schedule Operations", js: true do
           before(:each) do
             click_link "Add Schedule"
             find('#schedule_day').find(:xpath, "option[2]").select_option
@@ -153,14 +152,15 @@ feature "User Interface" do
             click_link "Schedules"
           end
           
-          scenario "Add Schedule", js: true do
+          scenario "Add Schedule" do
             expect(page).to have_content("Sunday")
             expect(page).to have_content("7:00 AM")
             expect(page).to have_content("10:00 AM")
           end
           
-          scenario "Edit Schedule", js: true do
+          scenario "Edit Schedule" do
             click_link "Edit"
+            sleep 3
             find('#schedule_day').find(:xpath, "option[2]").select_option
             find("#schedule_opening").set("8:00 AM")
             find("#schedule_closing").set("10:00 AM")
@@ -173,7 +173,7 @@ feature "User Interface" do
             expect(page).to have_content("10:00 AM")
           end
         
-          scenario "Delete post", js: true do
+          scenario "Delete Schedule" do
             click_link "Delete"
             page.accept_confirm
             sleep 1
@@ -185,11 +185,104 @@ feature "User Interface" do
       end
       
       context "Dishes" do
+        before(:each) do
+          click_link "Dishes / Foods"
+        end
+        
+        scenario "Display Dishes Page" do
+          within(:css, '.tab-content') do
+            expect(page).to have_content("Dishes")
+            expect(page).to have_content("No Dishes.")
+          end
+        end
+       
+        context "Dish Operations", js: true do
+          before(:each) do
+            click_link "Add Dish"
+            find('#food_name').set("My Food")
+            find("#food_description").set("Random Description")
+            find("#food_price").set(24)
+            find('#food_cuisine_id').find(:xpath, "option[2]").select_option
+            find_button("Submit Dish").click
+            click_link "Dishes / Foods"
+          end
+          
+          scenario "Add Dish" do
+            expect(page).to have_content("My Food")
+            expect(page).to have_content("Random Description")
+            expect(page).to have_content("24.0")
+            expect(page).to have_content("Korean")
+          end
+          
+          scenario "Edit Dish" do
+            click_link "Edit"
+            sleep 3
+            find('#food_name').set("My Food")
+            find("#food_description").set("Changed Description")
+            find("#food_price").set(24)
+            find('#food_cuisine_id').find(:xpath, "option[2]").select_option
+            find_button("Edit Dish").click
+            
+            click_link "Dishes / Foods"
+            expect(page).to have_content("My Food")
+            expect(page).to have_content("Changed Description")
+            expect(page).to have_content("P 24.0")
+            expect(page).to have_content("Korean")
+          end
+        
+          scenario "Delete Dish" do
+            click_link "Delete"
+            page.accept_confirm
+            sleep 1
+            expect(page).to have_content("No Dishes.")
+            expect(page).not_to have_css("table")
+          end
+        end
       end
       
       context "Photos" do
+        before(:each) do
+          click_link "Photos"
+        end
+        
+        scenario "Display Photos Page" do
+          within(:css, '.tab-content') do
+            expect(page).to have_content("Dishes")
+            expect(page).to have_content("No Dishes.")
+          end
+        end
+        
+        context "User Uploaded Photos" do
+          scenario "Change Status of Photos" do
+          
+          end
+        end
+       
+        context "Photo Operations", js: true do
+          before(:each) do
+            attach_file("picture_pic", "#{Rails.root}/spec/support/sisig.jpg", visible: false)
+            click_link "Photos"
+          end
+          
+          scenario "Add Photo" do
+            within(:css, '.tab-content') do
+              expect(page).to have_css('a')
+            end
+          end
+          
+          scenario "Delete Photo" do
+            find(:xpath, '//*[@id="photo"]/div[1]/div[2]/a/div').click
+            sleep 3
+            find_button("Delete").click
+            page.accept_confirm
+            sleep 1
+            click_link("Photos")
+            expect(page).to have_content("No Photos.")
+            expect(page).not_to have_css("table")
+          end
+        end  
       end
-      
+        
       context "Unhappy" do
         before(:each) do
           click_link "Unhappy?"
@@ -238,6 +331,4 @@ feature "User Interface" do
       expect(page.current_path == home_path).to be true
     end
   end
-  
-  
 end
