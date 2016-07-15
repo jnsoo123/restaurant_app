@@ -22,7 +22,7 @@ feature "User Interface" do
   
   context "Owner Interface" do
     before(:each) do
-      sleep 5
+      sleep 6
       click_link "#{owner1.name}"
       click_link "My Restaurants"
     end
@@ -102,6 +102,7 @@ feature "User Interface" do
         context "Post Operations" do
           before(:each) do
             click_link "Add Posts"
+            sleep 3
             find("#post_comment").set("THIS IS SOME RANDOM POST")
             find_button("Create Post").click
             within(:css, "#user-tabs") do
@@ -130,6 +131,10 @@ feature "User Interface" do
             click_link "Delete"
             page.accept_confirm
             sleep 1
+            within(:css, "#user-tabs") do
+              find(:css, "a[data-target='#announcement']").click
+            end
+            
             expect(page).to have_content("No posts / announcements")
             expect(page).not_to have_css("table")
           end
@@ -154,6 +159,7 @@ feature "User Interface" do
         context "Schedule Operations", js: true do
           before(:each) do
             click_link "Add Schedule"
+            sleep 5
             find('#schedule_day').find(:xpath, "option[2]").select_option
             find("#schedule_opening").set("7:00 AM")
             find("#schedule_closing").set("10:00 AM")
@@ -214,7 +220,7 @@ feature "User Interface" do
         context "Dish Operations", js: true do
           before(:each) do
             click_link "Add Dish"
-            sleep 3
+            sleep 5
             find('#food_name').set("My Food")
             find("#food_description").set("Random Description")
             find("#food_price").set(24)
@@ -270,8 +276,8 @@ feature "User Interface" do
         
         scenario "Display Photos Page" do
           within(:css, '.tab-content') do
-            expect(page).to have_content("Dishes")
-            expect(page).to have_content("No Dishes.")
+            expect(page).to have_content("Photos")
+            expect(page).to have_content("No Photos.")
           end
         end
         
