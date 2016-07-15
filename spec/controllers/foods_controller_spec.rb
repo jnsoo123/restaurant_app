@@ -5,6 +5,7 @@ RSpec.describe FoodsController, type: :controller do
   
   let!(:user1){FactoryGirl.create(:user, :name => "Dave", :admin => false)}
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Korean")}
+  let(:food){ create(:food) }
   
   before(:each) do
     sign_in user1
@@ -85,20 +86,28 @@ RSpec.describe FoodsController, type: :controller do
     
     describe "put #update" do
       before(:each) do
-        @foodAttributes = FactoryGirl.attributes_for(:food, :name => "Bulgogi", :description => "meat",
-        :price => 20, :cuisine_id => cuisine1.id, :restaurant_id => restaurant1.id)
-
-        put :update, :id => food1.id, :food => @foodAttributes
-        food1.reload
+        create(:cuisine, id: 123)
+        create(:restaurant, id: 123)
+        @food = create(:food, name: 'name', cuisine_id: 123, restaurant_id: 123)
       end
       
-      it "should update food values" do
-        expect(food1.name).to eq("Bulgogi")
-        expect(food1.description).to eq("meat")
-        expect(food1.price).to eq(20)
-        expect(food1.cuisine.name).to eq("Korean")
-        expect(food1.restaurant.name).to eq("RestoHouse")
+      context 'with valid attributes' do
+        it 'locates the requested @food' do
+          put :update, id: @food, food: attributes_for(:food), format: :js
+          expect(assigns(:food)).to eq (@food)
+        end
+        
+        it 'changes the @food\'s attributes' do
+          put :update, id: @food, food: attributes_for(:food, name: 'updatedname', description: 'updateddescription', price: '222'), format: :js
+          @food.reload
+          expect(@food.name).to eq('updatedname')
+          expect(@food.description).to eq('updateddescription')
+          expect(@food.price).to eq(222)
+        end
       end
+      
+      
+      
     end
   end
   
