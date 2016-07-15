@@ -7,6 +7,7 @@ feature "User Interface" do
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Korean")}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Some Restaurant", :user_id => owner1.id, :status => 'Accepted')}
   let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Fred", :admin => false)}
   
   before(:each) do
     visit home_path
@@ -252,11 +253,32 @@ feature "User Interface" do
           end
         end
         
-        context "User Uploaded Photos" do
-          scenario "Change Status of Photos" do
-          
-          end
-        end
+        # context "User Uploaded Photos", js: true do
+        #   before(:each) do
+        #     FactoryGirl.create(:picture, :restaurant => restaurant1, :user => user1, :pic => File.open("#{Rails.root}/spec/support/sisig.jpg"))
+        #     sleep 3
+        #     click_link "Edit Information"
+        #     sleep 3
+        #     click_link "Photos"
+        #   end
+        #
+        #   scenario "Accept User Photo" do
+        #     puts "THIS IS THE PICTURE COUNT: #{Picture.last.inspect}"
+        #     within(:css, "#photo > div.row.thumbnail_panel.pending_pic") do
+        #       click_button("Accept")
+        #     end
+        #     sleep 1
+        #     expect(Picture.last.status).to be true
+        #   end
+        #
+        #   scenario "Reject User Photo" do
+        #     id = Picture.last.id
+        #     within(:css, ".pending_pic") do
+        #       click_button("Reject")
+        #     end
+        #     expect(Picture.exists?(id)).to be false
+        #   end
+        # end
        
         context "Photo Operations", js: true do
           before(:each) do
