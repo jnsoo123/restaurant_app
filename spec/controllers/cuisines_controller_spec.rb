@@ -7,25 +7,20 @@ RSpec.describe CuisinesController, type: :controller do
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Indian")}
   let!(:cuisine2){FactoryGirl.create(:cuisine, :name => "Filipino")}
 
-  context "if logged in as admin" do
+
+  describe "GET #index" do
     before(:each) do
-      sign_in admin1
+      get :index
     end
 
-    describe "GET #index" do
-      before(:each) do
-        get :index
-      end
-      
-      it "returns a list of cuisines ordered by name" do
-        cuisineList = assigns(:cuisines)
-        expect(cuisineList[0].name).to eq(cuisine2.name)
-        expect(cuisineList[1].name).to eq(cuisine1.name)
-      end
-      
-      it "renders index template" do
-        expect(response).to render_template("index")
-      end
+    it "returns a list of cuisines ordered by name" do
+      cuisineList = assigns(:cuisines)
+      expect(cuisineList[0].name).to eq(cuisine2.name)
+      expect(cuisineList[1].name).to eq(cuisine1.name)
+    end
+
+    it "renders index template" do
+      expect(response).to render_template("index")
     end
   end
 
