@@ -23,6 +23,16 @@ class RepliesController < ApplicationController
     end
   end
   
+  def destroy 
+    @reply = Reply.find(params[:id])
+    if @reply.destroy
+      @restaurant = @reply.rating.restaurant if params[:rate].present?
+      @restaurant = @reply.post.restaurant if params[:post].present?
+      @user = User.find(params[:user]) if params[:user].present?
+      respond_with(@restaurant)
+    end
+  end
+  
   private
   
   def reply_params

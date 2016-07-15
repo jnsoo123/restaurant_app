@@ -12,7 +12,7 @@
         <% if user_signed_in? %>
           <p>
             <% if post.user_liked?(current_user) %>
-                <%= link_to "#{icon('heart-o', pluralize(post.likes.count, 'Unlike'))}".html_safe, delete_like_path(user: current_user.id, post: post.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
+              <%= link_to "Unlike #{icon('heart-o', pluralize(post.likes.count, 'Like'))}".html_safe, delete_like_path(user: current_user.id, post: post.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
             <% else %>
               <%= link_to "#{icon('heart-o', pluralize(post.likes.count, 'Like'))}".html_safe, likes_path(post_id: post.id), class: 'btn btn-like-comment', method: :post, remote: true %> 
             <% end %>
@@ -45,6 +45,11 @@
           <div class="media-body" style="max-width: 565px;">
             <h5 class="media-heading">
               <%= reply.user.name %> <small> - <%= distance_of_time_in_words_to_now(reply.created_at) %> ago</small>
+              <% if reply.user === current_user %>
+                <span style="margin-left: 20px;">
+                  <%= link_to "#{icon('trash')}".html_safe, reply_path(reply, post: true), method: :delete, remote: true %>
+                </span>
+              <% end %>
             </h5>
             <p><%= reply.comment %></p>
           </div>

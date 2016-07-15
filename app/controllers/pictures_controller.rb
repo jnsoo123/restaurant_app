@@ -1,6 +1,6 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:update, :destroy, :show]
-  skip_before_action :authenticate_user!, only: :show
+  skip_before_action :authenticate_user!, only: [:show, :show_more]
   respond_to :html
   respond_to :js, only: [:show, :show_more]
   
