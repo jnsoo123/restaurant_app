@@ -17,6 +17,18 @@ feature "Restaurant Interface" do
     fill_in 'Username', :with => user1.username
     fill_in 'password', :with => user1.password
     click_button('Login')
+    visit restaurant_path(restaurant1.id)
   end
+
+  scenario "Display Restaurant Profile Page" do
+    expect(page).to have_content("#{restaurant1.name}")
+    expect(page).to have_content("0 Photos")
+    expect(page).to have_content("0 Reviews")
+  end
+  
+  scenario "Add Photo", js: true do
+    attach_file("picture_pic", "#{Rails.root}/spec/support/sisig.jpg", visible: false)
+    expect(find('.alert-dismissible').text).to match(/Image was added!/)
+  end  
 
 end
