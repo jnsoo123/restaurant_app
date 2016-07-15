@@ -1,11 +1,11 @@
 <ul id="user-tabs" class="nav nav-tabs" role="tablist" style="margin-bottom: 10px;">
-  <li role="presentation" class="active"><a href="#edit_info" aria-controls="edit_info" role="tab" data-toggle="tab">Edit Information</a></li>
-  <li role="presentation" class=""><a href="#announcement" aria-controls="announcement" role="tab" data-toggle="tab">Announcements / Posts</a></li>
-  <li role="presentation" class=""><a href="#schedule" aria-controls="schedule" role="tab" data-toggle="tab">Schedules</a></li>
-  <li role="presentation" class=""><a href="#dish" aria-controls="dish" role="tab" data-toggle="tab">Dishes / Foods</a></li>
-  <li role="presentation" class=""><a href="#review" aria-controls="review" role="tab" data-toggle="tab">Reviews</a></li>
-  <li role="presentation" class=""><a href="#photo" aria-controls="photo" role="tab" data-toggle="tab">Photos</a></li>
-  <li role="presentation" class=""><a href="#unhappy" aria-controls="unhappy" role="tab" data-toggle="tab">Unhappy?</a></li>
+  <li role="presentation" class="active"><a data-target="#edit_info" aria-controls="edit_info" role="tab" data-toggle="tab">Edit Information</a></li>
+  <li role="presentation" class=""><a data-target="#announcement" aria-controls="announcement" role="tab" data-toggle="tab">Announcements / Posts</a></li>
+  <li role="presentation" class=""><a data-target="#schedule" aria-controls="schedule" role="tab" data-toggle="tab">Schedules</a></li>
+  <li role="presentation" class=""><a data-target="#dish" aria-controls="dish" role="tab" data-toggle="tab">Dishes / Foods</a></li>
+  <li role="presentation" class=""><a data-target="#review" aria-controls="review" role="tab" data-toggle="tab">Reviews</a></li>
+  <li role="presentation" class=""><a data-target="#photo" aria-controls="photo" role="tab" data-toggle="tab">Photos</a></li>
+  <li role="presentation" class=""><a data-target="#unhappy" aria-controls="unhappy" role="tab" data-toggle="tab">Unhappy?</a></li>
 </ul>
 
 <div class="tab-content">
@@ -168,7 +168,7 @@
           </table>
         </div>
       <% else %>
-        No reviews.
+        No ratings.
       <% end %>
     </div>
   </div>
@@ -184,10 +184,10 @@
           <% end %>
         </div>
       </div>  
-
       <div class="row pic-row" style = 'padding-left: 20px;'>
-        <% unless @restaurant.pictures.empty? %>
-          <% @restaurant.pictures.where(status: true).each do |picture| %>
+        
+        <% unless @pictures.empty? %>
+          <% @pictures.where(status: true).each do |picture| %>
              <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
               <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; border: 4px solid #fff; border-radius: 15px;'>
               </div>
@@ -245,7 +245,6 @@
     </div>
   </div>  
 </div>
-
 
 
 

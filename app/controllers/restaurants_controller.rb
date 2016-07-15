@@ -67,10 +67,11 @@ class RestaurantsController < ApplicationController
   end
   
   def owner_edit
-    @foods = @restaurant.foods
-    @ratings = @restaurant.ratings
+    @foods = @restaurant.foods.order(created_at: :desc)
+    @ratings = @restaurant.ratings(created_at: :desc)
     @schedules = @restaurant.schedules
-    @posts = @restaurant.posts
+    @posts = @restaurant.posts(created_at: :desc)
+    @pictures = @restaurant.pictures.order('created_at desc')
     @picture = Picture.new
     respond_with(@restaurant, template: 'users/owner/edit')
   end

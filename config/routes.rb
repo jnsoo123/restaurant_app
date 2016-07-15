@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
   post 'restaurants/ratings/more/:id' => 'ratings#show_more', as: :show_more_rating
   post 'restaurants/post/more/:id' => 'posts#show_more', as: :show_more_post
+  post 'restaurants/pictures/more/:id' => 'pictures#show_more', as: :show_more_picture
   
   get 'home/about' => 'home#about', as: :about_page
   get 'home/contact' => 'home#contact', as: :contact_page

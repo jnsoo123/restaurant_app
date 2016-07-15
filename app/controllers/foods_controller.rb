@@ -2,7 +2,7 @@ class FoodsController < ApplicationController
   before_action :set_food, only: [:edit, :update, :destroy]
   
   respond_to :html
-  respond_to :js, only: [:new, :edit, :create, :destroy]
+  respond_to :js, only: [:new, :edit, :create, :destroy, :update]
   
   def new
     @food = Food.new
@@ -15,8 +15,8 @@ class FoodsController < ApplicationController
   
   def update
     if @food.update(food_params)
-      flash[:success] = "Dish successfully updated!"
-      respond_with(@food, location: owner_resto_edit_path(@food.restaurant))
+      @foods = @food.restaurant.foods.page params[:page]
+      respond_with(@foods)
     else
       flash[:failure] = "<dl><dt>Your dish was not successfully updated because:</dt>" 
       @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
@@ -29,7 +29,7 @@ class FoodsController < ApplicationController
     @food = Food.new(food_params)
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     if @food.save
-      @foods = @food.restaurant.foods
+      @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
       flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 
@@ -41,7 +41,7 @@ class FoodsController < ApplicationController
   
   def destroy
     if @food.destroy
-      @foods = @food.restaurant.foods
+      @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
       flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 

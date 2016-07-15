@@ -13,7 +13,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.restaurant = current_user.restaurants.find(params[:resto_id])
     if @post.save
-      @posts = @post.restaurant.posts
+      @posts = @post.restaurant.posts.page params[:page]
       respond_with(@posts)
     else
       
@@ -25,7 +25,7 @@ class PostsController < ApplicationController
   
   def update
     if @post.update(post_params)
-      @posts = @post.restaurant.posts
+      @posts = @post.restaurant.posts.page params[:page]
       respond_with(@posts)
     else
       respond_with(@post)
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
   
   def destroy
     if @post.destroy
-      @posts = @post.restaurant.posts
+      @posts = @post.restaurant.posts.page params[:page]
       respond_with(@posts)
     end
   end
