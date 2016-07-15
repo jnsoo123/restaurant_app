@@ -8,9 +8,17 @@ class ApplicationController < ActionController::Base
   rescue_from SecurityError, with: :not_found
   add_flash_types :success, :failure
   
+  rescue_from ActiveRecord::RecordNotFound, with: :raise_not_found
+
+  
+  
   include DeviseHelper
   helper ApplicationHelper
 
+  def raise_not_found
+    render template: 'errors/404', :layout => false, status: 404
+  end
+    
   def change_locale
       l = params[:locale].to_s.strip.to_sym
       l = I18n.default_locale unless I18n.available_locales.include?(l)
