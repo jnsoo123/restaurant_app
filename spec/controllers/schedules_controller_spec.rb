@@ -81,16 +81,24 @@ RSpec.describe SchedulesController, type: :controller do
     
     describe "put #update" do
       before(:each) do
-        @scheduleAttributes = FactoryGirl.attributes_for(:schedule, :day => 'Friday', :opening => "7:00 AM", :closing => "3:00 PM", :restaurant_id => restaurant1.id)
-
-        put :update, :id => schedule1.id, :schedule => @scheduleAttributes
-        schedule1.reload
+        create(:restaurant, id: 123)
+        @schedule = create(:schedule, day: 'Tuesday', opening: '12:30 PM', closing: '4:30 PM', restaurant_id: 123)
       end
       
-      it "should update schedule values" do
-        expect(schedule1.day).to eq("Friday")
-        expect(schedule1.opening).to eq("7:00 AM")
-        expect(schedule1.closing).to eq("3:00 PM")
+      context 'with valid attributes' do
+        it 'locates the requested @schedule' do
+          put :update, id: @schedule, schedule: attributes_for(:schedule), format: :js
+          expect(assigns(:schedule)).to eq(@schedule)
+        end
+        
+        it 'changes the @schedule\'s attributes' do
+          put :update, id: @schedule, schedule: attributes_for(:schedule, day: 'Wednesday', opening: '3:30 PM', closing: '5:30 PM', restaurant_id: 123), format: :js
+          @schedule.reload
+          expect(@schedule.day).to eq('Wednesday')
+          expect(@schedule.opening).to eq('3:30 PM')
+          expect(@schedule.closing).to eq('5:30 PM')
+          
+        end
       end
     end
   end
