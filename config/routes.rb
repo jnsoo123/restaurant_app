@@ -18,11 +18,10 @@ Rails.application.routes.draw do
   get 'home/about' => 'home#about', as: :about_page
   get 'home/contact' => 'home#contact', as: :contact_page
   get 'home/index'
-  
+  get '/cuisines' => 'cuisines#index', as: :cuisines
   devise_for :users, :controllers => { :registrations => :registrations, :omniauth_callbacks => :omniauth_callbacks }
   
   resources :restaurants 
-  resources :cuisines
   resources :foods
   resources :pictures
   resources :ratings
@@ -91,5 +90,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  get '*path' => redirect('/')
   root 'home#index', as: 'home'
 end
