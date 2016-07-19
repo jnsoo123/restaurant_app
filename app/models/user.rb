@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   validates :name, :username, presence: true
   validates :username, uniqueness: true
   validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, on: :update, if: :no_avatar?
-  
+  after_destroy :ensure_an_admin_remains
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy
   has_many :ratings, dependent: :destroy
@@ -47,4 +47,11 @@ class User < ActiveRecord::Base
     end
   end
   
+  private
+  
+  def ensure_an_admin_remains
+    if User.where(admin: true).count.zero?
+      raise "Can't delete last admin"
+    end
+  end
 end

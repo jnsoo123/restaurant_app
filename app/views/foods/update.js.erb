@@ -1,4 +1,7 @@
-<% unless @food.errors.any? %>
+<% unless @err.present? %>
   $('#myModal').modal("hide")
   $('#food_area').html("<%= j render(@food) %>")
+<% else %>
+    $("#food_error_area").html("<%= @err.html_safe %>")
+    $("#food_error_area").addClass("alert alert-danger")
 <% end %>  

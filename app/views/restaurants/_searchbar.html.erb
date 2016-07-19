@@ -16,10 +16,10 @@
                 <% unless Food.all.empty? %>
                   <%= form_tag(restaurant_search_path, method: :get, style: 'padding: 20px;', id: 'filter_search_form') do %>
                     <div class="form-group">
-                      <%= select_tag :location, options_from_collection_for_select(Location.where(restaurant_id: nil),"id","address",1), prompt: 'Select a Place', class: 'form-control' %>
+                      <%= select_tag :location, options_from_collection_for_select(Location.where(restaurant_id: nil),"id","address", @location), prompt: 'Select a Place', class: 'form-control' %>
                     </div>
                     <div class="form-group">
-                      <%= select_tag :cuisine, options_from_collection_for_select(Cuisine.all,"id","name"), prompt: 'Select a Cuisine', class: 'form-control' %>
+                      <%= select_tag :cuisine, options_from_collection_for_select(Cuisine.all,"id","name", @cuisine), prompt: 'Select a Cuisine', class: 'form-control' %>
                     </div>
                     Filter by price range:
                     <div class="row">
@@ -27,7 +27,7 @@
                         <b>PHP <%= Food.min %></b> 
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
-                        <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= Food.min %>,<%= Food.max %>]"/> 
+                        <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= "#{@search_range[0].to_i if @search_range.present?}#{Food.min unless @search_range.present?}" %>,<%= "#{@search_range[1].to_i if @search_range.present?}#{Food.max unless @search_range.present?}"%>]"/> 
                       </div>
                       <div class="col-md-3 col-sm-3 col-xs-3">
                         <b class="pull-right">PHP <%= Food.max %></b>

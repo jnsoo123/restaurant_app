@@ -9,7 +9,11 @@
           <%= link_to rate.user.name, rate.user %> 
           <small>
             - <%= distance_of_time_in_words_to_now(rate.created_at) %> ago
+            <% if current_user === rate.user %> 
+              <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
+            <% end %>
           </small>
+          
         </h4>
         <p style="color: #bbb;"><small><%= pluralize(rate.user.ratings.count, "Review") %></small></p>
         <p>Rated <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>

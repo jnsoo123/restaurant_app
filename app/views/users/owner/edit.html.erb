@@ -179,7 +179,7 @@
         <div class="fileUpload btn btn-default pull-right">
           <span><%= icon('plus', 'Add Photos')%></span>
           <%= form_for(@picture) do |f| %> 
-            <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+            <%= f.file_field :pic, class: 'upload', style: 'height: 150px', accept: 'image/png,image/gif,image/jpeg'  %>
             <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
           <% end %>
         </div>

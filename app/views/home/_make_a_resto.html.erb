@@ -3,7 +3,7 @@
     <div class="container text-center">
       <h1><%= t('.marketingspeech')%></h1>
       <p><%= t('.speech')%></p>
-      <p><%= link_to "#{t('.signuptoday')} #{icon('check-circle-o')}".html_safe, new_restaurant_path, class: 'btn btn-primary outline white' %></p>
+      <p><%= link_to "#{'Register your restaurant' if user_signed_in?}#{'Sign up today' unless user_signed_in? } #{icon('check-circle-o')}".html_safe, new_restaurant_path, class: 'btn btn-primary outline white' %></p>
     </div>
   </div>
 </div>

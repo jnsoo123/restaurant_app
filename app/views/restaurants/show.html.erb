@@ -183,7 +183,7 @@
               <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{'Add Photos' if user_signed_in? }")%></span>
               <%= form_for(@picture) do |f| %> 
                 <% if user_signed_in? %>
-                  <%= f.file_field :pic, class: 'upload', style: 'height: 150px' %>
+                  <%= f.file_field :pic, class: 'upload', style: 'height: 150px', accept: 'image/png,image/gif,image/jpeg'  %>
                 <% else %>
                   <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
                 <% end %>

@@ -18,10 +18,10 @@ class FoodsController < ApplicationController
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
-      flash[:failure] = "<dl><dt>Your dish was not successfully updated because:</dt>" 
-      @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-      flash[:failure] << "</dl>"
-      redirect_to owner_resto_edit_path(@food.restaurant)
+      @err = "<dl><dt>Your dish was not successfully updated because:</dt>" 
+      @food.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
+      @err << "</dl>"
+      respond_with(@foods)
     end
   end
   
