@@ -114,7 +114,9 @@
           <div class="footer_body">
             <ul class="list-unstyled">
               <li><%= link_to "Home", home_path %></li>
+              <% unless user_signed_in? %>
               <li><%= link_to "Login", new_user_session_path %></li>
+              <% end %>
               <li><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
               <li><%= link_to "Cuisines", cuisines_path %></li>
             </ul>
@@ -138,7 +140,9 @@
           <div class="footer_body">
             <ul class="list-unstyled">
               <li><%= link_to "Make a Resto", new_restaurant_path %></li>
+              <% unless user_signed_in? %>
               <li><%= link_to "Sign up Today", new_user_registration_path %></li>
+              <% end %>
             </ul>
           </div>
         </div>

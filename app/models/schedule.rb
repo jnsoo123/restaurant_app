@@ -4,7 +4,7 @@ class Schedule < ActiveRecord::Base
   validates :restaurant, :day, :opening, :closing, presence: true
   
   def self.check_time?(opening, closing)   
-    if Time.parse(opening).to_i > Time.parse(closing).to_i
+    if Time.parse(opening).to_i >= Time.parse(closing).to_i
       return true
     end
     return false
