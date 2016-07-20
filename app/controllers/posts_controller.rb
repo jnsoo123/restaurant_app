@@ -16,7 +16,10 @@ class PostsController < ApplicationController
       @posts = @post.restaurant.posts.page params[:page]
       respond_with(@posts)
     else
-      
+      @err = "<dl><dt>Your post was not successfully created because:</dt>" 
+      @post.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
+      @err << "</dl>"
+      respond_with(@posts)
     end
   end
   
@@ -28,6 +31,9 @@ class PostsController < ApplicationController
       @posts = @post.restaurant.posts.page params[:page]
       respond_with(@posts)
     else
+      @err = "<dl><dt>Your post was not successfully updated because:</dt>" 
+      @post.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
+      @err << "</dl>"
       respond_with(@post)
     end
   end

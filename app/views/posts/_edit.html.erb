@@ -3,6 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">Edit Post / Announcement</h4>
 </div>
 <div class="modal-body">
+  <div id = 'post_error_area'></div>
   <%= form_for(@post, url: post_path(@post.id), method: :put, remote: true) do |f| %>
     
     <div class="form-group">

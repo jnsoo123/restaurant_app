@@ -31,4 +31,13 @@ var media =
   $("#rating_reply_<%= @reply.rating.id %>").html(media);
 <% end %>
 
+$(document).on('keyup keypress', '#new_reply input[type="text"]', function(e) {
+  if(e.keyCode == 13) {
+    if ($.trim($('#reply_comment').val()) == ''){
+      e.preventDefault();
+      return false;
+    }
+  }
+});
+
 
