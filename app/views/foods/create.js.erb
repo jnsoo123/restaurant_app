@@ -3,5 +3,4 @@
   $('#food_area').html("<%= j render(@food) %>")
 <% else %>
   $('#food_alert_area').html("<div class='alert alert-danger'><%= @err.html_safe %></div>")
-  $('#food_alert_area').parent().addClass('has-error')
 <% end %>  

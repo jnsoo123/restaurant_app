@@ -188,11 +188,8 @@ feature "User Interface" do
             find("#schedule_opening").set("8:00 AM")
             find("#schedule_closing").set("10:00 AM")
             find_button("Edit Schedule").click
-            
-            within(:css, "#user-tabs") do
-              expect(page).to have_css("a[data-target='#schedule']", wait: 10)
-              find(:css, "a[data-target='#schedule']").click
-            end
+            sleep 10
+
             expect(page).to have_content("Monday")
             expect(page).not_to have_content("7:00 AM")
             expect(page).to have_content("8:00 AM")
@@ -346,7 +343,7 @@ feature "User Interface" do
           
           scenario "Delete Photo" do
             find(:xpath, '//*[@id="photo"]/div[1]/div[2]/a/div').click
-            expect(page).to have_css(".btn-danger", wait: 10)
+            expect(page).to have_css(".btn-danger", wait: 15)
             find_button("Delete").click
             page.accept_confirm
             sleep 1

@@ -26,8 +26,8 @@
 //= require owl.carousel
 //= require nprogress
 //= require nprogress-turbolinks
-//= require social-share-button
 //= require turbolinks
+//= require social-share-button
 //= require_tree .
 
 NProgress.configure({

@@ -99,7 +99,9 @@ class RestaurantsController < ApplicationController
     if @restaurant.save
       if params[:latitude].present? 
         Location.create(latitude: params[:latitude], longitude: params[:longitude], restaurant: @restaurant)
-        @restaurant.update(address: @restaurant.location.address)
+        if @restaurant.address.blank?
+          @restaurant.update(address: @restaurant.location.address)
+        end
       end
       flash[:success] = "<strong>#{name}</strong> has been successfully created!"
       respond_with(@restaurant, location: users_restaurant_path)
@@ -119,7 +121,11 @@ class RestaurantsController < ApplicationController
     if @restaurant.update(restaurant_params)
       if @restaurant.location.present?
         if params[:latitude].present?
+          old_address = @restaurant.location.address
           @restaurant.location.update(latitude: params[:latitude], longitude: params[:longitude])
+          if @restaurant.address == old_address || @restaurant.address.blank?
+            @restaurant.update(address: @restaurant.location.address)
+          end
         end
       else
         if params[:latitude].present?
@@ -127,10 +133,10 @@ class RestaurantsController < ApplicationController
           location = Location.create(latitude: params[:latitude], longitude: params[:longitude], restaurant_id: @restaurant.id)
         end
       end
-      flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
+      flash[:success] = "Your restaurant has been successfully updated!"
       respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))
     else
-      flash[:failure] = "<dl><dt>#{@restaurant.name} was not successfully updated because:</dt>" 
+      flash[:failure] = "<dl><dt>Your restaurant was not successfully updated because:</dt>"
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@restaurant)

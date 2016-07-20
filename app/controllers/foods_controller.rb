@@ -43,9 +43,9 @@ class FoodsController < ApplicationController
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
-      flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 
-      @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-      flash[:failure] << "</dl>"
+      @err = "<dl><dt>Your dish was not successfully added because:</dt>" 
+      @food.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
+      @err << "</dl>"
       respond_with(@food)
     end
   end
