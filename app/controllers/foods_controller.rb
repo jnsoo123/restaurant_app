@@ -23,12 +23,10 @@ class FoodsController < ApplicationController
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
-      @err = ""
-      @food.errors.full_messages.map { |msg| @err << "#{msg}" }
-      unless Food.check_food?(@food.restaurant, food_params)
-        @err = "Existing Food under the same cuisine"
-        @food.update(food_attributes)
-      end
+      @err = "<dl><dt>Your dish was not successfully updated because:</dt>" 
+      @food.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
+      @err << "</dl>"
+      respond_with(@foods)
     end
   end
   

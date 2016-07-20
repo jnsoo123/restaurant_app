@@ -3,8 +3,7 @@
   <h4 class="modal-title" id="myModalLabel"><%= t('.editdish')%></h4>
 </div>
 <div class="modal-body">
-  <div id="food_alert_area">
-  </div>
+  <div id="food_error_area"></div>
   <%= form_for(@food, url: food_path(@food.id), method: :put, remote: true) do |f| %>
     <div class="form-group">
       <%= f.label t('.dish') %>

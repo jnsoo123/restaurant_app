@@ -31,7 +31,7 @@ ActiveAdmin.register Notification do
   
   form do |f|
     inputs 'Send a Message' do
-      f.input :user
+      f.input :user, include_blank: false
       f.input :message
     end
     
@@ -39,13 +39,8 @@ ActiveAdmin.register Notification do
     
   end
   
-  controller do
-    def create
-      create! do |format|
-        UserMailer.notify_email(User.find(params[:notification][:user_id])).deliver_now
-        format.html { redirect_to admin_notifications_path } 
-      end
-    end
+  after_create do |notification|
+    UserMailer.notify_email(User.find(params[:notification][:user_id])).deliver_now
   end
   
 end

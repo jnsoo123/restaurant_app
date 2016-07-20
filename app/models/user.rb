@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   validates :name, :username, presence: true
   validates :username, uniqueness: true
-  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, on: :update, if: :no_avatar?
-  
+  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :avatar_check?
+  after_destroy :ensure_an_admin_remains
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy
   has_many :ratings, dependent: :destroy
@@ -16,8 +16,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
   
-  def no_avatar?
-    avatar.nil?
+  def avatar_check?
+    avatar.nil? || avatar.present? 
   end
   
   def check_notification
@@ -47,4 +47,11 @@ class User < ActiveRecord::Base
     end
   end
   
+  private
+  
+  def ensure_an_admin_remains
+    if User.where(admin: true).count.zero?
+      raise "Can't delete last admin"
+    end
+  end
 end

@@ -11,6 +11,16 @@ class Restaurant < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_one :location, dependent: :destroy
   validates :name, :contact, :user, presence: true
+  validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :avatar_check?
+  validates_format_of :cover, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :cover_check?
+
+  def avatar_check?
+    avatar.nil? || avatar.present?
+  end
+
+  def cover_check?
+    cover.nil? || cover.present?
+  end
   
   def ave_ratings
     unless ratings.empty?

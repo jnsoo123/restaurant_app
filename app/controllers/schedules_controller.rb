@@ -17,23 +17,18 @@ class SchedulesController < ApplicationController
     if @schedule.save
       @schedules = @schedule.restaurant.schedules
       if Schedule.check_overlapping?(@schedule, @schedule.restaurant)
-        flash[:success] = "Schedule successfully added!"
+        
       else
         @schedule.destroy
         if Schedule.check_time?(schedule_params[:opening], schedule_params[:closing])
-          flash[:failure] = 'Opening time must be before closing time'
+          @err = "<dd>Opening time must be before closing time</dd>"
         else
-          flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 
           @err = "<dd>Overlapping Schedules</dd>"
-          flash[:failure] << "</dl>"
         end
       end
       @schedules = @schedule.restaurant.schedules.page params[:page]
       respond_with(@schedules)
     else
-      flash[:failure] = "<dl><dt>Your schedule was not successfully added because:</dt>" 
-      @schedule.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-      flash[:failure] << "</dl>"
       @schedules = @schedule.restaurant.schedules.page params[:page]
       respond_with(@schedule)
     end
