@@ -1,8 +1,9 @@
 class Restaurant < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   mount_uploader :cover, AvatarUploader
-  
+  include ActionView::Helpers::SanitizeHelper
   belongs_to :user
+  
   has_many :ratings, dependent: :destroy
   has_many :foods, dependent: :destroy
   has_many :pictures, dependent: :destroy
@@ -10,10 +11,13 @@ class Restaurant < ActiveRecord::Base
   has_many :cuisines, through: :foods
   has_many :posts, dependent: :destroy
   has_one :location, dependent: :destroy
+  
   validates :name, :contact, :user, presence: true
   validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :avatar_check?
   validates_format_of :cover, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :cover_check?
 
+ 
+  
   def avatar_check?
     avatar.nil? || avatar.present?
   end
