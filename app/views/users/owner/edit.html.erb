@@ -45,7 +45,7 @@
             </div>
             <div class="form-group">
               <%= f.label "Restaurant Picture" %>
-              <%= f.file_field :avatar %>
+              <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg'  %>
             </div>
           </div>
           <div class="col-md-6">
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group">
               <%= f.label "Cover Photo" %>
-              <%= f.file_field :cover %>
+              <%= f.file_field :cover, accept: 'image/png,image/gif,image/jpeg' %>
             </div>
           </div>
           <div class="col-md-12">
@@ -73,11 +73,26 @@
               function initMap() {
                 var init_location = {lat: <%= (@restaurant.location.present? ? @restaurant.location.latitude : "14.598451648903144") %>, lng: <%= (@restaurant.location.present? ? @restaurant.location.longitude : "120.98510786890984" ) %>};
 
+                var no_poi = [
+                  {
+                    featureType: "poi",
+                    stylers: [
+                      { visibility: "off" }
+                    ]
+                  },{
+                    featureType: "transit",
+                    stylers: [
+                      { visibility: "off" }
+                    ]
+                  }
+                ];
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
                   center: init_location,
                   scrollwheel: false
                 });
+                map.setOptions({styles: no_poi});
+                
                 map.addListener('click', function(event) {
                   marker.setPosition(event.latLng);
                   console.log(marker.getPosition().lat())
@@ -97,8 +112,8 @@
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
             </script>
           </div>
-          <%= hidden_field_tag :latitude, value: (@restaurant.location.present? ? @restaurant.location.latitude : nil) %>
-          <%= hidden_field_tag :longitude, value: (@restaurant.location.present? ? @restaurant.location.longitude : nil) %>
+          <%= hidden_field_tag :latitude, (@restaurant.location.present? ? @restaurant.location.latitude : nil) %>
+          <%= hidden_field_tag :longitude, (@restaurant.location.present? ? @restaurant.location.longitude : nil) %>
           <div class="col-md-12">
             <%= f.submit t('.updateresto'), class: 'btn btn-primary center-block outline' %>
           </div>

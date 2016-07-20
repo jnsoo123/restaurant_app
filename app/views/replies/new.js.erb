@@ -25,10 +25,15 @@ var media =
         </div>
       </div>
     `;
+
+
+
 <% if @reply.post.present? %>
   $("#post_reply_<%= @reply.post.id %>").html(media);
 <% else %>
   $("#rating_reply_<%= @reply.rating.id %>").html(media);
 <% end %>
+  
+
 
 

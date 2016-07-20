@@ -13,50 +13,55 @@
                &q=<%= @restaurant.location.latitude %>,<%= @restaurant.location.longitude %>" allowfullscreen>
         </iframe>
       <% else %>  
-        <h5 style="padding: 100px 0 20px 80px">Map Not Available</h5>
+        <h5 style="padding: 100px 0 100px 80px">Map Not Available</h5>
       <% end %>
       <div style="padding: 10px; margin-top: -5px;">
         <h4>Restaurants near here</h4>
-        <% if @restaurant.location.nearbys(3).where.not(restaurant_id: nil).present? %>
-          <div class="list-group nearbys" style="">
-            <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(8).each do |resto| %>
-              
-              <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
-                  </div>
-                  <div class="col-md-9">
-                    <%= resto.name %><br>
-                    <small>
-                      <% (resto.ave_ratings.to_i).times do %>
-                        <%= icon('star') %>
-                      <% end %>
-                      <% unless resto.ave_ratings % 1 == 0 %>
-                        <%= icon('star-half-o')%>
-                        <% (4 - resto.ave_ratings.to_i).times do %>
-                          <%= icon('star-o') %>
+        <% if @restaurant.location.present? %>
+          <% if @restaurant.location.nearbys(3).where.not(restaurant_id: nil).present? %>
+            <div class="list-group nearbys" style="">
+              <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(8).each do |resto| %>
+
+                <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
+                    </div>
+                    <div class="col-md-9">
+                      <%= resto.name %><br>
+                      <small>
+                        <% (resto.ave_ratings.to_i).times do %>
+                          <%= icon('star') %>
                         <% end %>
-                      <% else %>
-                        <% (5 - resto.ave_ratings.to_i).times do %>
-                          <%= icon('star-o') %>
+                        <% unless resto.ave_ratings % 1 == 0 %>
+                          <%= icon('star-half-o')%>
+                          <% (4 - resto.ave_ratings.to_i).times do %>
+                            <%= icon('star-o') %>
+                          <% end %>
+                        <% else %>
+                          <% (5 - resto.ave_ratings.to_i).times do %>
+                            <%= icon('star-o') %>
+                          <% end %>
                         <% end %>
-                      <% end %>
-                      &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
-                    </small>
+                        &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
+                      </small>
+                    </div>
                   </div>
-                </div>
+                <% end %>
               <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% else %>
+            No restaurants found.
+          <% end %>
         <% else %>
           No restaurants found.
         <% end %>
+        
       </div>
       <div style="padding: 10px; margin-top: -5px;">
         <h4>Top Rated Restaurants</h4>
           <div class="list-group nearbys" style="">
-            <% Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(8).each do |resto| %>
+            <% Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(5).each do |resto| %>
               
             <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
                 <div class="row" style="">
@@ -239,15 +244,15 @@
             <%= form_for(@rating) do |f| %>
               <div class="">
                 <fieldset class="rating">
-                  <%= f.radio_button :rate, 5, id: 'star5' %>
+                  <%= f.radio_button :rate, 5, id: 'star5', required: true %>
                   <%= label_tag :star5, "", class: 'full', title: '5 Stars' %>
-                  <%= f.radio_button :rate, 4, id: 'star4'  %>
+                  <%= f.radio_button :rate, 4, id: 'star4', required: true  %>
                   <%= label_tag :star4, "", class: 'full', title: '4 Stars' %>
-                  <%= f.radio_button :rate, 3, id: 'star3'  %>
+                  <%= f.radio_button :rate, 3, id: 'star3', required: true  %>
                   <%= label_tag :star3, "", class: 'full', title: '3 Stars' %>
-                  <%= f.radio_button :rate, 2, id: 'star2'  %>
+                  <%= f.radio_button :rate, 2, id: 'star2', required: true  %>
                   <%= label_tag :star2, "", class: 'full', title: '2 Stars' %>
-                  <%= f.radio_button :rate, 1, id: 'star1'  %>
+                  <%= f.radio_button :rate, 1, id: 'star1', required: true  %>
                   <%= label_tag :star1, "", class: 'full', title: '1 Star' %>
                 </fieldset>
               </div>

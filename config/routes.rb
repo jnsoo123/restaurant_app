@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/cuisines' => 'cuisines#index', as: :cuisines
   devise_for :users, :controllers => { :registrations => :registrations, :omniauth_callbacks => :omniauth_callbacks }
   
-  resources :restaurants 
+  resources :restaurants, except: :index
   resources :foods
   resources :pictures
   resources :ratings

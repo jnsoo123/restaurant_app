@@ -7,8 +7,7 @@ class RestaurantsController < ApplicationController
   before_action :authorize, only: [:listing, :reject, :edit]
   respond_to :html
 
-  def index
-  end
+  
 
   def search
     @search_result = []
@@ -116,13 +115,17 @@ class RestaurantsController < ApplicationController
   end
   
   def update    
+#    raise
     if @restaurant.update(restaurant_params)
       if @restaurant.location.present?
-        @restaurant.location.update(latitude: params[:latitude], longitude: params[:longitude])
-        @restaurant.update(address: @restaurant.location.address)
+        if params[:latitude].present?
+          @restaurant.location.update(latitude: params[:latitude], longitude: params[:longitude])
+        end
       else
-        location = Location.create(latitude: params[:latitude], longitude: params[:longitude], restaurant_id: @restaurant.id)
-        @restaurant.update(address: location)
+        if params[:latitude].present?
+          puts "@@@@@@@@@ #{params[:latitude]}"
+          location = Location.create(latitude: params[:latitude], longitude: params[:longitude], restaurant_id: @restaurant.id)
+        end
       end
       flash[:success] = "<strong>#{@restaurant.name}</strong> has been successfully updated!"
       respond_with(@restaurant, location: owner_resto_edit_path(@restaurant))

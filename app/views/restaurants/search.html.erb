@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-3">
       <div>
-        <% if @result.present? %>
+        <% if @result.present? && @result.map(&:location).compact.count > 1 %>
           <button type="button" class="btn btn-primary outline" data-toggle="modal" data-target="#mapModal" style="width: 100%; margin-bottom: 10px;">
             View results on map <%= icon('map-marker') %>
           </button>
@@ -89,41 +89,47 @@
 </div>
 
 <% if @result.present? %>
-  <script>
+  <% @first_resto_with_location = @result.find{|x|!x.location.nil?} %>
+  <% if @first_resto_with_location.present? %>
+    <script>
 
-    function initMap() {
-      var first_result = {lat: <%= @result.first.location.latitude %>, lng: <%= @result.first.location.longitude %>};
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: first_result
-      });
+      function initMap() {
 
-      var marker;
-      var infowindow = new google.maps.InfoWindow();
-
-      <% @result.each_with_index do |resto, i| %>
-        marker = new google.maps.Marker({
-          position: new google.maps.LatLng(<%= resto.location.latitude %>, <%= resto.location.longitude %>),
-          map: map
+        var first_result = {lat: <%= @first_resto_with_location.location.latitude %>, lng: <%= @first_resto_with_location.location.longitude %>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: first_result
         });
-        google.maps.event.addListener(marker, 'mouseover', (function(marker){
-          return function() {
-            var content = '<%= link_to(resto.name, resto) %>';
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
-          }
-        })(marker));
-      <% end %>
-      $('#mapModal').on('shown.bs.modal', function() {
-        google.maps.event.trigger(map, "resize");
-        map.setCenter(first_result)
-      });
 
-    }
+        var marker;
+        var infowindow = new google.maps.InfoWindow();
 
-  </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
-  </script>
+        <% @result.each_with_index do |resto, i| %>
+          <% if resto.location.present? %>
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(<%= resto.location.latitude %>, <%= resto.location.longitude %>),
+              map: map
+            });
+            google.maps.event.addListener(marker, 'mouseover', (function(marker){
+              return function() {
+                var content = '<%= link_to(resto.name, resto) %>';
+                infowindow.setContent(content);
+                infowindow.open(map, marker);
+              }
+            })(marker));
+          <% end %>
+        <% end %>
+        $('#mapModal').on('shown.bs.modal', function() {
+          google.maps.event.trigger(map, "resize");
+          map.setCenter(first_result)
+        });
+
+      }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeU6jS4Tk8t3OudUKIn7XtciDfe9CbZY&callback=initMap">
+    </script>
+  <% end %>
 <% end %>
 
 <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
