@@ -14,7 +14,12 @@ class FoodsController < ApplicationController
   end
   
   def update
-    if @food.update(food_params)
+    food_attributes = @food.attributes
+    if @food.update(food_params) 
+      unless Food.check_food?(@food.restaurant, food_params)
+        @err = "Existing Food under the same cuisine"
+        @food.update(food_attributes)
+      end
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
@@ -29,6 +34,10 @@ class FoodsController < ApplicationController
     @food = Food.new(food_params)
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     if @food.save
+      unless Food.check_food?(@food.restaurant, food_params)
+        @err = "Existing Food under the same cuisine"
+        @food.destroy
+      end
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else

@@ -1,4 +1,7 @@
 <% unless @post.errors.any? %>
   $('#myModal').modal("hide")
   $('#post_area').html("<%= j render(@post) %>")
+<% else %>
+    $("#post_error_area").html("<%= @err.html_safe %>")
+    $("#post_error_area").addClass("alert alert-danger")
 <% end %>  

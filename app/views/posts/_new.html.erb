@@ -3,6 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">Add Post</h4>
 </div>
 <div class="modal-body">
+  <div id = "post_alert_area"></div>
   <%= form_for(@post, url: posts_path(resto_id: @post.restaurant), remote: true) do |f| %>
     <div class="form-group">
       <%= f.text_area :comment, class: 'form-control', placeholder: 'Write your post / announcement ', required: true %>
