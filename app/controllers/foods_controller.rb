@@ -14,14 +14,21 @@ class FoodsController < ApplicationController
   end
   
   def update
-    if @food.update(food_params)
+    food_attributes = @food.attributes
+    if @food.update(food_params) 
+      unless Food.check_food?(@food.restaurant, food_params)
+        @err = "Existing Food under the same cuisine"
+        @food.update(food_attributes)
+      end
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
-      flash[:failure] = "<dl><dt>Your dish was not successfully updated because:</dt>" 
-      @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
-      flash[:failure] << "</dl>"
-      redirect_to owner_resto_edit_path(@food.restaurant)
+      @err = ""
+      @food.errors.full_messages.map { |msg| @err << "#{msg}" }
+      unless Food.check_food?(@food.restaurant, food_params)
+        @err = "Existing Food under the same cuisine"
+        @food.update(food_attributes)
+      end
     end
   end
   
@@ -29,6 +36,10 @@ class FoodsController < ApplicationController
     @food = Food.new(food_params)
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     if @food.save
+      unless Food.check_food?(@food.restaurant, food_params)
+        @err = "Existing Food under the same cuisine"
+        @food.destroy
+      end
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else

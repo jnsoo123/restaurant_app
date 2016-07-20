@@ -11,7 +11,7 @@ class Restaurant < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_one :location, dependent: :destroy
   validates :name, :contact, :user, presence: true
-
+  
   def ave_ratings
     unless ratings.empty?
       ratings.collect(&:rate).sum.to_f/ratings.size 

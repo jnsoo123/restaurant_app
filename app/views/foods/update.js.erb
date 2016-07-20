@@ -1,4 +1,7 @@
-<% unless @food.errors.any? %>
+<% if @err.blank? %>
   $('#myModal').modal("hide")
-  $('#food_area').html("<%= j render(@food) %>")
+  $('#food_area').html("<%= j render 'foods/food', foods: @foods %>")
+<% else %>
+  $('#food_alert_area').html("<div class='alert alert-danger'><%= @err.html_safe %></div>")
+  $('.edit_food .input-group').parent().addClass('has-error')
 <% end %>  
