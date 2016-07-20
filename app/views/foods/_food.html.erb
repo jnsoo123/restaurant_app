@@ -18,7 +18,7 @@
               <td><%= food.name %></td>
               <td><%= food.description %></td>
               <td><%= food.cuisine.name %></td>
-              <td>P <%= food.price %></td>
+              <td><%= number_to_currency(food.price, unit: "P") %></td>
               <td style="width: 150px;"><%= link_to t('.edit'), edit_food_path(food.id), class: 'btn btn-primary outline', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), food_path(food.id), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
             </tr>
           <% end %>

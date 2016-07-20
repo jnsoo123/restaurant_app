@@ -27,8 +27,10 @@ feature "Restaurant Interface" do
   end
   
   scenario "Add Photo", js: true do
+    sleep 10
+    expect(page).to have_css('#picture_pic', visible: false, wait: 10)
     attach_file("picture_pic", "#{Rails.root}/spec/support/sisig.jpg", visible: false)
-    expect(find('.alert-dismissible').text).to match(/Image was added!/)
+    expect(find('.alert-dismissible').text).to match(/Image was added and waiting to be approved and posted!/)
   end  
 
 end

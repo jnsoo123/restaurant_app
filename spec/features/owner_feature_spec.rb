@@ -88,6 +88,7 @@ feature "User Interface" do
       context "Announcements", js: true do
         before(:each) do
           within(:css, "#user-tabs") do
+            expect(page).to have_css("a[data-target='#announcement']", wait: 10)
             find(:css, "a[data-target='#announcement']").click
           end
         end
@@ -102,7 +103,7 @@ feature "User Interface" do
         context "Post Operations" do
           before(:each) do
             click_link "Add Posts"
-            sleep 3
+            expect(page).to have_css("#post_comment", wait: 10)
             find("#post_comment").set("THIS IS SOME RANDOM POST")
             find_button("Create Post").click
             within(:css, "#user-tabs") do
@@ -117,10 +118,11 @@ feature "User Interface" do
         
           scenario "Edit post", js: true do
             click_link "Edit"
-            sleep 3
+            expect(page).to have_css("#post_comment", wait: 10)
             find("#post_comment").set("THIS IS NOT SOME RANDOM POST")
             find_button("Edit Post / Announcement").click
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#announcement']", wait: 10)
               find(:css, "a[data-target='#announcement']").click
             end
             expect(page).to have_css("table")
@@ -132,6 +134,7 @@ feature "User Interface" do
             page.accept_confirm
             sleep 1
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#announcement']", wait: 10)
               find(:css, "a[data-target='#announcement']").click
             end
             
@@ -145,6 +148,7 @@ feature "User Interface" do
       context "Schedules" do
         before(:each) do
           within(:css, "#user-tabs") do
+            expect(page).to have_css("a[data-target='#schedule']", wait: 10)
             find(:css, "a[data-target='#schedule']").click
           end
         end
@@ -159,12 +163,14 @@ feature "User Interface" do
         context "Schedule Operations", js: true do
           before(:each) do
             click_link "Add Schedule"
-            sleep 5
+            expect(page).to have_css("#schedule_day", wait: 10)
+         #   sleep 5
             find('#schedule_day').find(:xpath, "option[2]").select_option
             find("#schedule_opening").set("7:00 AM")
             find("#schedule_closing").set("10:00 AM")
             find_button("Submit Schedule").click
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#schedule']", wait: 10)
               find(:css, "a[data-target='#schedule']").click
             end
           end
@@ -177,13 +183,14 @@ feature "User Interface" do
           
           scenario "Edit Schedule" do
             click_link "Edit"
-            sleep 3
+            expect(page).to have_css("#schedule_day", wait: 10)
             find('#schedule_day').find(:xpath, "option[2]").select_option
             find("#schedule_opening").set("8:00 AM")
             find("#schedule_closing").set("10:00 AM")
             find_button("Edit Schedule").click
             
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#schedule']", wait: 10)
               find(:css, "a[data-target='#schedule']").click
             end
             expect(page).to have_content("Monday")
@@ -196,6 +203,11 @@ feature "User Interface" do
             click_link "Delete"
             page.accept_confirm
             sleep 1
+            within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#schedule']", wait: 10)
+              find(:css, "a[data-target='#schedule']").click
+            end
+            
             expect(page).to have_content("No schedules found. Enter schedules so that users can know if your store is open in a particular day")
             expect(page).not_to have_css("table")
           end
@@ -206,6 +218,7 @@ feature "User Interface" do
       context "Dishes" do
         before(:each) do
           within(:css, "#user-tabs") do
+            expect(page).to have_css("a[data-target='#dish']", wait: 10)
             find(:css, "a[data-target='#dish']").click
           end
         end
@@ -220,7 +233,7 @@ feature "User Interface" do
         context "Dish Operations", js: true do
           before(:each) do
             click_link "Add Dish"
-            sleep 5
+            expect(page).to have_css("#food_name", wait: 10)
             find('#food_name').set("My Food")
             find("#food_description").set("Random Description")
             find("#food_price").set(24)
@@ -232,15 +245,16 @@ feature "User Interface" do
           end
           
           scenario "Add Dish" do
-            expect(page).to have_content("My Food")
-            expect(page).to have_content("Random Description")
-            expect(page).to have_content("24.0")
-            expect(page).to have_content("Korean")
+            food = Food.last
+            expect(page).to have_content("#{food.name}")
+            expect(page).to have_content("#{food.description}")
+            expect(page).to have_content("#{food.price}")
+            expect(page).to have_content("#{food.cuisine.name}")
           end
           
           scenario "Edit Dish" do
             click_link "Edit"
-            sleep 3
+            expect(page).to have_css("#food_name", wait: 10)
             find('#food_name').set("My Food")
             find("#food_description").set("Changed Description")
             find("#food_price").set(24)
@@ -248,19 +262,25 @@ feature "User Interface" do
             find_button("Edit Dish").click
             
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#dish']", wait: 10)
               find(:css, "a[data-target='#dish']").click
             end
             sleep 1
-            expect(page).to have_content("My Food")
-            expect(page).to have_content("Changed Description")
-            expect(page).to have_content("24.0")
-            expect(page).to have_content("Korean")
+            food = Food.last
+            expect(page).to have_content("#{food.name}")
+            expect(page).to have_content("#{food.description}")
+            expect(page).to have_content("#{food.price}")
+            expect(page).to have_content("#{food.cuisine.name}")
           end
         
           scenario "Delete Dish" do
             click_link "Delete"
             page.accept_confirm
             sleep 1
+            within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#dish']", wait: 10)
+              find(:css, "a[data-target='#dish']").click
+            end
             expect(page).to have_content("No foods found. Enter dishes to your restaurant so that it can be searched through advance search")
             expect(page).not_to have_css("table")
           end
@@ -270,6 +290,7 @@ feature "User Interface" do
       context "Photos" do
         before(:each) do
           within(:css, "#user-tabs") do
+            expect(page).to have_css("a[data-target='#photo']", wait: 10)
             find(:css, "a[data-target='#photo']").click
           end
         end
@@ -312,6 +333,7 @@ feature "User Interface" do
           before(:each) do
             attach_file("picture_pic", "#{Rails.root}/spec/support/sisig.jpg", visible: false)
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#photo']", wait: 10)
               find(:css, "a[data-target='#photo']").click
             end
           end
@@ -324,11 +346,12 @@ feature "User Interface" do
           
           scenario "Delete Photo" do
             find(:xpath, '//*[@id="photo"]/div[1]/div[2]/a/div').click
-            sleep 5
+            expect(page).to have_css(".btn-danger", wait: 10)
             find_button("Delete").click
             page.accept_confirm
             sleep 1
             within(:css, "#user-tabs") do
+              expect(page).to have_css("a[data-target='#photo']", wait: 10)
               find(:css, "a[data-target='#photo']").click
             end
             expect(page).to have_content("No Photos.")
@@ -340,6 +363,7 @@ feature "User Interface" do
       context "Unhappy" do
         before(:each) do
           within(:css, "#user-tabs") do
+            expect(page).to have_css("a[data-target='#unhappy']", wait: 10)
             find(:css, "a[data-target='#unhappy']").click
           end
         end
