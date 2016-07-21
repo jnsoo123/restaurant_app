@@ -23,6 +23,8 @@ class FoodsController < ApplicationController
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
+      puts "DID I ENTER HERE: #{@food.inspect}"
+      
       @err = "<dl><dt>Your dish was not successfully updated because:</dt>" 
       @food.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
       @err << "</dl>"

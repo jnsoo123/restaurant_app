@@ -9,7 +9,7 @@ class Food < ActiveRecord::Base
     puts "RESULT: #{Food.where(name: food_params[:name], cuisine_id: food_params[:cuisine_id].to_i, restaurant_id: resto.id).count == 0}"
     puts "@@@@@@@@@@@@@@THIS IS THE RESULT: #{Food.where(name: food_params[:name], cuisine_id: food_params[:cuisine_id].to_i, restaurant_id: resto.id).inspect}"
 
-   Food.where(name: food_params[:name], cuisine_id: food_params[:cuisine_id].to_i, restaurant_id: resto.id).count == 1
+   Food.where(name: food_params[:name], cuisine_id: food_params[:cuisine_id].to_i, restaurant_id: resto.id).count <= 1
   end
   
   def self.search_by_name(query)

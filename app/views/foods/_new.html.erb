@@ -13,7 +13,7 @@
       <%= f.text_area :description, class: 'form-control', placeholder: t('.description')%>
     </div>
     <div class="form-group">
-      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true, min: 1%>
+      <%= f.number_field :price, class: 'form-control', placeholder: t('.pricedish'), required: true, min: 1, step: 0.25%>
     </div>
     <div class="form-group">
       <%= f.select :cuisine_id, options_from_collection_for_select(Cuisine.all,'id','name'), { prompt: "Select a Cuisine"} ,class: 'form-control', required: true %>
