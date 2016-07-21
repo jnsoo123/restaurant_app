@@ -13,16 +13,16 @@ class PicturesController < ApplicationController
     end
     if @picture.save
       if @picture.status
-        flash[:success] = 'Image was added'
+        flash[:success] = t('.successowner')
         respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
       else
         
-        flash[:success] = 'Image was added and waiting to be approved and posted!'
+        flash[:success] = t('.successuser')
         Notification.create(message: "#{view_context.link_to current_user.name, user_path(current_user)} added a photo on your restaurant: #{view_context.link_to @picture.restaurant.name, restaurant_path(@picture.restaurant)}. #{view_context.link_to 'Click Here', owner_resto_edit_path(@picture.restaurant)} to view it from the dashboard.", user: @picture.restaurant.user)
         respond_with(@picture, location: restaurant_path(@picture.restaurant)) 
       end
     else
-      flash[:failure] = "<dl><dt>Your image was not added because:</dt>" 
+      flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
       if @picture.status
@@ -38,10 +38,10 @@ class PicturesController < ApplicationController
   
   def update
     if @picture.update(picture_params)
-      flash[:success] = 'Image successfully updated!'
+      flash[:success] = t('.success')
       respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
     else
-      flash[:failure] = "<dl><dt>Your image was not updated successfully because:</dt>" 
+      flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@picture.restaurant)
@@ -50,10 +50,10 @@ class PicturesController < ApplicationController
   
   def destroy
     if @picture.destroy
-      flash[:success] = 'Image was deleted!'
+      flash[:success] = t('.success')
       respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
     else
-      flash[:failure] = "<dl><dt>Your image was not deleted because:</dt>" 
+      flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@picture.restaurant)

@@ -12,16 +12,16 @@
         <% if user_signed_in? %>
           <p>
             <% if post.user_liked?(current_user) %>
-              <%= link_to "Unlike #{icon('heart-o', pluralize(post.likes.count, 'Like'))}".html_safe, delete_like_path(user: current_user.id, post: post.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
+              <%= link_to "#{t('.unlike')} #{icon('heart-o', pluralize(post.likes.count, t('.like')))}".html_safe, delete_like_path(user: current_user.id, post: post.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
             <% else %>
-              <%= link_to "#{icon('heart-o', pluralize(post.likes.count, 'Like'))}".html_safe, likes_path(post_id: post.id), class: 'btn btn-like-comment', method: :post, remote: true %> 
+              <%= link_to "#{icon('heart-o', pluralize(post.likes.count, t('.like')))}".html_safe, likes_path(post_id: post.id), class: 'btn btn-like-comment', method: :post, remote: true %> 
             <% end %>
-            <%= link_to "#{icon('comments-o', pluralize(post.replies.count, 'Reply'))}".html_safe, new_reply_path(post: post.id), class: 'btn btn-like-comment', remote: true %>
+            <%= link_to "#{icon('comments-o', pluralize(post.replies.count, t('.reply')))}".html_safe, new_reply_path(post: post.id), class: 'btn btn-like-comment', remote: true %>
           </p>
         <% else %>
           <p>
-            <%= link_to "#{icon('heart-o', pluralize(post.likes.count, 'Like'))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', method: :post, remote: true, disabled: true, data: { toggle: 'tooltip', placement: 'top', title: 'Sign in to like' } %> 
-            <%= link_to "#{icon('comments-o', pluralize(post.replies.count, 'Reply'))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', remote: true, disabled: true, data: {toggle: 'tooltip', placement: 'top', title: 'Sign in to reply' } %>
+            <%= link_to "#{icon('heart-o', pluralize(post.likes.count, 'Like'))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', method: :post, remote: true, disabled: true, data: { toggle: 'tooltip', placement: 'top', title: t('.signintolike') } %> 
+            <%= link_to "#{icon('comments-o', pluralize(post.replies.count, 'Reply'))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', remote: true, disabled: true, data: {toggle: 'tooltip', placement: 'top', title: t('.signintoreply') } %>
           </p>
         <% end %>
         
@@ -30,9 +30,9 @@
     <div class="media" style="padding: 0px 50px; margin: 0px;">
       <% if post.replies.count > 3 %>
         <% if @all == "true" %>
-          <%= link_to "View Less #{icon('caret-up')}".html_safe, show_more_post_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+          <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_post_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
         <% else %>
-          <%= link_to "View All (#{post.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_post_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+          <%= link_to "#{t('.viewall')} (#{post.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_post_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
         <% end %>
       <% end %>
     </div>

@@ -4,8 +4,8 @@
       <table class="table table-bordered">
         <thead>
           <tr style="background-color: #404040;">
-            <th>Announcement / Post</th>
-            <th>Date Posted</th>
+            <th><%= t('.announcementpost')%></th>
+            <th><%= t('.dateposted')%></th>
             <th><%= t('.actions')%></th>
           </tr>
         </thead>
@@ -14,12 +14,12 @@
             <tr>
               <td><%= post.comment %></td>
               <td><%= post.created_at.strftime("%B %d, %Y - %I:%M %p")%></td>
-              <td style="width: 150px;"><%= link_to t('.edit'), edit_post_path(post.id), class: 'btn btn-primary outline', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), post_path(post.id), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }, remote: true%></td>
+              <td style="width: 150px;"><%= link_to t('.edit'), edit_post_path(post.id), class: 'btn btn-primary outline', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), post_path(post.id), class: 'btn btn-danger', method: :delete, data: { confirm: t('.confirm') }, remote: true%></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 <% else %>
-  No posts / announcements
+  <%= t('.noposts')%>
   <% end %>

@@ -1,11 +1,11 @@
 <ul id="user-tabs" class="nav nav-tabs" role="tablist" style="margin-bottom: 10px;">
-  <li role="presentation" class="active"><a data-target="#edit_info" aria-controls="edit_info" role="tab" data-toggle="tab">Edit Information</a></li>
-  <li role="presentation" class=""><a data-target="#announcement" aria-controls="announcement" role="tab" data-toggle="tab">Announcements / Posts</a></li>
-  <li role="presentation" class=""><a data-target="#schedule" aria-controls="schedule" role="tab" data-toggle="tab">Schedules</a></li>
-  <li role="presentation" class=""><a data-target="#dish" aria-controls="dish" role="tab" data-toggle="tab">Dishes / Foods</a></li>
-  <li role="presentation" class=""><a data-target="#review" aria-controls="review" role="tab" data-toggle="tab">Reviews</a></li>
-  <li role="presentation" class=""><a data-target="#photo" aria-controls="photo" role="tab" data-toggle="tab">Photos</a></li>
-  <li role="presentation" class=""><a data-target="#unhappy" aria-controls="unhappy" role="tab" data-toggle="tab">Unhappy?</a></li>
+  <li role="presentation" class="active"><a data-target="#edit_info" aria-controls="edit_info" role="tab" data-toggle="tab"><%= t('.editinfo')%></a></li>
+  <li role="presentation" class=""><a data-target="#announcement" aria-controls="announcement" role="tab" data-toggle="tab"><%= t('.announcementposts')%></a></li>
+  <li role="presentation" class=""><a data-target="#schedule" aria-controls="schedule" role="tab" data-toggle="tab"><%= t('.schedules')%></a></li>
+  <li role="presentation" class=""><a data-target="#dish" aria-controls="dish" role="tab" data-toggle="tab"><%= t('.dishesfoods')%></a></li>
+  <li role="presentation" class=""><a data-target="#review" aria-controls="review" role="tab" data-toggle="tab"><%= t('.reviews')%></a></li>
+  <li role="presentation" class=""><a data-target="#photo" aria-controls="photo" role="tab" data-toggle="tab"><%= t('.photos')%></a></li>
+  <li role="presentation" class=""><a data-target="#unhappy" aria-controls="unhappy" role="tab" data-toggle="tab"><%= t('.unhappy')%></a></li>
 </ul>
 
 <div class="tab-content">
@@ -19,13 +19,13 @@
     </div>
 
     <div style="width: 100%;">
-      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Edit Information</h4>
+      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.editinfo')%></h4>
     </div>
     <div style="margin-bottom: 50px;">
       <%= form_for(@restaurant, url: restaurant_path, method: :put) do |f| %>
         <% if @restaurant.errors.any? %>
           <div id="error_explanation">
-            <h2><%= pluralize(@restaurant.errors.count, "error") %> prohibited this task from being saved:</h2>
+            <h2><%= pluralize(@restaurant.errors.count, "error") %><%= t('.prohibitsave')%></h2>
             <ul>
               <% @restaurant.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
@@ -44,26 +44,26 @@
               <%= f.text_field :contact, class: 'form-control' %>
             </div>
             <div class="form-group">
-              <%= f.label "Restaurant Picture" %>
+              <%= f.label t('.restopic') %>
               <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg'  %>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <%= f.label :address %>
+              <%= f.label :address, t('.address') %>
               <%= f.text_area :address, class: 'form-control' %>
             </div>
             <div class="form-group">
-              <%= f.label :website%>
+              <%= f.label :website, t('.website')%>
               <%= f.text_field :website, class: 'form-control'%>
             </div>
             <div class="form-group">
-              <%= f.label "Cover Photo" %>
+              <%= f.label t('.cover') %>
               <%= f.file_field :cover, accept: 'image/png,image/gif,image/jpeg' %>
             </div>
           </div>
           <div class="col-md-12">
-            <h4><%= @restaurant.location.present? ? "Edit Map Location" : "Set up your location <small>(so that users can easily find your restaurant)</small>".html_safe %></h4>
+            <h4><%= @restaurant.location.present? ? t('.editmaplocation') : t('.setuplocation').html_safe %></h4>
             <div id="map" style="height: 250px; margin-bottom: 10px;"></div>
             <script>
 
@@ -124,8 +124,8 @@
   </div>
   <div role="tabpanel" class="tab-pane fade in" id="announcement">
     <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
-      <h4 class="pull-left" style="color: #6b6b6b;">Announcements / Posts</h4>
-      <%= link_to "#{icon('plus', "Add Posts", style: 'margin-right: 10px;')}".html_safe, new_post_path(resto_id: @restaurant.id), class: 'btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
+      <h4 class="pull-left" style="color: #6b6b6b;"><%= t('.announcementposts')%></h4>
+      <%= link_to "#{icon('plus', t('.addposts'), style: 'margin-right: 10px;')}".html_safe, new_post_path(resto_id: @restaurant.id), class: 'btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
     </div>
 
     <div id="post_area">
@@ -134,8 +134,8 @@
   </div>
   <div role="tabpanel" class="tab-pane fade in" id="schedule">
     <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
-      <h4 class="pull-left" style="color: #6b6b6b;">Schedules</h4>
-      <%= link_to "#{icon('plus', "Add Schedule", style: 'margin-right: 10px;')}".html_safe, new_schedule_path(resto_id: @restaurant.id), class: 'time btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
+      <h4 class="pull-left" style="color: #6b6b6b;"><%= t('.schedules')%></h4>
+      <%= link_to "#{icon('plus', t('.addschedules'), style: 'margin-right: 10px;')}".html_safe, new_schedule_path(resto_id: @restaurant.id), class: 'time btn btn-default pull-right', remote: true, data: { toggle: 'modal', target: '#myModal'} %>
     </div>
 
     <div id="sched_area">
@@ -154,7 +154,7 @@
   </div>
   <div role="tabpanel" class="tab-pane fade in" id="review">
     <div style="width: 100%;">
-      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Reviews</h4>
+      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.reviews')%></h4>
     </div>
     <div>
       <% unless @ratings.empty? %>
@@ -163,10 +163,10 @@
             <thead>
               <tr style="background-color: #404040;">
                 <th>#</th>
-                <th style="width: 85px;">Name</th>
-                <th>Rate</th>
-                <th>Comment</th>
-                <th style="width: 100px;">Date</th>
+                <th style="width: 85px;"><%= t('.name')%></th>
+                <th><%= t('.rate')%></th>
+                <th><%= t('.comment')%></th>
+                <th style="width: 100px;"><%= t('.date')%></th>
               </tr>
             </thead>
             <tbody>
@@ -183,16 +183,16 @@
           </table>
         </div>
       <% else %>
-        No ratings.
+        <%= t('.noratings')%>
       <% end %>
     </div>
   </div>
   <div role="tabpanel" class="tab-pane fade in" id="photo"> 
     <div style="width: 100%;">
       <div class="clearfix" style="border-bottom: 1px solid #a1a1a1; margin-bottom: 15px;">
-        <h4 class="pull-left" style="color: #6b6b6b">Photos</h4>
+        <h4 class="pull-left" style="color: #6b6b6b"><%= t('.photos')%></h4>
         <div class="fileUpload btn btn-default pull-right">
-          <span><%= icon('plus', 'Add Photos')%></span>
+          <span><%= icon('plus', t('.addphotos'))%></span>
           <%= form_for(@picture) do |f| %> 
             <%= f.file_field :pic, class: 'upload', style: 'height: 150px', accept: 'image/png,image/gif,image/jpeg'  %>
             <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
@@ -209,12 +209,12 @@
             <% end %>
           <% end %>
         <% else %>
-          <p style="margin-left: -5px;">No Photos.</p>
+          <p style="margin-left: -5px;"><%= t('.nophotos')%></p>
         <% end %>
       </div>
     </div>
     <div style="width: 100%;">
-      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Pending Photos</h4>
+      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.pendingphotos')%></h4>
     </div>
 
     <% unless @restaurant.pictures.where(status: false).empty? %>
@@ -226,8 +226,8 @@
               <div class="caption">
                 <div class="row">
                   <div class="col-md-6">
-                    <p>Uploader: </p>
-                    <p>Upload Date: </p>
+                    <p><%= t('.uploader')%></p>
+                    <p><%= t('.uploaddate')%></p>
                   </div>
                   <div class="col-md-6">
                     <p><%= picture.user.username %></p>
@@ -238,10 +238,10 @@
               <div class="panel-footer" style="background-color: #fff; border-radius: 0px;">
                 <div class="row">
                   <div class="col-md-6">
-                    <%= button_to 'Accept', picture_path(picture.id, picture: { status: true }), class: 'btn btn-success', style: 'width: 100%;', method: :put%>
+                    <%= button_to t('.accept'), picture_path(picture.id, picture: { status: true }), class: 'btn btn-success', style: 'width: 100%;', method: :put%>
                   </div>
                   <div class="col-md-6">
-                    <%= button_to 'Reject', picture_path(picture), class: 'btn btn-danger', style: 'width: 100%;', method: :delete%>
+                    <%= button_to t('.reject'), picture_path(picture), class: 'btn btn-danger', style: 'width: 100%;', method: :delete%>
                   </div>
                 </div>
               </div>
@@ -250,13 +250,13 @@
         <% end %>
       </div>
     <% else %>
-      No Pending Pictures
+      <%= t('.pendingpictures')%>
     <% end %>
   </div>
   <div role="tabpanel" class="tab-pane fade in" id="unhappy">
     <div style="width: 100%;">
-      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;">Not Happy?</h4>
-      <%= button_to "Delete Restaurant", restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This will delete your restaurant and all of its data.' }%>
+      <h4 style="color: #6b6b6b; border-bottom: 1px solid #a1a1a1; padding-bottom: 15px;"><%= t('.nothappy')%></h4>
+      <%= button_to t('.deleteresto'), restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger', data: { confirm: t('.deleteconfirm') }%>
     </div>
   </div>  
 </div>

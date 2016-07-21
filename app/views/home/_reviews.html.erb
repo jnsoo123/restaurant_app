@@ -1,5 +1,5 @@
 <div id="reviews" class="container">
-  <h3><%= t('.recentreviews')%><br><small>View recent reviews by our users</small></h3>
+  <h3><%= t('.recentreviews')%><br><small><%= t('.reviewsuser')%></small></h3>
   <% unless @ratings.empty? %>
     <div class="row">
       <% @ratings.each do |rate| %>
@@ -34,7 +34,7 @@
   <% else %>
     <ul class="list-group">
       <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
-        <h3 class="text-center" style="padding-top: 50px">No Reviews yet.</h3>
+        <h3 class="text-center" style="padding-top: 50px"><%= t('.noreviews')%></h3>
       </li>
     </ul>
   <% end %>

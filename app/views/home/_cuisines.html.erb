@@ -1,5 +1,5 @@
 <div id="cuisines" class="container wow bounceInUp" style="margin-bottom: 20px;">
-  <h3><%= t('.popular')%><br><small>Explore popular cuisines in the world</small></h3>
+  <h3><%= t('.popular')%><br><small><%= t('.explore')%></small></h3>
     <% unless @cuisines.empty? %>
       <% @cuisines.each do |cuisine| %>
         <%= link_to(restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name)) do %>
@@ -17,7 +17,7 @@
     <% else %>
       <ul class="list-group">
         <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
-          <h3 class="text-center" style="padding-top: 50px">No Cuisines available yet</h3>
+          <h3 class="text-center" style="padding-top: 50px"><%= t('.nocuisines')%></h3>
         </li>
       </ul>
     <% end %>

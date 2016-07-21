@@ -1,5 +1,5 @@
 <div id="news" class="container">
-  <h3>News & Updates<br><small>Check out the latest news / updates sent by restaurants</small></h3>
+  <h3><%= t('.newsupdates')%><br><small><%= t('.newscheck')%></small></h3>
   
   <% if @posts.present? %>
     <div class="row">
@@ -29,7 +29,7 @@
   <% else %>
     <ul class="list-group">
       <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
-        <h3 class="text-center" style="padding-top: 50px">No Announcements yet.</h3>
+        <h3 class="text-center" style="padding-top: 50px"><%= t('.noannouncements')%></h3>
       </li>
     </ul>
   <% end %>

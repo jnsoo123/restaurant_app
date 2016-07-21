@@ -3,21 +3,21 @@
 <div style="background-color: #222; padding: 10px 20px 5px 20px;">
   <% if user_signed_in? %>
     <% if @picture.restaurant.user === current_user || current_user.admin %>
-      <span style="font-size: 15px; color: #fff;">Filename: <%= @picture.pic_identifier %></span>
+      <span style="font-size: 15px; color: #fff;"><%= t('.filename')%> <%= @picture.pic_identifier %></span>
     <% end %>
   <% end %>
 </div>
 <div style="background-color: #222; padding: 5px 20px;">
-  <span style="font-size: 15px; color: #fff;">Uploader: <%= link_to @picture.user.name, user_path(@picture.user), style: 'color: #fff;' %></span>
+  <span style="font-size: 15px; color: #fff;"><%= t('.uploader')%> <%= link_to @picture.user.name, user_path(@picture.user), style: 'color: #fff;' %></span>
 </div>
 <div style="background-color: #222; padding: 5px 20px 10px 20px;">
-  <span style="font-size: 15px; color: #fff;">Date Uploaded: <%= @picture.created_at.strftime("%B %d, %Y") %></span>
+  <span style="font-size: 15px; color: #fff;"><%= t('.uploaddate')%> <%= @picture.created_at.strftime("%B %d, %Y") %></span>
 </div>
 
 <% if current_user === @picture.restaurant.user %>
 
   <div class="text-center" style="padding: 10px; background-color: #222; ">
-    <%= button_to 'Delete', picture_path(@picture), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= button_to t('.delete'), picture_path(@picture), class: 'btn btn-danger', method: :delete, data: { confirm: t('.confirm') } %>
   </div>
 
 <% end %>

@@ -21,68 +21,148 @@
 
 ru:
   language: "Russian"
-  helpers:
-     submit:
-       create: "Create a %{model}"
-       update: "Update %{model} Information"
-       edit: "Edit %{model} information"
+
   layouts:
      application:
        home: "дом"
        about: "Около"
        contact: "связь"
+       makeresto: "Make a Resto"
+       signuptoday: "Sign up Today"
+       getstarted: "Get Started"
+       myadmin: "My Admin"
        language: "Language"
-       users: "Users"
+       allcuisines: "All Cuisines"
+       reviews: "Reviews"
        restaurants: "Restaurants"
        cuisines: "Cuisines"
        reviews: "Reviews"
        myprofile: "My Profile"
        myrestaurants: "My Restaurants"
        signout: "Sign Out"
-       login: "Log In"
+       login: "Login"
        signup: "Sign Up"
-       notice: "You have %{n} pending restaurant applications"
-       footer: "Place footer content here"     
 
      owner:
        fudzdashboard: "Fudz Dashboard"
+       messages: "Messages"
        myrestaurants: "My Restaurants"
        addrestaurants: "Add Restaurants"
-       comments: "Comments"
-       ratings: "Ratings"
-       reservations: "Reservations"
-       notifications: "Notifications"
        mainpage: "Go Back to Mainpage"
-
-  administrator:
-     index:
-       username: "Username"
-       name: "Name"
-       email: "Email"
-       location: "Location"
-       profile_picture_url: "Profile Picture URL"
-       edit: "Edit"
-  
+   
+  pictures:
+    create:
+      successowner: "Image was added"
+      successuser: "Image was added and waiting to be approved and posted!"
+      failurestart: "Your image was not added because:"
+      
+    update:
+      success: "Image successfully updated!"
+      failurestart: "Your image was not updated successfully because:"
+      
+    destroy:  
+      success: "Image was deleted!"
+      failurestart: "Your image was not deleted because:"
+    
+    picture:
+      viewless: "View Less"
+      viewall: "View All"
+      
+    show:
+      filename: "Filename:"
+      uploader: "Uploader:"
+      uploaddate: "Date Uploaded:"
+      delete: "Delete"
+      confirm: "Are you sure?"
+      
+  notifications:
+    destroy:
+      success: "Message deleted."
+        
+  posts:
+    create: 
+      failurestart: "Your post was not successfully created because:"
+      
+    update:
+      failurestart: "Your post was not successfully updated because:"
+      
+    announcement:
+      unlike: "Unlike"
+      like: "Like"
+      reply: "Reply"
+      signintolike: "Sign in to like"
+      signintoreply: "Sign in to reply"
+      viewless: "View Less"
+      viewall: "View All"
+      
+    edit:
+      editpost: "Edit Post / Announcement"
+      message: "Message"
+      
+    new:
+      addpost: "Add Post"
+      placepost: "Write your post / announcement "
+      createpost: "Create Post"
+      
+    post:    
+      announcementpost: "Announcement / Post"
+      dateposted: "Date Posted"
+      actions: "Actions"
+      edit: "Edit"
+      confirm: "Are you sure?"
+      noposts: "No posts / announcements"
+    
   cuisines:
-     form:
-          name: "Name"
-          description: "Description"
-          
-     edit:
-          updatecuisine: "Update Cuisine"
-          
      index:
-          name: "Name"
-          description: "Description"
-          updatecuisine: "Update Cuisine"
-          removecuisine: "Remove Cuisine"
-          createcuisine: "Create New Cuisine"
-          nocuisine: "No Cuisines Available"
-          
+          explore: "Explore all the cuisines"
+          discover: "Discover delicious delicacy from the cuisines registered here"
+  
+  schedules:
+     create:
+       openingerror: "Opening time must be before closing time"
+       overlapping: "Overlapping Schedules"
+     
+     update:
+       success: "Schedule successfully updated!"
+       overlapping: "Overlapping Schedules"
+       
+     destroy:
+       failurestart: "Your schedule was not successfully destroyed because:"
+       
+     edit:
+       editsched: "Edit Schedule"
+       availableday: "Available Day: "
+       selectday: "Select a day from the week"
+       opening: "Opening Time"
+       closing: "Closing Time"
+       
      new:
-          newcuisine: "New Cuisine"
+       addsched: "Add Schedule"
+       submitsched: "Submit Schedule"
+       availableday: "Available Day: "
+       selectday: "Select a day from the week"
+       opening: "Opening Time"
+       closing: "Closing Time"
+       
+     schedule: 
+       nosched: "No schedules found. Enter schedules so that users can know if your store is open in a particular day"
+       availableday: "Available Day"
+       opening: "Opening Time"
+       closing: "Closing Time"
+       actions: "Actions"
+       confirm: "Are you sure?"
+       delete: "Delete"
           
   foods:
+     create:
+       existingfood: "Existing Food under the same cuisine"
+       failurestart: "Your dish was not successfully added because:"
+     update:
+       existingfood: "Existing Food under the same cuisine"
+       failurestart: "Your dish was not successfully updated because:"
+     destroy:
+       failurestart: "Your dish was not successfully destroyed because:"
+     
      edit:
           dish: "Dish"
           dishname: "Dish Name"
@@ -98,81 +178,168 @@ ru:
           description: "Description"
           pricedish: "Price of Dish"
           submitdish: "Submit Dish"
+     
+     food:
+          dish: "Dish"
+          description: "Description"
+          price: "Price"
+          cuisine: "Cuisine"
+          actions: "Actions"
+          confirm: "Are you sure?"
+          empty: "No foods found. Enter dishes to your restaurant so that it can be searched through advance search"
+          
 
   ratings: 
-     index: 
-          display: "Display by: "
-          show: "Show"
-          rating: "Rating"
-          restaurant: "Restaurant"
-          user: "User"
+     create:
+          success: "You have successfully rated the restaurant"
+          failurestart: "Your rating was not saved properly because:"
+          
+     update:
+          success: "You have successfully updated your rating"
+          failurestart: "Your rating was not updated properly because:"
+    
+     rating:
+          rated: "Rated"
+          like: "Like"
+          unlike: "Unlike"
+          reply: "Reply"
+          signintolike: "Sign in to like"
+          signintoreply: "Sign in to reply"
+          viewless: "View Less"
+          viewall: "View All"
+          noreviews: "No Reviews yet."
+          
+     edit:
+          editreview: "Edit Review"
           comment: "Comment"
           
-  restaurants:
-     edit:
-          name: "Name"
-          description: "Description"
-          address: "Address"
-          contact: "Contact"
-          map: "Map"
-          low_price_range: "Low Price Range"
-          high_price_range: "High Price Range"
-          editrestoinfo: "Edit Restaurant Information"  
-                
+  restaurants:  
+     create:
+          success: "Your restaurant has been successfully created!"
+          failurestart: "Your restaurant was not successfully created because:"
+  
+     update:
+          success: "Your restaurant has been successfully updated!"
+          failurestart: "Your restaurant was not successfully updated because:"
+          
+     destroy:
+          success: "Restaurant has been deleted!"
+          failurestart: "Restaurant was not successfully deleted because:"
+  
+     searchbar:
+          placesearch: "Search for fudz/cuisine/dishes..."
+          search: "Search"
+          searchtools: "Search tools"
+          selectplace: "Select a Place"
+          selectcuisine: "Select a Cuisine"
+          filterprice: "Filter by price range:"
+          currency: "PHP"
+          nodishes: "No available dishes yet."
+    
      new:
           enterrestoinfo: "Enter your restaurant's information"
-          restoinfodetails: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
           restoname: "Restaurant Name"
-          description: "Description"
-          restoaddress: "Restaurant Address"
           contact: "Contact Number"
+          address: "Address"
           submitresto: "Submit Your Restaurant"
+          signinfirst: "You need to sign in first!"
+          clickhere: "Click Here"
+          clickmap: "Click the map to set up your restaurant's location"
           
      reject:
           rejecttitle: "Rejection Letter for %{resto}" 
           message: "Message"
           submitletter: "Submit Letter"
+          rejectstatus: "Rejected"
           
      search:
+          viewresult: "View results on map"
+          sortby: "Sort by"
+          noresults: "No Results Found!"
           go: "Go!"
+          
+     show:
+          restonear: "Restaurants near here"
+          noresto: "No restaurants found."
+          topresto: "Top Rated Restaurants"
+          webunavailable: "Website not available"
+          sunday: "Sunday"
+          monday: "Monday"
+          tuesday: "Tuesday"
+          wednesday: "Wednesday"
+          thursday: "Thursday"
+          friday: "Friday"
+          saturday: "Saturday"
+          nomenu: "No menu available."
+          menu: " Menu"
+          photo: "Photo"
+          addphoto: "Add Photos"
+          newsannouncements: " News / Announcements"
+          review: "Review"
+          writereview: "Write a Review"
+          signintoreview: "Sign in to write a review"
+          rateresto: "Rate This Restaurant"
+          addreview: "Add Review"
         
-     listing:
-          pending: "Pending"
-          nopending: "No Pending Restaurant Registrations"
-          accepted: "Accepted"
-          noaccepted: "No Accepted Restaurant"
-          rejected: "Rejected"
-          norejected: "No Rejected Restaurant"
-          name: "Name"
-          description: "Description"
-          address: "Address"
-          contact: "Contact"
-          pricerange: "Price Range"
-          map: "Map"
+
   home:
      cuisines:
           popular: "Popular Cuisines"
+          nocuisines: "No Cuisines available yet"
+          explore: "Explore popular cuisines in the world"
           
+     jumbotron:
+          placesearch: "Search for fudz/cuisine/dishes..."
+          search: "Search"
+          searchtools: "Search tools"
+          filterprice: "Filter by price range:"
+          currency: "PHP"
+          nodishes: "No available dishes yet."
+                    
      make_a_resto:
           marketingspeech: "Super Awesome Marketing Speech"
           speech: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
           signuptoday: "Sign up today"
+          registerrestaurant: "Register your restaurant"
+          
+     news: 
+          newsupdates: "News & Updates"
+          newscheck: "Check out the latest news / updates sent by restaurants"
+          noannouncements: "No Announcements yet."
           
      restaurants:
-          caption: "Find Food for your Appetite"
-          ads: "More ads"
-          reviews: "Reviews"
-          restaurants: "Restaurants"
-          cuisines: "Cuisines"
-          makeresto: "Make a Restaurant"
           topresto: "Top Rated Restaurants"
-          placeholder: "Search for food/restaurants/cuisines..."
-          go: "Go!"
+          findresto: "Find the best restaurants in the world right here"
+          noresto: "No Restaurants available yet"
+          open: "Open Now"
+          close: "Closed"
           
      reviews:
           recentreviews: "Recent Reviews"
-  
+          reviewsuser: "View recent reviews by our users"
+          noreviews: "No Reviews yet."
+    
+     about:
+          headerparagraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          about1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          about2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+     contact:
+          title: "Contact Us"
+          mailaddress: "Mailing Address:"
+          contact1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          contact2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+
   devise:
+     passwords:
+          new:
+              forgotpassword: "Forgot Password"
+              enteremail: "Enter your Email"
+              send: "Send me reset password instructions"
+              login: "Login"
+              signup: "Sign Up"
+              loginfacebook: " Login with Facebook"
+     
      registrations:
           edit:
               edituserinfo: "Edit User Information"
@@ -180,7 +347,7 @@ ru:
               username: "Username"
               name: "Name"
               pendingconfirm: "Currently waiting confirmation for: %{email}"
-              avatar: "Avatar"
+              profilepicture: "Profile Picture"
               location: "Location"
               password: "Password"
               passwordinfo: "(leave blank if you don't want to change it)"
@@ -191,6 +358,7 @@ ru:
               cancel: "Cancel my account"
               unhappy: "Unhappy?"
               back: "Back"
+              confirm: "Are you sure?"
       
           new:
               signup: "Sign Up"
@@ -208,11 +376,32 @@ ru:
               placepass: "password"
               signup: "Sign Up"
               forgotpass: "Forgot your password?"
+              signinfirst: "You need to sign in or sign up before continuing."
+              username: "Username"
+              loginfacebook: " Login with Facebook"
           
   users:
+     authorize_owner: 
+       noresto: "You don't have any restaurants."
+    
+     reviews:
+       rated: "Rated"
+       unlike: "Unlike"
+       like: "Like"
+       reply: "Reply"
+       viewless: "View Less"
+       viewall: "View All"
+       signintolike: "Sign in to like"
+       signintoreply: "Sign in to reply"
+       
      show:
+       reviewedresto: "Reviewed Restaurants"
+       uploadedphotos: "Uploaded Photos"
+       startfudz: "Started using Fudz Finder"
        yourreviews: "Your Reviews"
-       noreviews: "You have not rated nor reviewed any restaurant."
+       noreviews: "No Reviews."
+       nophotos: "No Photos."
+       
        editprofile: "Edit Profile"
        edituserinfo: "Edit User Information"
        email: "Email"
@@ -233,47 +422,64 @@ ru:
      owner:
        edit:     
          changephoto: "Change Cover Photo"
-         editinfo: "(Edit Information)"
+         editinfo: "Edit Information"
+         announcementposts: "Announcements / Posts"
+         schedules: "Schedules"
+         dishesfoods: "Dishes / Foods"
+         reviews: "Reviews"
+         photos: "Photos"
+         unhappy: "Unhappy?"
+         prohibitsave: " prohibited this task from being saved:"
          name: "Name"
-         description: "Description"
-         address: "Address"
          contact: "Contact Information"
-         pricerange: "Price Range"
-         mintomax: "(Min to Max)"
-         min: "Min"
-         max: "Max"
-         embedmap: "Embed Map"
+         address: "Address"
+         restopic: "Restaurant Picture"
+         website: "Website"
+         cover: "Cover Photo"
+         editmaplocation: "Edit Map Location"
+         setuplocation: "Set up your location <small>(so that users can easily find your restaurant)</small>"
          updateresto: "Update Restaurant"
+         addposts: "Add Posts"
+         addschedules: "Add Schedule"
          dishes: "Dishes"
          adddish: "Add Dish"
-         dish: "Dish"
-         cuisine: "Cuisine"
-         Price: Price
-         actions: "Actions"
-         nodish: "No dishes yet. Please add some."
-         edit: "Edit"
-         delete: "Delete"
+         rate: "Rate"
+         comment: "Comment"
+         date: "Date"
+         noratings: "No ratings."
+         addphotos: "Add Photos"
+         nophotos: "No Photos."
+         pendingphotos: "Pending Photos"
+         uploader: "Uploader: "
+         uploaddate: "Upload Date: "
+         accept: "Accept"
+         reject: "Reject"
+         pendingpictures: "No Pending Pictures"
+         nothappy: "Not Happy?"
+         deleteresto: "Delete Restaurant"
+         deleteconfirm: "Are you sure? This will delete your restaurant and all of its data."
          
        new:
          createtitle: "Create New Restaurant"
          name: "Name"
-         description: "Description"
          address: "Address"
          contact: "Contact Information"
-         pricerange: "Price Range"
-         mintomax: "(Min to Max)"
-         min: "Min"
-         max: "Max"
-         embedmap: "Embed Map"
+         clickmap: "Click the map to set up your restaurant's location"
          registerresto: "Register Restaurant" 
          
        restaurants: 
          myrestaurants: "My Restaurants"
-         restaurants: "Restaurants"
-         status: "Status"
-         createdon: "Created On"
-         avgrating: "Average Rating"
-         addresto: "Add a Restaurant" 
+         ratings: "Ratings"
+         photos: "Photos"
+         new: "New"
+         addrestaurant: "Add a Restaurant"
+         
+       notifications:
+         mymessages: "My Messages"
+         message: "Message"
+         actions: "Actions"
+         delete: "Delete"
+         nomessage: "No messages."        
           
      admin:
        edit:     
