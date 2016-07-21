@@ -32,7 +32,7 @@ class RestaurantsController < ApplicationController
     puts "@@@@@@@@ #{@search_result}"
     
     if params[:location].present?
-      if sort_type == 'ratings'
+      if sort_type == 'ratings'        
         @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @search_result.map(&:id), status: 'Accepted').joins("LEFT JOIN ratings ON ratings.restaurant_id = restaurants.id").group("restaurants.id").order("AVG(ratings.rate) DESC")
         puts "@@@@ DUMAAN DITO GUYS"
         puts "@@@@ #{@search_result}"
@@ -67,6 +67,7 @@ class RestaurantsController < ApplicationController
     else
       @result = Kaminari.paginate_array(@result).page(params[:page])
     end
+    puts "#{@result.inspect}"
 #    @result = @result.page(params[:page])
     respond_with(@result)
   end
