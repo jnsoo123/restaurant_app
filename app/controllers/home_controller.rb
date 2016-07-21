@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     @days = []
     Date::DAYNAMES.each_with_index { |x, i| @days << [x, x] }
 #    @restaurants = Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(8)
-    @restaurants = Restaurant.where(id: Restaurant.where(status: "Accepted").sort_by{|resto| resto.ave_ratings }.reverse.map(&:id)).limit(8)
+    @restaurants = Restaurant.joins(:ratings).group("restaurants.id").order("AVG(ratings.rate) DESC").limit(8)
     
     @cuisines = Cuisine.joins(:foods).group("foods.cuisine_id").order("count(foods.cuisine_id) desc").limit(4)
 #    @cuisines = Cuisine.all.limit(8)
