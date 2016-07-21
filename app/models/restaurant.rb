@@ -1,4 +1,9 @@
+
+
 class Restaurant < ActiveRecord::Base
+  
+  include FindByOrderedIds
+  
   mount_uploader :avatar, AvatarUploader
   mount_uploader :cover, AvatarUploader
   include ActionView::Helpers::SanitizeHelper
