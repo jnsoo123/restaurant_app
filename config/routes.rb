@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :pictures
   resources :ratings
   resources :schedules
-  resources :users
+  resources :users, except: :index
   resources :posts
   resources :replies
   

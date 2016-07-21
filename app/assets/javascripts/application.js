@@ -14,16 +14,11 @@
 //= require bootstrap-sprockets
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require jquery.atwho
 //= require jquery.ui.effect-blind
-//= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 //= require bootstrap-slider
 //= require moment
 //= require bootstrap-datetimepicker
-//= require owl.carousel
 //= require nprogress
 //= require nprogress-turbolinks
 //= require turbolinks

@@ -14,16 +14,14 @@
                   <div class="media-body" style="">
                     <h4 class="media-heading">
                       <%= rate.restaurant.name %>
-                      <small>
-                        <% rate.rate.times do %>
-                          <%= icon('star')%>
-                        <% end %>
-                        <% (5-rate.rate).times do %>
-                          <%= icon('star-o')%>
-                        <% end %>
-                      </small>
                     </h4>
-                    <p style=" height: 50px; color: #676767;"><b style="font-size: 15px;"><%= rate.user.name %></b>: <%= truncate(rate.comment, length: 190) %></p>
+                    <p style=" height: 50px; color: #676767;">
+                      <b style="font-size: 15px;">
+                        <%= rate.user.name %>
+                      </b>
+                      - 
+                      Rated <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= truncate(rate.comment, length: 190)  %>
+                    </p>
                     <p style="color: #676767; margin-bottom: 0;"><%= rate.likes.count %> <%= icon('heart') %> &nbsp;&nbsp;&nbsp; <%= rate.replies.count %> <%= icon('comments-o') %><br><%= distance_of_time_in_words_to_now(rate.created_at) %> ago</p>
                   </div>
                 </div>

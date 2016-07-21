@@ -13,6 +13,10 @@
             <div class="form-group" style="margin-top: 15px;">
               <%= f.text_field :contact, class: 'form-control', placeholder: t('.contact'), required: true %>
             </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+              <%= f.text_field :address, class: 'form-control', placeholder: t('.address') %>
+            </div>
             <p><%= t('.clickmap')%></p>
             <div id="map" style="height: 400px; margin: 0px;"></div>
             <script>

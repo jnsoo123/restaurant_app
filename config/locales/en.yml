@@ -239,6 +239,7 @@ en:
           enterrestoinfo: "Enter your restaurant's information"
           restoname: "Restaurant Name"
           contact: "Contact Number"
+          address: "Address"
           submitresto: "Submit Your Restaurant"
           signinfirst: "You need to sign in first!"
           clickhere: "Click Here"
@@ -389,6 +390,8 @@ en:
        reply: "Reply"
        viewless: "View Less"
        viewall: "View All"
+       signintolike: "Sign in to like"
+       signintoreply: "Sign in to reply"
        
      show:
        reviewedresto: "Reviewed Restaurants"

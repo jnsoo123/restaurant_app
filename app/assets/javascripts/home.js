@@ -6,11 +6,6 @@ $(document).on("ready page:change", function() {
   var slideShowTimeout = 15000;
   
   
-  $(".owl-carousel").owlCarousel({
-    singleItem: true,
-    autoHeight : true
-
-  });
     
   $('#filter_search_button').click(function(e){
     e.preventDefault();
