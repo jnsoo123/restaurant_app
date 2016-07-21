@@ -32,7 +32,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="<%= filter_active_class(home_path) %> hvr-pulse"><%= link_to t('.home'), home_path, class: '' %></li>
 
-            <li class="<%= filter_active_class(cuisines_path)%> hvr-pulse"><%= link_to "All Cuisines", cuisines_path %></li>
+            <li class="<%= filter_active_class(cuisines_path)%> hvr-pulse"><%= link_to t('.allcuisines'), cuisines_path %></li>
 
             <li class="<%= filter_active_class(restaurant_search_path)%> hvr-pulse"><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
             <% if current_page?(home_path) %>
@@ -40,10 +40,10 @@
               <li class=" hvr-pulse"><a href="#reviews"><%= t('.reviews')%></a></li>
               <% if user_signed_in? %>
                 <% unless current_user.restaurants.present? %>
-                  <li class=" hvr-pulse"><a href="#make_a_resto">Make a Resto</a></li>
+                  <li class=" hvr-pulse"><a href="#make_a_resto"><%= t('.makeresto')%></a></li>
                 <% end %>
               <% else %>
-                <li class=" hvr-pulse"><a href="#make_a_resto">Make a Resto</a></li>
+                <li class=" hvr-pulse"><a href="#make_a_resto"><%= t('.makeresto')%></a></li>
               <% end %>  
             <% end %>
             <% if user_signed_in? %>
@@ -55,7 +55,7 @@
                 <ul id="dropdown-menu" class="dropdown-menu">
                   <% if user_signed_in? %>
                     <% if current_user.admin? %>
-                      <li><%= link_to "My Admin", admin_root_path %></li>
+                      <li><%= link_to t('.myadmin'), admin_root_path %></li>
                     <% end%>
                   <% end%>  
                   <li><%= link_to t('.myprofile'), user_profile_path(current_user.id) %></li>
@@ -66,7 +66,7 @@
                 </ul>
               </li>
             <% else %>
-              <li class=" hvr-pulse"><%= link_to icon('user', "Login", style: 'margin-right: 8px;'), new_user_session_path %></li>
+              <li class=" hvr-pulse"><%= link_to icon('user', t('.login'), style: 'margin-right: 8px;'), new_user_session_path %></li>
             <% end %>
 
           </ul>
@@ -114,42 +114,42 @@
           </div>
           <div class="footer_body">
             <ul class="list-unstyled">
-              <li><%= link_to "Home", home_path %></li>
+              <li><%= link_to t('.home'), home_path %></li>
               <% unless user_signed_in? %>
-              <li><%= link_to "Login", new_user_session_path %></li>
+              <li><%= link_to t('.login'), new_user_session_path %></li>
               <% end %>
-              <li><%= link_to "Restaurants", restaurant_search_path(searchQuery: "") %></li>
-              <li><%= link_to "Cuisines", cuisines_path %></li>
+              <li><%= link_to t('.restaurants'), restaurant_search_path(searchQuery: "") %></li>
+              <li><%= link_to t('.cuisines'), cuisines_path %></li>
             </ul>
           </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
-            About
+            <%= t('.about') %>
           </div>
           <div class="footer_body">
             <ul class="list-unstyled">
-              <li><%= link_to "About Us", about_page_path %></li>
-              <li><%= link_to "Contact Us", contact_page_path %></li>
+              <li><%= link_to t('.about'), about_page_path %></li>
+              <li><%= link_to t('.contact'), contact_page_path %></li>
             </ul>
           </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
-            Get Started
+            <%= t('.getstarted') %>
           </div>
           <div class="footer_body">
             <ul class="list-unstyled">
-              <li><%= link_to "Make a Resto", new_restaurant_path %></li>
+              <li><%= link_to t('.makeresto'), new_restaurant_path %></li>
               <% unless user_signed_in? %>
-              <li><%= link_to "Sign up Today", new_user_registration_path %></li>
+              <li><%= link_to t('.signuptoday'), new_user_registration_path %></li>
               <% end %>
             </ul>
           </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
-            Language
+            <%= t('.language') %>
           </div>
           <div class="footer_body">
             <div class="dropdown">

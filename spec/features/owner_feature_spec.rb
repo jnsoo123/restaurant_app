@@ -166,6 +166,7 @@ feature "User Interface" do
             expect(page).to have_css("#schedule_day", wait: 10)
          #   sleep 5
             find('#schedule_day').find(:xpath, "option[2]").select_option
+            sleep 3
             find("#schedule_opening").set("7:00 AM")
             find("#schedule_closing").set("10:00 AM")
             find_button("Submit Schedule").click
@@ -185,6 +186,7 @@ feature "User Interface" do
             click_link "Edit"
             expect(page).to have_css("#schedule_day", wait: 10)
             find('#schedule_day').find(:xpath, "option[2]").select_option
+            sleep 3
             find("#schedule_opening").set("8:00 AM")
             find("#schedule_closing").set("10:00 AM")
             find_button("Edit Schedule").click
