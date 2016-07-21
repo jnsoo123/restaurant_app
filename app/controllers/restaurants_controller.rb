@@ -29,28 +29,43 @@ class RestaurantsController < ApplicationController
       @search_result = Restaurant.find(@result)
     end
     
-    if sort_type == 'ratings'
-      @result = Restaurant.where(id: Restaurant.where(id: @search_result, status: "Accepted").sort_by{|resto| resto.ave_ratings }.reverse.map(&:id))
-#      @result = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: @search_result, status: 'Accepted')
-    elsif sort_type == 'name'
-      @result = Restaurant.order('name').where(id: @search_result, status: 'Accepted')
-    elsif sort_type == 'price_low_to_high'
-      @result = Restaurant.includes(:foods).order('foods.price').where(id: @search_result, status: 'Accepted')
-    else
-      @result = Restaurant.includes(:foods).order('foods.price desc').where(id: @search_result, status: 'Accepted')
-    end
-    if params[:location].present?
+    puts "@@@@@@@@ #{@search_result}"
     
-      @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @result.map(&:id))
-
+    if params[:location].present?
+      if sort_type == 'ratings'
+        @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @search_result.map(&:id), status: 'Accepted').joins("LEFT JOIN ratings ON ratings.restaurant_id = restaurants.id").group("restaurants.id").order("AVG(ratings.rate) DESC")
+      elsif sort_type == 'name'
+        @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @search_result.map(&:id), status: 'Accepted').order('name')
+      elsif sort_type == 'price_low_to_high'
+        @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @search_result.map(&:id), status: 'Accepted').includes(:foods).order('foods.price')
+      else
+        @result = Restaurant.where(id: Location.find(params[:location]).nearbys(3).map(&:restaurant_id) & @search_result.map(&:id), status: 'Accepted').includes(:foods).order('foods.price desc')
+      end
+    else
+      if sort_type == 'ratings'
+        @result = Restaurant.where(id: @search_result, status: 'Accepted').joins("LEFT JOIN ratings ON ratings.restaurant_id = restaurants.id").group("restaurants.id").order("AVG(ratings.rate) DESC")
+      elsif sort_type == 'name'
+        @result = Restaurant.order('name').where(id: @search_result, status: 'Accepted')
+      elsif sort_type == 'price_low_to_high'
+        @result = Restaurant.includes(:foods).order('foods.price').where(id: @search_result, status: 'Accepted')
+      else
+        @result = Restaurant.includes(:foods).order('foods.price desc').where(id: @search_result, status: 'Accepted')
+      end
     end
+    
     
     @searchQuery = params[:searchQuery] || ""
     @price_range = params[:price_range] unless params[:price_range].nil?
     @location = Location.find(params[:location]).id if params[:location].present?
     @cuisine = Cuisine.find(params[:cuisine]).id if params[:cuisine].present?
     @main_active = true if sort_type == 'ratings'
-    @result = @result.page params[:page]
+    
+    unless @result.kind_of?(Array)
+      @result = @result.page(params[:page])
+    else
+      @result = Kaminari.paginate_array(@result).page(params[:page])
+    end
+#    @result = @result.page(params[:page])
     respond_with(@result)
   end
 
