@@ -1,5 +1,5 @@
 <div class="clearfix" style="width: 100%; border-bottom: 1px solid #a1a1a1; margin-top: 15px; margin-bottom: 15px">
-  <h4 class="pull-left" style="color: #6b6b6b;">My Messages</h4>
+  <h4 class="pull-left" style="color: #6b6b6b;"><%= t('.mymessages')%></h4>
 </div>
 <% unless @notifications.blank? %>
   <div style="padding: 0 0 20px 0;">
@@ -10,8 +10,8 @@
     <table class="table table-bordered">
       <thead>
         <tr style="background-color: #404040;">
-          <th>Message</th>
-          <th>Actions</th>
+          <th><%= t('.message')%></th>
+          <th><%= t('.actions')%></th>
         </tr>
       </thead>
       <tbody>
@@ -21,7 +21,7 @@
               <p><%= noti.message.html_safe %></p>
               <small style="color: #bbb"><%= noti.created_at.strftime("%B %d, %Y")%></small>
             </td>
-            <td><%= link_to 'Delete', delete_notification_path(noti), method: :delete, class: 'btn btn-danger' %></td>
+            <td><%= link_to t('.delete'), delete_notification_path(noti), method: :delete, class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
       </tbody>
@@ -31,5 +31,5 @@
     <%= paginate @notifications, window: 2 %>
   </div>
 <% else %>
-  <h3>No messages.</h3>
+  <h3><%= t('.nomessage')%></h3>
 <% end %>

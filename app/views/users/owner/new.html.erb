@@ -31,12 +31,12 @@
         </div>
         <div class="">
           <div class="form-group">
-            <%= f.label :address %>
+            <%= f.label :address, t('.address') %>
             <%= f.text_field :address, class: 'form-control' %>
           </div>
         </div>
         <div class="" style="margin-bottom: 20px;">
-          <p>Click the map to set up your restaurant's location</p>
+          <p><%= t('.clickmap')%></p>
           <div id="map" style="height: 400px;"></div>
           <script>
 

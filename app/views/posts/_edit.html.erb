@@ -1,18 +1,18 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">Edit Post / Announcement</h4>
+  <h4 class="modal-title" id="myModalLabel"><%= t('.editpost')%></h4>
 </div>
 <div class="modal-body">
   <div id = 'post_error_area'></div>
   <%= form_for(@post, url: post_path(@post.id), method: :put, remote: true) do |f| %>
     
     <div class="form-group">
-      <%= f.label "Message" %>
+      <%= f.label t('.message') %>
       <%= f.text_area :comment, class: 'form-control', required: true %>
     </div>
     
     <div class="actions">
-      <%= f.submit "Edit Post / Announcement", class: 'btn btn-primary', style: 'width: 100%;' %>
+      <%= f.submit t('.editpost'), class: 'btn btn-primary', style: 'width: 100%;' %>
     </div>
   
   <% end %>

@@ -14,7 +14,7 @@ class NotificationsController < ApplicationController
   
   def destroy
     @notification.destroy
-    flash[:success] = "Message deleted."
+    flash[:success] = t('.success')
     respond_with(@notification)
   end
   

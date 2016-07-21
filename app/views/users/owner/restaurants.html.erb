@@ -44,15 +44,15 @@
               <div class="row" style="padding: 5px 20px 5px 20px;">
                 <div class="col-md-4 col-sm-4 col-xs-4">
                   <p style="font-size: 25px; margin: 0px;"><b><%= resto.ratings.count %></b></p>
-                  <p style="margin: 0px; color: #717171;">Ratings</p>
+                  <p style="margin: 0px; color: #717171;"><%= t('.ratings')%></p>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-4">
                   <p style="font-size: 25px; margin: 0px;"><b><%= resto.pictures.where(status: true).count %></b></p>
-                  <p style="margin: 0px; color: #717171;">Photos</p>
+                  <p style="margin: 0px; color: #717171;"><%= t('.photos')%></p>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-4">
                   <p style="font-size: 25px; margin: 0px;"><b><%= resto.pictures.where(status: false).count %></b></p>
-                  <p style="margin: 0px; color: #717171;">New</p>
+                  <p style="margin: 0px; color: #717171;"><%= t('.new')%></p>
                 </div>
               </div>
             </div>
@@ -65,8 +65,8 @@
           <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px; height: 434px;">
             <div style = 'background-image: url(<%= asset_path("plus.png") %>); background-repeat: no-repeat; background-size: contain; background-position: center; min-height: 200px;'></div>
             <div class="caption">
-              <p><span class="label label-success">New</span></p>
-              <h3>Add a Restaurant</h3>
+              <p><span class="label label-success"><%= t('.new')%></span></p>
+              <h3><%= t('.addrestaurant')%></h3>
             </div>
           </div>
         <% end %>

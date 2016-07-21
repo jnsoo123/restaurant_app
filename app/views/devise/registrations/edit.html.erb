@@ -1,61 +1,61 @@
 
 <div class="container" style="max-width: 500px; padding: 20px; background-color: #fff; margin-top: 20px; margin-bottom: 20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)">
-  <h2>Edit User Information</h2>
+  <h2><%= t('.edituserinfo') %> </h2>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="form-group">
-      <%= f.label :email %><br />
+      <%= f.label :email, t('.email') %><br />
       <%= f.email_field :email, autofocus: true, class: 'form-control' %>
     </div>
 
     <div class="form-group">
-      <%= f.label :username %><br />
+      <%= f.label :username, t('.username') %><br />
       <%= f.text_field :username, class: 'form-control'  %>
     </div>
 
     <div class="form-group">
-      <%= f.label :name %><br />
+      <%= f.label :name, t('.name') %><br />
       <%= f.text_field :name, class: 'form-control'  %>
     </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <div><%= t('.pendingconfirm', resource.unconfirmed_email) %></div>
     <% end %>
 
     <div class="form-group">
-      <%= f.label "Profile Picture" %><br />
+      <%= f.label t('.profilepicture') %><br />
       <%= f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg' %>
     </div>
 
     <div class="form-group">
-      <%= f.label :location %><br />
+      <%= f.label :location, t('.location') %><br />
       <%= f.text_field :location, class: 'form-control'  %>
     </div>
     <% if resource.provider.blank? %>
       <div class="form-group">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.label :password, t('.password') %> <i><%= t('.passwordinfo')%></i><br />
         <%= f.password_field :password, autocomplete: "off", class: 'form-control'  %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label :password_confirmation, t('.passwordconfirmation') %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'  %>
       </div>
 
       <div class="form-group">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+        <%= f.label :current_password, t('.currentpassword') %> <i><%= t('.currentpasswordinfo')%></i><br />
         <%= f.password_field :current_password, autocomplete: "off", class: 'form-control'  %>
       </div>
     <% end %>
 
     <div class="actions">
-      <%= f.submit "Update", class: 'btn btn-primary', style: 'width: 100%;' %>
+      <%= f.submit t('.submitupdate'), class: 'btn btn-primary', style: 'width: 100%;' %>
     </div>
   <% end %>
 
-  <h3>Cancel my account</h3>
+  <h3><%= t('.cancel')%></h3>
 
-  <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
+  <p><%= t('.unhappy')%> <%= button_to t('.cancel'), registration_path(resource_name), data: { confirm: t('.confirm') }, method: :delete, class: 'btn btn-danger' %></p>
 
 </div>

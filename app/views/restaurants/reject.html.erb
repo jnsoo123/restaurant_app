@@ -1,7 +1,7 @@
 
 <%= t('.rejecttitle', resto: @restaurant.name )%>
 
-<%= form_tag(restaurant_path(@restaurant.id, restaurant: { status: 'Rejected' }), method: :put) do |f| %>
+<%= form_tag(restaurant_path(@restaurant.id, restaurant: { status: t('.rejectstatus') }), method: :put) do |f| %>
    <div class="form-group">
 	  <%= label_tag :message, t('.message') %><br/>
       <%= text_area_tag :message, nil, rows: 10, cols: 20, required: true %>

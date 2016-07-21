@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   
   def authorize_owner
     if current_user.restaurants.blank?
-      flash[:failure] = "You don't have any restaurants."
+      flash[:failure] = t('.noresto')
       redirect_to home_path
     end
   end

@@ -13,7 +13,7 @@
             <div class="form-group" style="margin-top: 15px;">
               <%= f.text_field :contact, class: 'form-control', placeholder: t('.contact'), required: true %>
             </div>
-            <p>Click the map to set up your restaurant's location</p>
+            <p><%= t('.clickmap')%></p>
             <div id="map" style="height: 400px; margin: 0px;"></div>
             <script>
               
@@ -73,7 +73,7 @@
       </div>
     </div>
   <% else %>
-    You need to sign in first! <%= link_to 'Click Here', new_user_session_path %>
+    <%= t('.signinfirst')%> <%= link_to t('.clickhere'), new_user_session_path %>
   <% end %>
 </div>
 

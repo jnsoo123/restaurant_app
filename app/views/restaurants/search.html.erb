@@ -6,7 +6,7 @@
       <div>
         <% if @result.present? && @result.map(&:location).compact.count > 1 %>
           <button type="button" class="btn btn-primary outline" data-toggle="modal" data-target="#mapModal" style="width: 100%; margin-bottom: 10px;">
-            View results on map <%= icon('map-marker') %>
+            <%= t('.viewresult')%> <%= icon('map-marker') %>
           </button>
         <% end %>
       </div>
@@ -15,7 +15,7 @@
           <h3 class="panel-title">Filters</h3>
         </div>
         <div class="panel-body">
-          <p>Sort by</p>
+          <p><%= t('.sortby')%></p>
           <ul class="list-unstyled filters">
             <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, cuisine: @cuisine, price_range: (@price_range.nil? ? nil : @price_range ), location: @location), @main_active)%>"><%= link_to "Ratings - <small>High to low</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, cuisine: @cuisine, price_range: (@price_range.nil? ? nil : @price_range ), location: @location) %></li>
             <li class="<%= filter_active_class(restaurant_search_path(searchQuery: @searchQuery, cuisine: @cuisine, sort: 'name', price_range: (@price_range.nil? ? nil : @price_range ), location: @location)) %>"><%= link_to "Name - <small>Alphabetical Order</small>".html_safe, restaurant_search_path(searchQuery: @searchQuery, cuisine: @cuisine, sort: 'name', price_range: (@price_range.nil? ? nil : @price_range ), location: @location) %></li>
@@ -77,7 +77,7 @@
           <% end %>
         </div>
       <% else %>
-        <h3 class="text-center">No Results Found!</h3>
+        <h3 class="text-center"><%= t('.noresults')%></h3>
         <%= link_to "See all restaurants", restaurant_search_path(searchQuery: ""), class: 'btn btn-primary center-block', style: 'width: 200px;' %>
         <h4 class="text-center"></h4>
       <% end %>
