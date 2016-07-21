@@ -61,7 +61,7 @@
       <div style="padding: 10px; margin-top: -5px;">
         <h4><%= t('.topresto')%></h4>
           <div class="list-group nearbys" style="">
-            <% Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(5).each do |resto| %>
+            <% Restaurant.joins(:ratings).group("restaurants.id").order("AVG(ratings.rate) DESC").limit(5).each do |resto| %>
               
             <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
                 <div class="row" style="">

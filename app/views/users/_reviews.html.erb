@@ -1,7 +1,7 @@
           <% @user.ratings.order("created_at desc").each do |rate| %>
             <div class="media">
               <div class="media-left">
-                <%= image_tag(display_resto(rate.restaurant), width: 44, height: 44, class: 'img-circle') %>
+                <div class="img-circle" style="width: 44px; height: 44px; background: url('<%= asset_path(display_resto(rate.restaurant))%>'); background-size: cover; background-position: center; "></div>
               </div>
               <div class="media-body">
                 <h4 class="media-heading"><%= link_to rate.restaurant.name, rate.restaurant %> 
