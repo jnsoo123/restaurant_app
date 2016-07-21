@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :authorize, only: [:edit, :update]
   before_action :authorize_owner, only: [:restaurants]
-  skip_before_action :authorize, only: :show
+  skip_before_action :authenticate_user!, only: :show
   
   def show
 #    puts "@@@@@@@@#{@user}"
