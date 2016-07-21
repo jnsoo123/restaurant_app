@@ -52,6 +52,7 @@ gem 'owlcarousel-rails'
 gem 'bootstrap-slider-rails'
 gem 'hover-rails'
 gem 'nprogress-rails'
+gem 'animate-rails'
 #gem 'wow-rails'
 
 gem 'carrierwave'
