@@ -1,6 +1,6 @@
 $(document).on("ready page:change", function() {
   
-  
+//  alert(1);
   var slideShowDivs = $('.bg')
   var currentID = 0;
   var slideShowTimeout = 15000;
@@ -23,6 +23,7 @@ $(document).on("ready page:change", function() {
   });
   
   var jumboHeight = $('.jumbotron').outerHeight();
+  
   function parallax(){
       var scrolled = $(window).scrollTop();
       $('.bg').css('height', (jumboHeight-scrolled) + 'px');

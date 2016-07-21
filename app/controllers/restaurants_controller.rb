@@ -103,10 +103,10 @@ class RestaurantsController < ApplicationController
           @restaurant.update(address: @restaurant.location.address)
         end
       end
-      flash[:success] = "<strong>#{name}</strong> has been successfully created!"
+      flash[:success] = "Your restaurant has been successfully created!"
       respond_with(@restaurant, location: users_restaurant_path)
     else
-      flash[:failure] = "<dl><dt>#{name} was not successfully created because:</dt>" 
+      flash[:failure] = "<dl><dt>Your restaurant was not successfully created because:</dt>" 
       @restaurant.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
       respond_with(@restaurant, location: owner_resto_new_path)
