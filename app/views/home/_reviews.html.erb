@@ -1,5 +1,5 @@
 <div id="reviews" class="container">
-  <h3><%= t('.recentreviews')%><br><small>View recent reviews by our users</small></h3>
+  <h3><%= t('.recentreviews')%><br><small><%= t('.reviewsuser')%></small></h3>
   <% unless @ratings.empty? %>
     <div class="row">
       <% @ratings.each do |rate| %>
@@ -9,7 +9,7 @@
               <div class="panel-body">
                 <div class="media" style="padding: 10px;">
                   <div class="media-left" style="padding: 0 25px 10px 10px;">
-                    <%= image_tag(display_resto(rate.restaurant), width: 64, height: 64, class: 'img-circle') %>
+                    <div class="img-circle" style="width: 44px; height: 44px; background: url('<%= asset_path(display_resto(rate.restaurant))%>'); background-size: cover; background-position: center; "></div>
                   </div>
                   <div class="media-body" style="">
                     <h4 class="media-heading">
@@ -34,7 +34,7 @@
   <% else %>
     <ul class="list-group">
       <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
-        <h3 class="text-center" style="padding-top: 50px">No Reviews yet.</h3>
+        <h3 class="text-center" style="padding-top: 50px"><%= t('.noreviews')%></h3>
       </li>
     </ul>
   <% end %>

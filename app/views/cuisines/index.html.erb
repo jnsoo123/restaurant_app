@@ -1,6 +1,6 @@
 <%= render 'restaurants/searchbar' %>
 <div id="cuisines" class="container" style="max-width: 850px;">
-  <h3 class="text-center">Explore all the cuisines<br><small>Discover delicious delicacy from the cuisines registered here</small></h3>
+  <h3 class="text-center"><%= t('.explore')%><br><small><%= t('.discover')%></small></h3>
     <% unless Cuisine.all.empty? %>
       <div class="row thumbnail_panel">
         <% @cuisines.each do |cuisine| %>

@@ -17,15 +17,13 @@ class FoodsController < ApplicationController
     food_attributes = @food.attributes
     if @food.update(food_params) 
       unless Food.check_food?(@food.restaurant, food_params)
-        @err = "Existing Food under the same cuisine"
+        @err = t('.existingfood')
         @food.update(food_attributes)
       end
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
-    else
-      puts "DID I ENTER HERE: #{@food.inspect}"
-      
-      @err = "<dl><dt>Your dish was not successfully updated because:</dt>" 
+    else     
+      @err = "<dl><dt>#{t('.failurestart')}</dt>" 
       @food.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
       @err << "</dl>"
       respond_with(@foods)
@@ -37,13 +35,13 @@ class FoodsController < ApplicationController
     @food.restaurant = current_user.restaurants.find(params[:resto_id])
     if @food.save
       unless Food.check_food?(@food.restaurant, food_params)
-        @err = "Existing Food under the same cuisine"
+        @err = t('.existingfood')
         @food.destroy
       end
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
-      @err = "<dl><dt>Your dish was not successfully added because:</dt>" 
+      @err = "<dl><dt>#{t('.failurestart')}</dt>" 
       @food.errors.full_messages.map { |msg| @err << "<dd>#{msg}</dd>" }
       @err << "</dl>"
       respond_with(@food)
@@ -55,7 +53,7 @@ class FoodsController < ApplicationController
       @foods = @food.restaurant.foods.page params[:page]
       respond_with(@foods)
     else
-      flash[:failure] = "<dl><dt>Your dish was not successfully added because:</dt>" 
+      flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @food.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
       redirect_to owner_resto_edit_path(@food.restaurant)

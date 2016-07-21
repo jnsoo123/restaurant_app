@@ -19,12 +19,12 @@
               <td><%= food.description %></td>
               <td><%= food.cuisine.name %></td>
               <td><%= number_to_currency(food.price, unit: "P") %></td>
-              <td style="width: 150px;"><%= link_to t('.edit'), edit_food_path(food.id), class: 'btn btn-primary outline', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), food_path(food.id), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
+              <td style="width: 150px;"><%= link_to t('.edit'), edit_food_path(food.id), class: 'btn btn-primary outline', remote: true,  data: { toggle: 'modal', target: '#myModal'} %> <%= link_to t('.delete'), food_path(food.id), class: 'btn btn-danger', method: :delete, data: { confirm: t('.confirm') }, remote: true %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 <% else %>
-  No foods found. Enter dishes to your restaurant so that it can be searched through advance search
+  <%= t('.empty') %>
   <% end %>

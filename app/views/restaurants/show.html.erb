@@ -16,7 +16,7 @@
         <h5 style="padding: 100px 0 100px 80px">Map Not Available</h5>
       <% end %>
       <div style="padding: 10px; margin-top: -5px;">
-        <h4>Restaurants near here</h4>
+        <h4><%= t('.restonear')%></h4>
         <% if @restaurant.location.present? %>
           <% if @restaurant.location.nearbys(3).where.not(restaurant_id: nil).present? %>
             <div class="list-group nearbys" style="">
@@ -51,15 +51,15 @@
               <% end %>
             </div>
           <% else %>
-            No restaurants found.
+            <%= t('.noresto')%>
           <% end %>
         <% else %>
-          No restaurants found.
+          <%= t('.noresto')%>
         <% end %>
         
       </div>
       <div style="padding: 10px; margin-top: -5px;">
-        <h4>Top Rated Restaurants</h4>
+        <h4><%= t('.topresto')%></h4>
           <div class="list-group nearbys" style="">
             <% Restaurant.includes(:ratings).order('ratings.rate desc').where(status: 'Accepted').limit(5).each do |resto| %>
               
@@ -103,7 +103,7 @@
         <% if @restaurant.website.present? %>
           <p style="margin-bottom: 0;"><%= icon('globe', link_to(@restaurant.website, "http://#{@restaurant.website}"), style: 'margin-right: 10px; color: dodgerblue;')%></p>
         <% else %>
-          <p style="margin-bottom: 0;"><%= icon('globe', "Website not available", style: 'margin-right: 10px; color: dodgerblue;')%></p>
+          <p style="margin-bottom: 0;"><%= icon('globe', t('.webunavailable'), style: 'margin-right: 10px; color: dodgerblue;')%></p>
         <% end %>
       </div>
       <% if @restaurant.sched.present? %>
@@ -115,31 +115,31 @@
               <% case day %>
               <% when 0 %>
                 <div class="pull-left">
-                  <p>Sunday</p>
+                  <p><%= t('.sunday')%></p>
                 </div>
               <% when 1 %>
                 <div class="pull-left">
-                  <p>Monday</p>
+                  <p><%= t('.monday')%></p>
                 </div>
               <% when 2 %>
                 <div class="pull-left">
-                  <p>Tuesday</p>
+                  <p><%= t('.tuesday')%></p>
                 </div>
               <% when 3 %>
                 <div class="pull-left">
-                  <p>Wednesday</p>
+                  <p><%= t('.wednesday')%></p>
                 </div>
               <% when 4 %>
                 <div class="pull-left">
-                  <p>Thursday</p>
+                  <p><%= t('.thursday')%></p>
                 </div>
               <% when 5 %>
                 <div class="pull-left">
-                  <p>Friday</p>
+                  <p><%= t('.friday')%></p>
                 </div>
               <% when 6 %>
                 <div class="pull-left">
-                  <p>Saturday</p>
+                  <p><%= t('.saturday')%></p>
                 </div>
               <% end %>
               <div class="pull-right">
@@ -155,7 +155,7 @@
       <div style=" ">
         <% if @restaurant.foods.present? %>
           <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-            <h4 style=" color: #676767; padding-bottom: 30px; margin: 0;"><%= icon('cutlery', " Menu", style: 'margin-right: 10px; font-weight: 700;') %></h4>
+            <h4 style=" color: #676767; padding-bottom: 30px; margin: 0;"><%= icon('cutlery', t('.menu'), style: 'margin-right: 10px; font-weight: 700;') %></h4>
             <div class="row">
               <% unless @restaurant.foods.blank? %>
                 <% @restaurant.foods.each do |food| %>
@@ -175,7 +175,7 @@
                   </div> 
                 <% end %>
               <% else %>
-                <h4 style="margin-left: 13px;">No menu available.</h4>
+                <h4 style="margin-left: 13px;"><%= t('.nomenu')%></h4>
               <% end %>
             </div>
           </div>
@@ -183,9 +183,9 @@
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
           <div class="clearfix" style="">
-            <h4 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,"Photo"), style: 'margin-right: 8px;')%></h4>
+            <h4 class="pull-left" style=" color: #676767; padding-bottom: 10px; margin-top: 0px;"><%= icon('picture-o', pluralize(@restaurant.pictures.where(status: true).count,t('.photo')), style: 'margin-right: 8px;')%></h4>
             <div class="fileUpload btn btn-danger pull-right">
-              <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{'Add Photos' if user_signed_in? }")%></span>
+              <span><%= icon('plus', "#{'Sign in to upload' unless user_signed_in? }#{t('.addphoto') if user_signed_in? }")%></span>
               <%= form_for(@picture) do |f| %> 
                 <% if user_signed_in? %>
                   <%= f.file_field :pic, class: 'upload', style: 'height: 150px', accept: 'image/png,image/gif,image/jpeg'  %>
@@ -206,7 +206,7 @@
         <% if @restaurant.posts.present? %>
         
           <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-            <h4><%= icon('rss', ' News / Announcements', style: 'margin-right: 8px;') %></h4>
+            <h4><%= icon('rss', t('.newsannouncements'), style: 'margin-right: 8px;') %></h4>
             <div id="announcement_area">
               <%= render 'posts/announcement' %>
             </div>
@@ -217,7 +217,7 @@
 
         
         <div style="padding: 25px; border-left: 2px solid whitesmoke; border-bottom: 2px solid whitesmoke;">
-          <h4 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, 'Review')}", style: 'margin-right: 8px;')%></h4>
+          <h4 style=" color: #676767; padding-bottom: 10px;"><%= icon('star', "#{pluralize(@restaurant.ratings.count, t('.review'))}", style: 'margin-right: 8px;')%></h4>
           
           <div id="reviews_area">
             <%= render 'ratings/rating'%>
@@ -228,19 +228,19 @@
           <% if user_signed_in? %>
             <% unless @restaurant.ratings.find_by(user_id: current_user.id) || @restaurant.user === current_user %>
               <div style="margin-bottom: 20px;">
-                <button class="btn btn-danger btn-hide-click" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;">Write a Review</button>
+                <button class="btn btn-danger btn-hide-click" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;"><%= t('.writereview')%></button>
               </div>
             <% end %>
           <% else %>
             <div style="margin-bottom: 20px;">
-              <button class="btn btn-danger" disabled="disabled" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;">Sign in to write a review</button>
+              <button class="btn btn-danger" disabled="disabled" data-toggle="collapse" data-target="#review_part" style="height: 50px; padding: 14px;"><%= t('.signintoreview')%></button>
             </div>
           <% end %>
 
 
           <div id="review_part" class="collapse" style="margin-bottom: 20px;">
 
-            <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('pencil', 'Rate This Restaurant', style: 'margin-right: 8px;')%></h3>
+            <h3 style=" color: #676767; padding-bottom: 10px;"><%= icon('pencil', t('.rateresto'), style: 'margin-right: 8px;')%></h3>
             <%= form_for(@rating) do |f| %>
               <div class="">
                 <fieldset class="rating">
@@ -262,7 +262,7 @@
               </div>
               <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
               <div class="actions">
-                <%= f.submit "Add Review", class: 'btn btn-danger' %>
+                <%= f.submit t('.addreview'), class: 'btn btn-danger' %>
               </div>
             <% end %>
 

@@ -2,18 +2,18 @@
 
 <div id="loginform" class="container" style="margin-bottom: 35px;">
   <div class="form-header" style="background-color: #CF2228; color: #fff;">
-    <div class="text-center">Forgot Password</div>
+    <div class="text-center"><%= t('.forgotpassword')%></div>
   </div>
   <div class="form-body">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
 
       <div class="form-group">
-        <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Enter your Email' %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('.enteremail') %>
       </div>
 
       <div class="actions">
-        <%= f.submit "Send me reset password instructions", class: 'btn btn-primary', style: 'width: 100%; margin-bottom: 10px;' %>
+        <%= f.submit t('.send'), class: 'btn btn-primary', style: 'width: 100%; margin-bottom: 10px;' %>
         <div class="row">
           <div class="col-md-6">
             <%= link_to t('.login'), new_user_session_path, class: 'btn btn-primary', style: 'width: 100%;'%>
@@ -23,7 +23,7 @@
           </div>
         </div>
         <p class="text-center">or</p>
-        <%= link_to "#{icon('facebook-official', " Login with Facebook", style: 'margin-right: 10px;')}".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-facebook', style: 'width: 100%; height: 46px; padding-top: 12px;' %>
+        <%= link_to "#{icon('facebook-official', t('.loginfacebook'), style: 'margin-right: 10px;')}".html_safe, user_facebook_omniauth_authorize_path, class: 'btn btn-facebook', style: 'width: 100%; height: 46px; padding-top: 12px;' %>
       </div>
     <% end %>
   </div>

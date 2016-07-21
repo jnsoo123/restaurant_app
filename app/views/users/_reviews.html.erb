@@ -1,7 +1,7 @@
           <% @user.ratings.order("created_at desc").each do |rate| %>
             <div class="media">
               <div class="media-left">
-                <%= image_tag(display_resto(rate.restaurant), width: 44, height: 44, class: 'img-circle') %>
+                <div class="img-circle" style="width: 44px; height: 44px; background: url('<%= asset_path(display_resto(rate.restaurant))%>'); background-size: cover; background-position: center; "></div>
               </div>
               <div class="media-body">
                 <h4 class="media-heading"><%= link_to rate.restaurant.name, rate.restaurant %> 
@@ -13,20 +13,21 @@
                   </small>
                 </h4>
                 <p style="color: #bbb"><%= rate.restaurant.address %></p>
-                <p>Rated <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>
+
+                <p><%= t('.rated')%> <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>
                   <% if user_signed_in? %>
                   <p>
                     <% if rate.user_liked?(current_user) %>
-                      <%= link_to "Unlike #{icon('heart-o', pluralize(rate.likes.count, 'Like'))}".html_safe, delete_like_path(user: current_user.id, rating: rate.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
+                      <%= link_to "#{t('.unlike')} #{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, delete_like_path(user: current_user.id, rating: rate.id, user_page: @user.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
                     <% else %>
-                      <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, 'Like'))}".html_safe, likes_path(rate_id: rate.id), class: 'btn btn-like-comment', method: :post, remote: true %> 
+                      <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, likes_path(rate_id: rate.id, user_page: @user.id), class: 'btn btn-like-comment', method: :post, remote: true %> 
                     <% end %>
-                    <%= link_to "#{icon('comments-o', pluralize(rate.replies.count, 'Reply'))}".html_safe, new_reply_path(rate: rate.id), class: 'btn btn-like-comment', remote: true %>
+                    <%= link_to "#{icon('comments-o', pluralize(rate.replies.count, t('.reply')))}".html_safe, new_reply_path(rate: rate.id, user: @user.id), class: 'btn btn-like-comment', remote: true %>
                   </p>
                 <% else %>
                   <p>
-                    <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, 'Like'))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', method: :post, remote: true, disabled: true, data: { toggle: 'tooltip', placement: 'top', title: 'Sign in to like'} %> 
-                    <%= link_to "#{icon('comments-o', pluralize(rate.replies.count, 'Reply'))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', remote: true, disabled: true, data: { toggle: 'tooltip', placement: 'top', title: 'Sign in to reply'} %>
+                    <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', method: :post, remote: true, disabled: true, data: { toggle: 'tooltip', placement: 'top', title: t('.signintolike')} %> 
+                    <%= link_to "#{icon('comments-o', pluralize(rate.replies.count, t('.reply')))}".html_safe, new_user_session_path, class: 'btn btn-like-comment', remote: true, disabled: true, data: { toggle: 'tooltip', placement: 'top', title: t('.signintoreply')} %>
                   </p>
                 <% end %>
               </div>
@@ -34,9 +35,9 @@
             <div class="media" style="padding: 0px 50px; margin: 0px;">
               <% if rate.replies.count > 3 %>
                 <% if @all == "true" %>
-                <%= link_to "View Less #{icon('caret-up')}".html_safe, show_more_rating_path(@user, more: false, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+                <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_rating_path(@user, more: false, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
                 <% else %>
-                  <%= link_to "View All (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@user, more: true, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+                  <%= link_to "#{t('.viewall')} (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@user, more: true, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
                 <% end %>
               <% end %>
             </div>
