@@ -30,7 +30,8 @@ class RestaurantsController < ApplicationController
     end
     
     if sort_type == 'ratings'
-      @result = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: @search_result, status: 'Accepted')
+      @result = Restaurant.where(id: Restaurant.where(id: @search_result, status: "Accepted").sort_by{|resto| resto.ave_ratings }.reverse.map(&:id))
+#      @result = Restaurant.includes(:ratings).order('ratings.rate desc').where(id: @search_result, status: 'Accepted')
     elsif sort_type == 'name'
       @result = Restaurant.order('name').where(id: @search_result, status: 'Accepted')
     elsif sort_type == 'price_low_to_high'
