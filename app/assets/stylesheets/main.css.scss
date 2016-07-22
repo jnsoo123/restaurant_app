@@ -175,7 +175,9 @@ a {
 .floating_alert {
     position: absolute;
     top: 60px;
-    right: 20px;
+    left:50%;
+    -webkit-transform:translate(-50%, 0);
+  /* centeres automatically */
     z-index: 5000;
 }
 
