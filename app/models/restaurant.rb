@@ -28,6 +28,10 @@ class Restaurant < ActiveRecord::Base
     cover.nil? || cover.present?
   end
   
+  def cuisine_list
+    Cuisine.where(id: self.foods.map(&:cuisine_id).uniq)
+  end
+  
   def ave_ratings
     unless ratings.empty?
       ratings.collect(&:rate).sum.to_f/ratings.size 

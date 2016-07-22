@@ -97,7 +97,21 @@
       <div class="module" style="max-width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
-        <p style="font-size: 30px;"><%= @restaurant.name %> <%= social_share_button_tag("#{@restaurant.name}", url: "www.example.com/#{restaurant_path(@restaurant)}") %></p>
+        <p style="font-size: 30px; margin-bottom: 0px;">
+          <%= @restaurant.name %>
+        </p>
+        <span style="font-size: 12px;">
+          <% list = [] %>
+          <% @restaurant.cuisine_list.each do |cuisine| %>
+            <% list << "#{link_to cuisine.name, restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name), style: 'color: #888;'}" %>
+          <% end %>
+          <%= list.join(", ").html_safe %>
+        </span>
+        <p>
+          <%= social_share_button_tag("#{@restaurant.name}", url: "www.example.com/#{restaurant_path(@restaurant)}") %>
+        </p>
+          
+
         <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px; color: green;') %></p>
         <p><%= icon('phone', @restaurant.contact, style: 'margin-right: 10px; color: red;') %></p>
         <% if @restaurant.website.present? %>
