@@ -16,6 +16,22 @@
                     <h4 class="media-heading">
                       <%= post.restaurant.name %>
                     </h4>
+                    <p style="font-size: 12px; color: #676767;">
+                      <% (post.restaurant.ave_ratings.to_i).times do %>
+                          <%= icon('star') %>
+                      <% end %>
+                      <% unless post.restaurant.ave_ratings % 1 == 0 %>
+                        <%= icon('star-half-o')%>
+                        <% (4 - post.restaurant.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% else %>
+                        <% (5 - post.restaurant.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% end %>
+                      &nbsp;&nbsp;(<%= pluralize(post.restaurant.ratings.count, 'review') %>)
+                    </p>
                     <p style="height: 50px; color: #676767;"><%= post.comment %></p>
                     <p style="color: #676767; margin-bottom: 0;"><%= post.likes.count %> <%= icon('heart') %> &nbsp;&nbsp;&nbsp; <%= post.replies.count %> <%= icon('comments-o') %><br><%= distance_of_time_in_words_to_now(post.created_at)%> ago</p>
                   </div>
