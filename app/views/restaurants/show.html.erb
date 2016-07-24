@@ -97,16 +97,29 @@
       <div class="module" style="max-width: 750px; height: 250px; background-image: url('<%= asset_path(display_cover(@restaurant)) %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       </div>
       <div style="padding: 25px; border-bottom: 2px solid whitesmoke; border-left: 2px solid whitesmoke">
-        <p style="font-size: 30px; margin-bottom: 0px;">
-          <%= @restaurant.name %>
-        </p>
-        <span style="font-size: 12px;">
-          <% list = [] %>
-          <% @restaurant.cuisine_list.each do |cuisine| %>
-            <% list << "#{link_to cuisine.name, restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name), style: 'color: #888;'}" %>
-          <% end %>
-          <%= list.join(", ").html_safe %>
-        </span>
+        <div class="clearfix" style="font-size: 30px; margin-bottom: 0px;">
+          <div class="pull-left">
+            <%= @restaurant.name %>
+          </div>
+          <div class="pull-right">
+            <span class="label label-danger" style="padding: 5px 10px;"> <%= (@restaurant.ave_ratings.round(1) % 1 == 0 ? @restaurant.ave_ratings.to_i :  @restaurant.ave_ratings.round(1) ) %> / 5</span>
+          </div>
+        </div>
+        <div class="clearfix" style="margin-top: 5px;">
+          <div class="pull-left">
+            <span style="font-size: 12px;">
+              <% list = [] %>
+              <% @restaurant.cuisine_list.each do |cuisine| %>
+                <% list << "#{link_to cuisine.name, restaurant_search_path(search: cuisine.name, searchQuery: cuisine.name), style: 'color: #888;'}" %>
+              <% end %>
+              <%= list.join(", ").html_safe %>
+            </span>
+          </div>
+          <div class="pull-right">
+            <%= pluralize(@restaurant.ratings.count, "Review") %>
+          </div>
+        </div>
+        
         <p>
           <%= social_share_button_tag("#{@restaurant.name}", url: "www.example.com/#{restaurant_path(@restaurant)}") %>
         </p>
