@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   get 'home/index'
   get '/cuisines' => 'cuisines#index', as: :cuisines
   devise_for :users, :controllers => { :registrations => :registrations, :omniauth_callbacks => :omniauth_callbacks }
-  
+  devise_scope :user do
+    delete '/admin/logout', :to => 'active_admin/devise/sessions#destroy', as: :admin_logout
+  end
   resources :restaurants, except: :index
   resources :foods
   resources :pictures
