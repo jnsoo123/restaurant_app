@@ -77,6 +77,7 @@ class RestaurantsController < ApplicationController
     else
       @picture = Picture.new
       @rating = Rating.new
+      @ratings = @restaurant.ratings.page params[:page]
     end
   end
 
