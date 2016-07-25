@@ -1,5 +1,5 @@
 <% unless @restaurant.ratings.empty? %>
-  <% @restaurant.ratings.order(created_at: :desc).each do |rate| %>
+  <% (@more_reviews == 'true' ? @restaurant.ratings.order(created_at: :desc) : @restaurant.ratings.order(created_at: :desc).limit(5)).each do |rate| %>
     <div class="media">
       <div class="media-left">
         <div class="img-circle" style="width: 44px; height: 44px; background: url('<%= asset_path(display_user(rate.user))%>'); background-size: cover; background-position: center; "></div>
@@ -20,11 +20,11 @@
         <% if user_signed_in? %>
           <p>
             <% if rate.user_liked?(current_user) %>
-              <%= link_to "#{t('.unlike')} #{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, delete_like_path(user: current_user.id, rating: rate.id), class: 'btn btn-like-comment', method: :delete, remote: true %> 
+              <%= link_to "#{t('.unlike')} #{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, delete_like_path(user: current_user.id, rating: rate.id, review: @more_reviews), class: 'btn btn-like-comment', method: :delete, remote: true %> 
             <% else %>
-              <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, likes_path(rate_id: rate.id), class: 'btn btn-like-comment', method: :post, remote: true %> 
+              <%= link_to "#{icon('heart-o', pluralize(rate.likes.count, t('.like')))}".html_safe, likes_path(rate_id: rate.id, review: @more_reviews), class: 'btn btn-like-comment', method: :post, remote: true %> 
             <% end %>
-            <%= link_to "#{icon('comments-o', pluralize(rate.replies.count, t('.reply')))}".html_safe, new_reply_path(rate: rate.id), class: 'btn btn-like-comment', remote: true %>
+            <%= link_to "#{icon('comments-o', pluralize(rate.replies.count, t('.reply')))}".html_safe, new_reply_path(rate: rate.id, review: @more_reviews), class: 'btn btn-like-comment', remote: true %>
           </p>
         <% else %>
           <p>
@@ -66,6 +66,13 @@
     <div id="rating_reply_<%= rate.id %>" style="padding: 5px 20px;">
           
     </div>
+  <% end %>
+  <% if @restaurant.ratings.count > 5 %>
+    <% if @more_reviews == "true" %>
+<%= link_to "View less", show_more_reviews_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
+    <% else %>
+<%= link_to "View more reviews(#{@restaurant.ratings.count - 5})", show_more_reviews_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
+    <% end %>
   <% end %>
 <% else %>
   <div style="height: 75px;">

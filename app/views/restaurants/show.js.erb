@@ -1,0 +1,2 @@
+$('#reviews_area').html("<%= escape_javascript render 'ratings/rating' %>");
+$('#paginator').html('<%= escape_javascript(paginate(@ratings, :remote => true).to_s) %>');

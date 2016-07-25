@@ -18,6 +18,7 @@ var media =
                 <% if @user.present? %>
                   <%= f.hidden_field :user, value: "#{@user.id}" %>
                 <% end %>
+                <%= hidden_field_tag :review, "#{@more_reviews}" %>
               </div>
             <% end %>
           <% end %>

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   delete 'owner/notifications/:id' => 'notifications#destroy', as: :delete_notification
   get 'restaurants/reject/:id' => 'restaurants#reject', as: :restaurant_reject
   post 'restaurants/ratings/more/:id' => 'ratings#show_more', as: :show_more_rating
+  post 'restaurants/ratings/:id' => 'ratings#more_reviews', as: :show_more_reviews
   post 'restaurants/post/more/:id' => 'posts#show_more', as: :show_more_post
   post 'restaurants/pictures/more/:id' => 'pictures#show_more', as: :show_more_picture
   

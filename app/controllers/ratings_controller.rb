@@ -1,18 +1,13 @@
 class RatingsController < ApplicationController
   
   respond_to :html
-  respond_to :js, only: [:edit, :show_more]
+  respond_to :js, only: [:edit, :show_more, :more_reviews]
   before_action :set_rating, only: [:edit, :update]
   before_action :authorize, only: [:index]
   skip_before_action :authenticate_user!, only: :show_more
   
   def index
-    @order = ["DESC","ASC","ASC"] if @order.nil?
-    if(params[:search_category].nil?)
-      @ratings = Rating.order('rate DESC')
-    else      
-      @ratings, @order = Rating.sort(params[:search_category], params[:search_order]) 
-    end
+    
   end
   
   def show_more
@@ -20,6 +15,12 @@ class RatingsController < ApplicationController
     puts "############ #{@all.class}"
     @restaurant = Restaurant.find(params[:id]) unless params[:user].present?
     @user = User.find(params[:id]) if params[:user].present?
+    respond_with(@all)
+  end
+  
+  def more_reviews
+    @more_reviews = params[:more]
+    @restaurant = Restaurant.find(params[:id]) unless params[:user].present?
     respond_with(@all)
   end
   
