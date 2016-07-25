@@ -20,7 +20,7 @@
         <% if @restaurant.location.present? %>
           <% if @restaurant.location.nearbys(3).where.not(restaurant_id: nil).present? %>
             <div class="list-group nearbys" style="">
-              <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(8).each do |resto| %>
+              <% Restaurant.where(id: @restaurant.location.nearbys(3).where.not(restaurant_id: nil).map(&:restaurant_id), status:   'Accepted').limit(5).each do |resto| %>
 
                 <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
                   <div class="row">
