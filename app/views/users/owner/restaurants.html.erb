@@ -6,7 +6,7 @@
 
   <div class="row thumbnail_panel">
     <% @restaurants.each do |resto| %>
-      <div class="col-md-4 col-sm-6 col-xs-12 hvr-grow" style="padding: 20px;">
+      <div class="col-md-4 col-sm-6 col-xs-12 hvr-bob" style="padding: 20px;">
         <%= link_to(owner_resto_edit_path(resto)) do %>
           <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px;">
             <div style = 'background-image: url(<%= asset_path(display_resto(resto)) %>); background-repeat: no-repeat; background-size: cover; background-position: center; min-height: 200px;'></div>
@@ -60,7 +60,7 @@
         <% end %>
       </div>
     <% end %>
-    <div class="col-md-4 col-sm-6 col-xs-12 hvr-grow" style="padding: 20px;">
+    <div class="col-md-4 col-sm-6 col-xs-12 hvr-bob" style="padding: 20px;">
         <%= link_to(owner_resto_new_path) do %>
           <div class="thumbnail text-center" style=" padding: 0px; border: 0; border-radius: 0px; height: 434px;">
             <div style = 'background-image: url(<%= asset_path("plus.png") %>); background-repeat: no-repeat; background-size: contain; background-position: center; min-height: 200px;'></div>

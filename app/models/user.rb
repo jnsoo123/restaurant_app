@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   validates :name, :username, presence: true
   validates :username, uniqueness: true
   validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :avatar_check?
+  validates_format_of :username, without: %r{[\s-]}
   after_destroy :ensure_an_admin_remains
   mount_uploader :avatar, AvatarUploader
   has_many :restaurants, dependent: :destroy

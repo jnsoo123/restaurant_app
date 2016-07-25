@@ -14,7 +14,11 @@ class PicturesController < ApplicationController
     if @picture.save
       if @picture.status
         flash[:success] = t('.successowner')
-        respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+        if params[:page].present? 
+          respond_with(@picture, location: restaurant_path(@picture.restaurant))
+        else
+          respond_with(@picture, location: File.join(owner_resto_edit_path(@picture.restaurant), '#photo'))
+        end
       else
         
         flash[:success] = t('.successuser')
@@ -39,19 +43,19 @@ class PicturesController < ApplicationController
   def update
     if @picture.update(picture_params)
       flash[:success] = t('.success')
-      respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+      respond_with(@picture, location: File.join(owner_resto_edit_path(@picture.restaurant),"#photo"))
     else
       flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-      redirect_to owner_resto_edit_path(@picture.restaurant)
+      redirect_to File.join(owner_resto_edit_path(@picture.restaurant),"#photo")
     end
   end
   
   def destroy
     if @picture.destroy
       flash[:success] = t('.success')
-      respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+      respond_with(@picture, location: File.join(owner_resto_edit_path(@picture.restaurant),"#photo"))
     else
       flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
