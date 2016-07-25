@@ -49,14 +49,14 @@ feature "Home Interface" do
         end
       end
     
-      scenario "Display Restaurant Profile of Top Rated Restaurant" do
+      scenario "Display Restaurant Profile of Top Rated Restaurant", js: true do
         within(:css, "div#restaurants") do
-            first('.hvr-grow > a').click
+            first('.hvr-bob > a').click
         end
         
-        expect(page.has_css?('.module')).to be true
-        expect(page.has_css?('div#picture-part')).to be true
-        expect(page.has_css?('div#reviews_area')).to be true
+        expect(page.has_css?('.module', wait: 10)).to be true
+        expect(page.has_css?('div#picture-part', wait: 10)).to be true
+        expect(page.has_css?('div#reviews_area', wait: 10)).to be true
       end
     end
   end

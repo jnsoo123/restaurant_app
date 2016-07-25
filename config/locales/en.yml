@@ -49,6 +49,11 @@ en:
        mainpage: "Go Back to Mainpage"
    
   pictures:
+    photo_area:
+      addphotos: "Add Photos"
+      nophotos: "No Photos."
+      photos: "Photos"
+    
     create:
       successowner: "Image was added"
       successuser: "Image was added and waiting to be approved and posted!"
@@ -447,8 +452,6 @@ en:
          comment: "Comment"
          date: "Date"
          noratings: "No ratings."
-         addphotos: "Add Photos"
-         nophotos: "No Photos."
          pendingphotos: "Pending Photos"
          uploader: "Uploader: "
          uploaddate: "Upload Date: "

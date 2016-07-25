@@ -312,8 +312,9 @@ feature "User Interface" do
       context "Photos" do
         before(:each) do
           within(:css, "#user-tabs") do
+            #picture_pic
             expect(page).to have_css("a[data-target='#photo']", wait: 10)
-            find(:css, "a[data-target='#photo']").click
+            find(:css, "a[data-target='#photo']", wait: 10).click
           end
         end
        
@@ -322,18 +323,18 @@ feature "User Interface" do
             attach_file("picture_pic", "#{Rails.root}/spec/support/sisig.jpg", visible: false)
             within(:css, "#user-tabs") do
               expect(page).to have_css("a[data-target='#photo']", wait: 10)
-              find(:css, "a[data-target='#photo']").click
+              find(:css, "a[data-target='#photo']", wait: 10).click
             end
           end
           
           scenario "Add Photo" do
-            within(:css, '.tab-content') do
-              expect(page).to have_css('a')
-            end
+              expect(Picture.count).to eq(2)
+              expect(Picture.last.status).to be true
           end
           
-          scenario "Delete Photo" do
-            find(:xpath, '//*[@id="photo"]/div[1]/div[2]/a/div').click
+          scenario "Delete Photo" do   
+            page.evaluate_script 'window.location.reload()'
+            find(:css, '#photo_area > div.row.pic-row > a > div', wait: 10).click
             expect(page).to have_css(".btn-danger", wait: 15, visible: false)
             find_button("Delete").click
             page.accept_confirm
@@ -361,6 +362,7 @@ feature "User Interface" do
         
         scenario "Delete Restaurant", js: true do
           click_button "Delete Restaurant"
+          sleep 10
           page.accept_confirm
           sleep 1
           expect(page).not_to have_content("Some Restaurant")
