@@ -267,6 +267,7 @@
                   <%= f.file_field :pic, class: 'upload', style: 'height: 150px', disabled: 'disabled' %>
                 <% end %>
                 <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+                <%= hidden_field_tag 'page', true %>
               <% end %>
             </div>
           </div>

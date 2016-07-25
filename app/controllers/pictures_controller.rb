@@ -14,7 +14,11 @@ class PicturesController < ApplicationController
     if @picture.save
       if @picture.status
         flash[:success] = t('.successowner')
-        respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+        if params[:page].present? 
+          respond_with(@picture, location: restaurant_path(@picture.restaurant))
+        else
+          respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+        end
       else
         
         flash[:success] = t('.successuser')
