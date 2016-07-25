@@ -49,6 +49,11 @@ en:
        mainpage: "Go Back to Mainpage"
    
   pictures:
+    photo_area:
+      addphotos: "Add Photos"
+      nophotos: "No Photos."
+      photos: "Photos"
+    
     create:
       successowner: "Image was added"
       successuser: "Image was added and waiting to be approved and posted!"
@@ -238,7 +243,7 @@ en:
           enterrestoinfo: "Enter your restaurant's information"
           restoname: "Restaurant Name"
           contact: "Contact Number"
-          address: "Address (leave field blank to reset address)"
+          address: "Address (leave field blank to set address by map)"
           submitresto: "Submit Your Restaurant"
           signinfirst: "You need to sign in first!"
           clickhere: "Click Here"
@@ -308,14 +313,16 @@ en:
      restaurants:
           topresto: "Top Rated Restaurants"
           findresto: "Find the best restaurants in the world right here"
-          noresto: "No Restaurants available yet"
+          noresto: "No top restaurants yet."
           open: "Open Now"
           close: "Closed"
+          createone: "Create one?"
           
      reviews:
           recentreviews: "Recent Reviews"
           reviewsuser: "View recent reviews by our users"
           noreviews: "No Reviews yet."
+          writereview: "Write a review?"
     
      about:
           headerparagraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -379,9 +386,9 @@ en:
               loginfacebook: " Login with Facebook"
           
   users:
-     authorize_owner: 
+     restaurants:
        noresto: "You don't have any restaurants."
-    
+
      reviews:
        rated: "Rated"
        unlike: "Unlike"
@@ -445,8 +452,6 @@ en:
          comment: "Comment"
          date: "Date"
          noratings: "No ratings."
-         addphotos: "Add Photos"
-         nophotos: "No Photos."
          pendingphotos: "Pending Photos"
          uploader: "Uploader: "
          uploaddate: "Upload Date: "

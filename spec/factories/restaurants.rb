@@ -4,10 +4,10 @@ FactoryGirl.define do
       "Restaurant#{n}"
     end
     address "random address"
-    contact "some contact"
+    contact "392-3212"
     status "Pending"
     map "MyText"
-    website "website@website.com"
+    website "http://website@website.com"
     avatar { File.open("#{Rails.root}/spec/support/sisig.jpg") } 
     cover { File.open("#{Rails.root}/spec/support/sisig.jpg") }
     user

@@ -24,7 +24,7 @@ feature "Home Interface" do
   context "Restaurants" do  
     context "No Restaurants Available" do
       scenario "Displays No Restaurants Available" do
-        expect(page).to have_content("No Restaurants available")
+        expect(page).to have_content("No top restaurants yet.")
       end
     end  
   
@@ -42,14 +42,21 @@ feature "Home Interface" do
           expect(page).to have_content("#{restaurant1.name}")
         end
       end
-    
-      scenario "Display Restaurant Profile of Top Rated Restaurant" do
-        within(:css, "div#restaurants") do
-            first('.hvr-grow > a').click
+      
+      scenario "Display New Restaurant" do
+        within(:css, "div#new_restaurants") do
+          expect(page).to have_content("#{restaurant1.name}")
         end
-        expect(page.has_css?('.module')).to be true
-        expect(page.has_css?('div#picture-part')).to be true
-        expect(page.has_css?('div#reviews_area')).to be true
+      end
+    
+      scenario "Display Restaurant Profile of Top Rated Restaurant", js: true do
+        within(:css, "div#restaurants") do
+            first('.hvr-bob > a').click
+        end
+        
+        expect(page.has_css?('.module', wait: 10)).to be true
+        expect(page.has_css?('div#picture-part', wait: 10)).to be true
+        expect(page.has_css?('div#reviews_area', wait: 10)).to be true
       end
     end
   end
@@ -101,13 +108,12 @@ feature "Home Interface" do
         end
       end
       
-      expect(page.has_css?('.social-share-button')).to be true
       expect(page.has_css?('.module')).to be true
       expect(page.has_css?('div#picture-part')).to be true
       expect(page.has_css?('div#reviews_area')).to be true
       
       within(:css, "div.col-md-9.col-sm-12.col-xs-12") do
-        expect(find('div:nth-child(2) > p:nth-child(1)')).to have_content("#{restaurant1.name}")
+        expect(find('div:nth-child(1) > div.pull-left')).to have_content("#{restaurant1.name}")
       end  
     end
   end

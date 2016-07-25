@@ -40,7 +40,8 @@
                           <%= icon('info', "<span class='label label-success'>Open Now</span>".html_safe, style: 'margin-left: 2px; margin-right: 14px;') %>
                         <% end %>
                       </p>
-                      <p class="list-group-item-text ellipsified" style="margin-top: 10px;"><span class=""><%= icon('map-marker', resto.address, style: 'margin-right: 12px;') %></span></p>
+                      <p class="list-group-item-text ellipsified" style="margin-top: 10px;"><span class="">
+                        <%= icon('map-marker', resto.address.present? ? resto.address : "Address not available", style: 'margin-right: 12px;') %></span></p>
                       <p class="list-group-item-text" style="margin-top: 10px;"><%= icon('phone', resto.contact, style: 'margin-right: 10px;') %></p>
                       
                     </div>
@@ -56,7 +57,7 @@
     <% else %>
       <div class="list-group">
         <li class="list-group-item" style="margin-bottom: 10px; height: 175px; padding: 0px;">
-          <h3 class="text-center" style="padding-top: 50px">No top restaurants yet. <%= link_to 'Create one?', new_restaurant_path %></h3>
+          <h3 class="text-center" style="padding-top: 50px"><%= t('.noresto')%> <%= link_to t('.createone'), new_restaurant_path %></h3>
         </li>
       </div>
       

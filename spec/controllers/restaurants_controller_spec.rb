@@ -37,7 +37,7 @@ RSpec.describe RestaurantsController, type: :controller do
       context "has no latitude params" do
         before(:each) do
           post :create, :restaurant =>  FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "523-2312", 
           :low_price_range => 10, :high_price_range => 20, :status => "Pending")
         end
 
@@ -51,7 +51,7 @@ RSpec.describe RestaurantsController, type: :controller do
       context "has latitude params" do
         before(:each) do
           post :create, :restaurant =>  FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "3123-2312", 
           :low_price_range => 10, :high_price_range => 20, :status => "Pending"), :latitude => 14.600528132327128, 
           :longitude => 120.9610766172409
         end
@@ -119,8 +119,8 @@ RSpec.describe RestaurantsController, type: :controller do
       context "Successful Update" do
         before(:each) do
           @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "New restaurant",
-          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
-          :status => "Pending", :website => "website", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "392-3212", 
+          :status => "Pending", :website => "http://website.com", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
           :cover => fixture_file_upload('sisig.jpg', 'image/jpg'))
 
           put :update, :id => restaurant2.id, :restaurant => @restoAttributes
@@ -140,7 +140,7 @@ RSpec.describe RestaurantsController, type: :controller do
       context "Failed Update" do
         before(:each) do
           @restoAttributes = FactoryGirl.attributes_for(:restaurant, :name => "",
-          :description => "New Description", :map => "mapper", :address => "address", :contact => "Contact", 
+          :description => "New Description", :map => "mapper", :address => "address", :contact => "321-1231", 
           :status => "Pending", :website => "website", :avatar => fixture_file_upload('sisig.jpg', 'image/jpg'),
           :cover => fixture_file_upload('sisig.jpg', 'image/jpg'))
          

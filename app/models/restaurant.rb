@@ -19,7 +19,11 @@ class Restaurant < ActiveRecord::Base
   validates :name, :contact, :user, presence: true
   validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :avatar_check?
   validates_format_of :cover, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :cover_check?
-  
+  validates_format_of :website, with: %r{\A(http|https|ftp|ftps):\/\/(([a-z0-9]+\:)?[a-z0-9]+\@)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\Z}ix,
+                                allow_blank: true  
+                                
+  validates_format_of :contact, with: %r{\A[\d\-\+]*\Z}
+                                  
   def avatar_check?
     avatar.nil? || avatar.present?
   end
