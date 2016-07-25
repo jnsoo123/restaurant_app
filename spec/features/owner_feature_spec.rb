@@ -8,6 +8,7 @@ feature "User Interface" do
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Some Restaurant", :user_id => owner1.id, :status => 'Accepted')}
   let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
   let!(:user1){FactoryGirl.create(:user, :name => "Fred", :admin => false)}
+  let!(:picture1){FactoryGirl.create(:picture, :restaurant => restaurant1, :user => user1, :pic => File.open("#{Rails.root}/spec/support/sisig.jpg"))}
   
   before(:each) do
     visit home_path
@@ -18,7 +19,6 @@ feature "User Interface" do
     fill_in 'password', :with => owner1.password
     click_button('Login')
   end
-  
   
   context "Owner Interface" do
     before(:each) do
@@ -49,7 +49,6 @@ feature "User Interface" do
         end
         
         scenario "Display 1 Message" do
-          #notification_area > div.table-responsive > table > tbody > tr > td.notification_messages
           within(:css, "tbody") do
             within(:css, "tr") do
               expect(find('td:nth-child(1)').text).to match(/Some Message/)
@@ -69,6 +68,30 @@ feature "User Interface" do
         find(:xpath, '//*[@id="dashboard-owner"]/div/div[2]/div/div[2]/div[1]/a').click
       end
       
+      context "User Uploaded Photos", js: true do
+        before(:each) do
+          within(:css, "#user-tabs") do
+            expect(page).to have_css("a[data-target='#photo']", wait: 10)
+            find(:css, "a[data-target='#photo']").click
+          end
+        end
+
+        scenario "Accept User Photo" do
+          within(:css, ".pending_pic") do
+            find_button("Accept").click
+          end
+          expect(Picture.last.status).to be true
+        end
+
+        scenario "Reject User Photo" do
+          id = Picture.last.id
+          within(:css, ".pending_pic") do
+            find_button("Reject").click
+          end
+          expect(Picture.exists?(id)).to be false
+        end
+      end
+      
       context "Edit Information" do
         scenario "Display Restaurant Edit Page" do
           within(:css, ".tab-content") do
@@ -79,9 +102,9 @@ feature "User Interface" do
         end
       
         scenario "Edit Restaurant" do
-          fill_in "restaurant_contact", with: "I changed this"
+          fill_in "restaurant_contact", with: "412-1231"
           click_button "Update Restaurant"
-          expect(find("#restaurant_contact").value).to eq("I changed this")
+          expect(find("#restaurant_contact").value).to eq("412-1231")
         end
       end
       
@@ -103,9 +126,9 @@ feature "User Interface" do
         context "Post Operations" do
           before(:each) do
             click_link "Add Posts"
-            expect(page).to have_css("#post_comment", wait: 10)
-            find("#post_comment").set("THIS IS SOME RANDOM POST")
-            find_button("Create Post").click
+            expect(page).to have_css("#post_comment", wait: 10, visible: false)
+            find("#post_comment", wait: 10, visible: false).set("THIS IS SOME RANDOM POST")
+            find_button("Create Post", wait: 10, visible: false).click
             within(:css, "#user-tabs") do
               find(:css, "a[data-target='#announcement']").click
             end
@@ -113,20 +136,20 @@ feature "User Interface" do
           
           scenario "Add post", js: true do
             expect(page).to have_css("table")
-            expect(page).to have_content("THIS IS SOME RANDOM POST")
+            expect(page).to have_content(Post.last.comment)
           end
         
           scenario "Edit post", js: true do
             click_link "Edit"
-            expect(page).to have_css("#post_comment", wait: 10)
-            find("#post_comment").set("THIS IS NOT SOME RANDOM POST")
-            find_button("Edit Post / Announcement").click
+            expect(page).to have_css("#post_comment", wait: 10, visible: false)
+            find("#post_comment", wait: 10, visible: false).set("THIS IS NOT SOME RANDOM POST")
+            find_button("Edit Post / Announcement", wait: 10, visible: false).click
             within(:css, "#user-tabs") do
               expect(page).to have_css("a[data-target='#announcement']", wait: 10)
               find(:css, "a[data-target='#announcement']").click
             end
             expect(page).to have_css("table")
-            expect(page).to have_content("THIS IS NOT SOME RANDOM POST")
+            expect(page).to have_content(Post.last.comment)
           end
         
           scenario "Delete post", js: true do
@@ -163,9 +186,9 @@ feature "User Interface" do
         context "Schedule Operations", js: true do
           before(:each) do
             click_link "Add Schedule"
-            expect(page).to have_css("#schedule_day", wait: 10)
+            expect(page).to have_css("#schedule_day", wait: 10, visible: false)
          #   sleep 5
-            find('#schedule_day').find(:xpath, "option[2]").select_option
+            find('#schedule_day', visible: false).find(:xpath, "option[2]").select_option
             sleep 3
             find("#schedule_opening").set("7:00 AM")
             find("#schedule_closing").set("10:00 AM")
@@ -184,8 +207,8 @@ feature "User Interface" do
           
           scenario "Edit Schedule" do
             click_link "Edit"
-            expect(page).to have_css("#schedule_day", wait: 10)
-            find('#schedule_day').find(:xpath, "option[2]").select_option
+            expect(page).to have_css("#schedule_day", wait: 10, visible: false)
+            find('#schedule_day', visible: false).find(:xpath, "option[2]").select_option
             sleep 3
             find("#schedule_opening").set("8:00 AM")
             find("#schedule_closing").set("10:00 AM")
@@ -232,8 +255,8 @@ feature "User Interface" do
         context "Dish Operations", js: true do
           before(:each) do
             click_link "Add Dish"
-            expect(page).to have_css("#food_name", wait: 10)
-            find('#food_name').set("My Food")
+            expect(page).to have_css("#food_name", wait: 10, visible: false)
+            find('#food_name', wait: 10, visible: false).set("My Food")
             find("#food_description").set("Random Description")
             find("#food_price").set(24)
             find('#food_cuisine_id').find(:xpath, "option[2]").select_option
@@ -253,7 +276,7 @@ feature "User Interface" do
           
           scenario "Edit Dish" do
             click_link "Edit"
-            expect(page).to have_css("#food_name", wait: 10)
+            expect(page).to have_css("#food_name", wait: 10, visible: false)
             find('#food_name').set("My Food")
             find("#food_description").set("Changed Description")
             find("#food_price").set(24)
@@ -293,40 +316,6 @@ feature "User Interface" do
             find(:css, "a[data-target='#photo']").click
           end
         end
-        
-        scenario "Display Photos Page" do
-          within(:css, '.tab-content') do
-            expect(page).to have_content("Photos")
-            expect(page).to have_content("No Photos.")
-          end
-        end
-        
-        # context "User Uploaded Photos", js: true do
-        #   before(:each) do
-        #     FactoryGirl.create(:picture, :restaurant => restaurant1, :user => user1, :pic => File.open("#{Rails.root}/spec/support/sisig.jpg"))
-        #     sleep 3
-        #     click_link "Edit Information"
-        #     sleep 3
-        #     click_link "Photos"
-        #   end
-        #
-        #   scenario "Accept User Photo" do
-        #     puts "THIS IS THE PICTURE COUNT: #{Picture.last.inspect}"
-        #     within(:css, "#photo > div.row.thumbnail_panel.pending_pic") do
-        #       click_button("Accept")
-        #     end
-        #     sleep 1
-        #     expect(Picture.last.status).to be true
-        #   end
-        #
-        #   scenario "Reject User Photo" do
-        #     id = Picture.last.id
-        #     within(:css, ".pending_pic") do
-        #       click_button("Reject")
-        #     end
-        #     expect(Picture.exists?(id)).to be false
-        #   end
-        # end
        
         context "Photo Operations", js: true do
           before(:each) do
@@ -345,7 +334,7 @@ feature "User Interface" do
           
           scenario "Delete Photo" do
             find(:xpath, '//*[@id="photo"]/div[1]/div[2]/a/div').click
-            expect(page).to have_css(".btn-danger", wait: 15)
+            expect(page).to have_css(".btn-danger", wait: 15, visible: false)
             find_button("Delete").click
             page.accept_confirm
             sleep 1
@@ -353,7 +342,6 @@ feature "User Interface" do
               expect(page).to have_css("a[data-target='#photo']", wait: 10)
               find(:css, "a[data-target='#photo']").click
             end
-            expect(page).to have_content("No Photos.")
             expect(page).not_to have_css("table")
           end
         end  
@@ -393,7 +381,7 @@ feature "User Interface" do
       #keep js true here to execute script
       scenario "Add Restaurant", js: true do
         fill_in 'restaurant_name', :with => "THIS IS A RESTAURANT"
-        fill_in 'restaurant_contact', :with => "THIS IS MY CONTACT"
+        fill_in 'restaurant_contact', :with => "321-2312"
         page.execute_script("$('#latitude').val(24.1231)")
         page.execute_script("$('#longitude').val(24.1231)")
         
