@@ -60,42 +60,84 @@
       </div>
       <div style="padding: 10px; margin-top: -5px;">
         <h4><%= t('.topresto')%></h4>
+          
+        <% if Restaurant.joins(:ratings).group("restaurants.id").order("AVG(ratings.rate) DESC").limit(5).present? %>
           <div class="list-group nearbys" style="">
-            <% if Restaurant.joins(:ratings).group("restaurants.id").order("AVG(ratings.rate) DESC").limit(5).present? %>
-              <% Restaurant.joins(:ratings).group("restaurants.id").order("AVG(ratings.rate) DESC").limit(5).each do |resto| %>
-              
-              <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
-                  <div class="row" style="">
-                    <div class="col-md-3">
-                      <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
-                    </div>
-                    <div class="col-md-9">
-                      <%= resto.name %><br>
-                      <small>
-                        <% (resto.ave_ratings.to_i).times do %>
-                          <%= icon('star') %>
-                        <% end %>
-                        <% unless resto.ave_ratings % 1 == 0 %>
-                          <%= icon('star-half-o')%>
-                          <% (4 - resto.ave_ratings.to_i).times do %>
-                            <%= icon('star-o') %>
-                          <% end %>
-                        <% else %>
-                          <% (5 - resto.ave_ratings.to_i).times do %>
-                            <%= icon('star-o') %>
-                          <% end %>
-                        <% end %>
-                        &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
-                      </small>
-                    </div>
+            <% Restaurant.joins(:ratings).group("restaurants.id").order("AVG(ratings.rate) DESC").limit(5).each do |resto| %>
+
+            <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
+                <div class="row" style="">
+                  <div class="col-md-3">
+                    <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
                   </div>
-                <% end %>
+                  <div class="col-md-9">
+                    <%= resto.name %><br>
+                    <small>
+                      <% (resto.ave_ratings.to_i).times do %>
+                        <%= icon('star') %>
+                      <% end %>
+                      <% unless resto.ave_ratings % 1 == 0 %>
+                        <%= icon('star-half-o')%>
+                        <% (4 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% else %>
+                        <% (5 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% end %>
+                      &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
+                    </small>
+                  </div>
+                </div>
               <% end %>
-            <% else %>
-              No restaurants found.
             <% end %>
-            
           </div>
+        <% else %>
+          No restaurants found.
+        <% end %>
+            
+          
+      </div>
+      <div style="padding: 10px; margin-top: -5px;">
+        <h4>New Restaurants</h4>
+          <% if Restaurant.where(status: 'Accepted').order(created_at: :desc).limit(5).present? %>
+
+            <div class="list-group nearbys" style="">
+              <% Restaurant.where(status: 'Accepted').order(created_at: :desc).limit(5).each do |resto| %>
+
+              <%= link_to resto, class: 'list-group-item', style: 'margin: 5px 0 5px 0;' do %>
+                <div class="row" style="">
+                  <div class="col-md-3">
+                    <div style="background-image: url('<%= asset_path(display_resto(resto))%>'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 40px; width: 40px;"></div>
+                  </div>
+                  <div class="col-md-9">
+                    <%= resto.name %><br>
+                    <small>
+                      <% (resto.ave_ratings.to_i).times do %>
+                        <%= icon('star') %>
+                      <% end %>
+                      <% unless resto.ave_ratings % 1 == 0 %>
+                        <%= icon('star-half-o')%>
+                        <% (4 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% else %>
+                        <% (5 - resto.ave_ratings.to_i).times do %>
+                          <%= icon('star-o') %>
+                        <% end %>
+                      <% end %>
+                      &nbsp;&nbsp;(<%= pluralize(resto.ratings.count, 'review') %>)
+                    </small>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          No restaurants found.
+        <% end %>
+            
       </div>
     </div>
     <div class="col-md-9 col-sm-12 col-xs-12" style="margin: 0; padding: 0;">
