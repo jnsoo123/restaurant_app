@@ -172,7 +172,7 @@
         </p>
           
 
-        <p><%= icon('map-marker', @restaurant.address, style: 'margin-right: 10px; color: green;') %></p>
+        <p><%= icon('map-marker', "#{@restaurant.address unless @restaurant.address.blank?}#{'Address not available' if @restaurant.address.blank?}", style: 'margin-right: 10px; color: green;') %></p>
         <p><%= icon('phone', @restaurant.contact, style: 'margin-right: 10px; color: red;') %></p>
         <% if @restaurant.website.present? %>
           <p style="margin-bottom: 0;"><%= icon('globe', link_to(@restaurant.website, "http://#{@restaurant.website}"), style: 'margin-right: 10px; color: dodgerblue;')%></p>
