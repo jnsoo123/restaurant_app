@@ -48,14 +48,14 @@ class PicturesController < ApplicationController
       flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
       flash[:failure] << "</dl>"
-      redirect_to owner_resto_edit_path(@picture.restaurant)
+      redirect_to File.join(owner_resto_edit_path(@picture.restaurant),"#photo")
     end
   end
   
   def destroy
     if @picture.destroy
       flash[:success] = t('.success')
-      respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+      respond_with(@picture, location: File.join(owner_resto_edit_path(@picture.restaurant),"#photo"))
     else
       flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }
