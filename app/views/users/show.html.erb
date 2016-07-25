@@ -10,7 +10,7 @@
       <h3><%= @user.name %> <small> @<%= @user.username %></small></h3>
       <p><%= icon('envelope', @user.email) %></p>
       <% if @user === current_user %>
-        <p><%= link_to "#{icon('pencil-square-o')} #{t('editprofile')}".html_safe, edit_user_registration_path %></p>
+        <p><%= link_to "#{icon('pencil-square-o')} #{t('.editprofile')}".html_safe, edit_user_registration_path %></p>
       <% end %>
     </div>
   </div>
