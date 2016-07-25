@@ -17,7 +17,7 @@ class PicturesController < ApplicationController
         if params[:page].present? 
           respond_with(@picture, location: restaurant_path(@picture.restaurant))
         else
-          respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+          respond_with(@picture, location: File.join(owner_resto_edit_path(@picture.restaurant), '#photo'))
         end
       else
         
@@ -43,7 +43,7 @@ class PicturesController < ApplicationController
   def update
     if @picture.update(picture_params)
       flash[:success] = t('.success')
-      respond_with(@picture, location: owner_resto_edit_path(@picture.restaurant))
+      respond_with(@picture, location: File.join(owner_resto_edit_path(@picture.restaurant),"#photo"))
     else
       flash[:failure] = "<dl><dt>#{t('.failurestart')}</dt>" 
       @picture.errors.full_messages.map { |msg| flash[:failure] << "<dd>#{msg}</dd>" }

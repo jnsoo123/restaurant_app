@@ -1,0 +1,23 @@
+<div class="clearfix" style="border-bottom: 1px solid #a1a1a1; margin-bottom: 15px;">
+        <h4 class="pull-left" style="color: #6b6b6b"><%= t('.photos')%></h4>
+        <div class="fileUpload btn btn-default pull-right">
+          <span><%= icon('plus', t('.addphotos'))%></span>
+          <%= form_for(@picture) do |f| %> 
+            <%= f.file_field :pic, class: 'upload', style: 'height: 150px', accept: 'image/png,image/gif,image/jpeg'  %>
+            <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+          <% end %>
+        </div>
+      </div>  
+      <div class="row pic-row" style = 'padding-left: 20px;'>
+        
+        <% unless @pictures.empty? %>
+          <% @pictures.where(status: true).each do |picture| %>
+             <%= link_to picture_path(picture), remote: true, data: { toggle: 'modal', target: '#myModal' } do %>
+              <div class="col-md-3 col-sm-4 col-xs-12 img-responsive" style = 'background-image: url(<%= picture.pic.url %>); background-repeat: no-repeat; background-size: cover; background-position: center; border: 4px solid #fff; border-radius: 15px;'>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p style="margin-left: -5px;"><%= t('.nophotos')%></p>
+        <% end %>
+      </div>
