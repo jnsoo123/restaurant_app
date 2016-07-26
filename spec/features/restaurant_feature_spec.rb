@@ -31,5 +31,37 @@ feature "Restaurant Interface" do
     attach_file("picture_pic", "#{Rails.root}/spec/support/sisig.jpg", visible: false)
     expect(find('.alert-dismissible').text).to match(/Image was added and waiting to be approved and posted!/)
   end
-
+  
+  context "Reviewing", js: true  do
+    before(:each) do
+      find_button("Write a Review", wait: 10).click
+      sleep 10
+      find('label[for=star2]').click
+      find_button("Add Review", wait: 10).click
+    end
+    
+    scenario "Write a review" do
+      expect(find('.alert-dismissible').text).to match(/You have successfully rated the restaurant/)
+    end
+    
+    scenario "Like a Review" do
+      within(:css, '#reviews_area > div:nth-child(1) > div.media-body') do
+         find(:css, 'p:nth-child(4) > a:nth-child(1)').click
+         sleep 10
+         expect(find(:css, 'p:nth-child(4) > a:nth-child(1)', wait: 10).text).to match(/Unlike/)
+      end
+    end
+    
+    scenario "Reply to Review" do
+      within(:css, '#reviews_area > div:nth-child(1) > div.media-body') do
+         find(:css, 'p:nth-child(4) > a:nth-child(2)').click
+         sleep 10
+         
+         find(:xpath, '//*[@id="reply_comment"]', wait: 10).set("Comment")
+         find(:xpath, '//*[@id="reply_comment"]', wait: 10).native.send_keys(:return)
+         sleep 10
+         expect(find(:xpath, '//*[@id="reviews_area"]/div[3]/div[2]/p').text).to match(Reply.last.comment)
+      end
+    end
+  end
 end

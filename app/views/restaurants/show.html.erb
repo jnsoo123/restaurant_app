@@ -13,7 +13,7 @@
                &q=<%= @restaurant.location.latitude %>,<%= @restaurant.location.longitude %>" allowfullscreen>
         </iframe>
       <% else %>  
-        <h5 style="padding: 100px 0 100px 80px">Map Not Available</h5>
+        <h5 style="padding: 100px 0 100px 80px"><%= t('.mapunavailable')%></h5>
       <% end %>
       <div style="padding: 10px; margin-top: -5px;">
         <h4><%= t('.restonear')%></h4>
@@ -94,13 +94,13 @@
             <% end %>
           </div>
         <% else %>
-          No restaurants found.
+          <%= t('.noresto')%>
         <% end %>
             
           
       </div>
       <div style="padding: 10px; margin-top: -5px;">
-        <h4>New Restaurants</h4>
+        <h4><%= t('.newrestaurants')%></h4>
           <% if Restaurant.where(status: 'Accepted').order(created_at: :desc).limit(5).present? %>
 
             <div class="list-group nearbys" style="">
@@ -185,7 +185,9 @@
           <h4><%= icon('clock-o', "Hours", style: 'margin-right: 8px;')%></h4>
           <hr style="margin-top: 5px;">
           <% @restaurant.sched.each do |day, sched| %>
+           <% sched.each do |s|%>
             <div class="clearfix" style="padding: 0 75px;">
+             
               <% case day %>
               <% when 0 %>
                 <div class="pull-left">
@@ -217,10 +219,10 @@
                 </div>
               <% end %>
               <div class="pull-right">
-                <%= sched[0].opening %> - <%= sched[0].closing %>
+                  <%= s.opening %> - <%= s.closing %>
               </div>
             </div>
-
+            <%  end %>
           <% end %>
         </div>
       <% end %>

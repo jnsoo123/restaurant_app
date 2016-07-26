@@ -94,6 +94,7 @@ class Restaurant < ActiveRecord::Base
         end
       end
     end
+        
     return scheds
   end
   
