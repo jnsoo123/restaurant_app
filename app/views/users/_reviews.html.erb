@@ -34,15 +34,15 @@
             </div>
             <div class="media" style="padding: 0px 50px; margin: 0px;">
               <% if rate.replies.count > 3 %>
-                <% if @all == "true" %>
-                <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_rating_path(@user, more: false, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+                <% if @all == "true" && @review_id.to_i == rate.id %>
+                <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_rating_path(@user, rate_id: rate.id, more: false, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
                 <% else %>
-                  <%= link_to "#{t('.viewall')} (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@user, more: true, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+                  <%= link_to "#{t('.viewall')} (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@user, rate_id: rate.id, more: true, user: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
                 <% end %>
               <% end %>
             </div>
             <% if rate.replies.present? %>
-              <% (@all == "true" ? rate.replies : rate.replies.last(3)).each do |reply| %>
+              <% (@all == "true" && @review_id.to_i == rate.id ? rate.replies : rate.replies.last(3)).each do |reply| %>
                 <div class="media" style="padding: 10px 50px 10px 50px; margin: 0px;">
                   <div class="media-left">
                     <div style="background: url('<%= asset_path(display_user(reply.user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>

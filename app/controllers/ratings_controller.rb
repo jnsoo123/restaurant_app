@@ -11,8 +11,10 @@ class RatingsController < ApplicationController
   end
   
   def show_more
-    @all = params[:more]
-    puts "############ #{@all.class}"
+    @all = params[:more] || nil
+    @review_id = params[:rate_id]
+    @more_reviews = params[:review]
+    puts "############ #{@all}"
     @restaurant = Restaurant.find(params[:id]) unless params[:user].present?
     @user = User.find(params[:id]) if params[:user].present?
     respond_with(@all)

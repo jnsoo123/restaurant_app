@@ -46,7 +46,8 @@ class PostsController < ApplicationController
   end
   
   def show_more
-    @all = params[:more]
+    @all = params[:more] || nil
+    @post_id = params[:post_id]
     @restaurant = Restaurant.find(params[:id])
     respond_with(@all)
   end

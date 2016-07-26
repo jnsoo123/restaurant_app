@@ -22,7 +22,7 @@ class PicturesController < ApplicationController
       else
         
         flash[:success] = t('.successuser')
-        Notification.create(message: "#{view_context.link_to current_user.name, user_path(current_user)} added a photo on your restaurant: #{view_context.link_to @picture.restaurant.name, restaurant_path(@picture.restaurant)}. #{view_context.link_to 'Click Here', owner_resto_edit_path(@picture.restaurant)} to view it from the dashboard.", user: @picture.restaurant.user)
+        Notification.create(message: "#{view_context.link_to current_user.name, user_path(current_user)} added a photo on your restaurant: #{view_context.link_to @picture.restaurant.name, restaurant_path(@picture.restaurant)}. #{view_context.link_to 'Click Here', File.join(owner_resto_edit_path(@picture.restaurant),"#photo")} to view it from the dashboard.", user: @picture.restaurant.user)
         respond_with(@picture, location: restaurant_path(@picture.restaurant)) 
       end
     else

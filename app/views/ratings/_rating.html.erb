@@ -12,8 +12,7 @@
             <% if current_user === rate.user %> 
               <%= link_to "#{icon('pencil', nil, style: 'margin-left: 20px;')}".html_safe, edit_rating_path(rate), remote: true, data: { toggle: 'modal', target: '#myModal'} %>
             <% end %>
-          </small>
-          
+          </small>  
         </h4>
         <p style="color: #bbb;"><small><%= pluralize(rate.user.ratings.count, "Review") %></small></p>
         <p><%= t('.rated')%> <span class="badge" style="margin-top: -3px; padding: 2px 4px; background-color: #CF2228;"><%= rate.rate %></span>&nbsp;&nbsp; <%= rate.comment %></p>
@@ -35,16 +34,17 @@
       </div>
     </div>
     <div class="media" style="padding: 0px 50px; margin: 0px;">
+      <% puts "@@@@@@@@@@ #{@review_id.class}"%>
       <% if rate.replies.count > 3 %>
-        <% if @all == "true" %>
-          <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_rating_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+        <% if @all == "true" && @review_id.to_i == rate.id %>
+          <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_rating_path(@restaurant, rate_id: rate.id, more: false, review: @more_reviews), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
         <% else %>
-          <%= link_to "#{t('.viewall')} (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+          <%= link_to "#{t('.viewall')} (#{rate.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_rating_path(@restaurant, rate_id: rate.id, more: true, review: @more_reviews), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
         <% end %>
       <% end %>
     </div>
     <% if rate.replies.present? %>
-      <% (@all == "true" ? rate.replies : rate.replies.last(3)).each do |reply| %>
+      <% (@all == "true" && @review_id.to_i == rate.id ? rate.replies : rate.replies.last(3)).each do |reply| %>
         <div class="media" style="padding: 10px 50px 10px 53px; margin: 0px;">
           <div class="media-left">
             <div style="background: url('<%= asset_path(display_user(reply.user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>
@@ -71,7 +71,7 @@
     <% if @more_reviews == "true" %>
 <%= link_to "View less", show_more_reviews_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
     <% else %>
-<%= link_to "View more reviews(#{@restaurant.ratings.count - 5})", show_more_reviews_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
+<%= link_to "View all reviews (#{5 - @restaurant.ratings.count})", show_more_reviews_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
     <% end %>
   <% end %>
 <% else %>
