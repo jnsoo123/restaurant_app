@@ -154,6 +154,8 @@ Restaurant.create!(
   address: '',
   contact: '02-3746879',
   status: 'Accepted',
+  avatar: File.open(Rails.root + "app/assets/images/frazzledcooklogo.jpg"),
+  cover: File.open(Rails.root + "app/assets/images/The-Frazzled-Cook-Interiors.jpg"),
   user_id: 2
 )
 
@@ -179,6 +181,22 @@ Food.create!(
   name: "Grilled Tanigue Steak",
   description: "Marinated and grilled tanigue topped with our version of herbed butter.",
   price: 370,
+  cuisine: Cuisine.find_by(name: 'Filipino'),
+  restaurant: Restaurant.last
+)
+
+Food.create!(
+  name: "Truffle Pasta",
+  description: "Mixed pasta with sauteed Portobello mushroom and home made white truffle sauce.",
+  price: 295,
+  cuisine: Cuisine.find_by(name: 'Italian'),
+  restaurant: Restaurant.last
+)
+
+Food.create!(
+  name: "Tenderloin and Sausage Pizza",
+  description: "Herbed crusted thin pizza dough topped with beef tenderloin salpicao, onion, and kesong puti",
+  price: 295,
   cuisine: Cuisine.find_by(name: 'Filipino'),
   restaurant: Restaurant.last
 )
