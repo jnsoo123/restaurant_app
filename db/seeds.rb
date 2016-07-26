@@ -54,9 +54,9 @@ File.open(Rails.root.join('app/assets/images/thaicuisine.jpg')) do |f|
 end
 
 User.create!(
-  name: 'John Neil Soo',
-  email: 'jnsoo@gmail.com',
-  username: 'jnsoo',
+  name: 'Toshi Okayasu',
+  email: 'toshi@gmail.com',
+  username: 'toshi',
   password: '123123',
   password_confirmation: '123123',
   admin: false
