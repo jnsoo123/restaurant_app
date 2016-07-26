@@ -7,7 +7,6 @@
                 <h4 class="media-heading"><%= link_to rate.restaurant.name, rate.restaurant %> 
                   <small>
                     - <%= distance_of_time_in_words_to_now(rate.created_at) %> ago
-                    <% end %>
                   </small>
                 </h4>
                 <p style="color: #bbb"><%= rate.restaurant.address %></p>
