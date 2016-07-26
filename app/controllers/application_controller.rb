@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: [:change_locale, :set_locale]
   before_action :set_locale
   rescue_from SecurityError, with: :not_found
+  rescue_from RuntimeError, with: :show_error
   add_flash_types :success, :failure
   
   rescue_from ActiveRecord::RecordNotFound, with: :raise_not_found
@@ -40,6 +41,11 @@ class ApplicationController < ActionController::Base
   
   def not_found
     render :template => "errors/404", :layout => false, :status => 404
+  end
+  
+  def show_error
+    flash[:notice] = "Cant delete last admin"
+    redirect_to user_path(current_user)
   end
   
   def set_locale
