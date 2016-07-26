@@ -52,3 +52,134 @@ end
 File.open(Rails.root.join('app/assets/images/thaicuisine.jpg')) do |f|
   Cuisine.create(name: 'Thai', avatar: f)
 end
+
+User.create!(
+  name: 'John Neil Soo',
+  email: 'jnsoo@gmail.com',
+  username: 'jnsoo',
+  password: '123123',
+  password_confirmation: '123123',
+  admin: false
+)
+
+Restaurant.create!(
+  name: 'Lingnam',
+  address: '',
+  contact: '123-123',
+  status: 'Accepted',
+  avatar: File.open(Rails.root + "app/assets/images/lingnamprofile.png"),
+  cover: File.open(Rails.root + "app/assets/images/lingnamlogo.jpg"),
+  user_id: 2,
+  website: 'http://www.lingnam.com.ph'
+)
+
+Location.create!(
+  latitude: 14.609525,
+  longitude: 120.982246,
+  restaurant: Restaurant.last
+)
+
+Restaurant.last.update!(
+  address: Location.last.address
+)
+
+Food.create!(
+  name: "Beef Wanton Noodles",
+  price: 198,
+  cuisine: Cuisine.find_by(name: 'Chinese'),
+  restaurant: Restaurant.last
+)
+
+Restaurant.create!(
+  name: 'Love Desserts',
+  address: '',
+  contact: '02-2469069',
+  status: 'Accepted',
+  avatar: File.open(Rails.root + "app/assets/images/desserts_dp.jpg"),
+  cover: File.open(Rails.root + "app/assets/images/desserts_cover.jpg"),
+  user_id: 2
+)
+
+Location.create!(
+  latitude: 14.639285,
+  longitude: 121.000677,
+  restaurant: Restaurant.last
+)
+
+Restaurant.last.update!(
+  address: Location.last.address
+)
+
+Food.create!(
+  name: "Eat All You Can Desserts Buffet",
+  price: 200,
+  cuisine: Cuisine.find_by(name: 'Filipino'),
+  restaurant: Restaurant.last
+)
+
+Restaurant.create!(
+  name: 'Sisig sa Rada',
+  address: '',
+  contact: '0917-1234567',
+  status: 'Accepted',
+  user_id: 2
+)
+
+Location.create!(
+  latitude: 14.556205,
+  longitude: 121.018608,
+  restaurant: Restaurant.last
+)
+
+Restaurant.last.update!(
+  address: Location.last.address
+)
+
+Food.create!(
+  name: "Sisig with rice",
+  price: 50,
+  cuisine: Cuisine.find_by(name: 'Filipino'),
+  restaurant: Restaurant.last
+)
+
+Food.create!(
+  name: "Sisig no rice",
+  price: 40,
+  cuisine: Cuisine.find_by(name: 'Filipino'),
+  restaurant: Restaurant.last
+)
+
+Restaurant.create!(
+  name: 'The Frazzled Cook',
+  address: '',
+  contact: '02-3746879',
+  status: 'Accepted',
+  user_id: 2
+)
+
+Location.create!(
+  latitude: 14.626998,
+  longitude: 121.005163,
+  restaurant: Restaurant.last
+)
+
+Restaurant.last.update!(
+  address: Location.last.address
+)
+
+Food.create!(
+  name: "Fish and Fries",
+  description: "Breaded fish fillets and fries served with aioli dip.",
+  price: 245,
+  cuisine: Cuisine.find_by(name: 'French'),
+  restaurant: Restaurant.last
+)
+
+Food.create!(
+  name: "Grilled Tanigue Steak",
+  description: "Marinated and grilled tanigue topped with our version of herbed butter.",
+  price: 370,
+  cuisine: Cuisine.find_by(name: 'Filipino'),
+  restaurant: Restaurant.last
+)
+
