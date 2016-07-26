@@ -29,15 +29,15 @@
     </div>
     <div class="media" style="padding: 0px 50px; margin: 0px;">
       <% if post.replies.count > 3 %>
-        <% if @all == "true" %>
-          <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_post_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+        <% if @all == "true" && @post_id.to_i == post.id %>
+          <%= link_to "#{t('.viewless')} #{icon('caret-up')}".html_safe, show_more_post_path(@restaurant, more: false, post_id: post.id), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
         <% else %>
-          <%= link_to "#{t('.viewall')} (#{post.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_post_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
+          <%= link_to "#{t('.viewall')} (#{post.replies.count - 3}) #{icon('caret-down')}".html_safe, show_more_post_path(@restaurant, more: true, post_id: post.id), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 3px; color: #777777;', remote: true, method: :post %>
         <% end %>
       <% end %>
     </div>
     <% if post.replies.present? %>
-      <% (@all == "true" ? post.replies : post.replies.last(3)).each do |reply| %>
+      <% (@all == "true" && @post_id.to_i == post.id ? post.replies : post.replies.last(3)).each do |reply| %>
         <div class="media" style="padding: 10px 50px 10px 63px; margin: 0px;">
           <div class="media-left">
             <div style="background: url('<%= asset_path(display_user(reply.user)) %>'); background-size: cover; background-position: center center; width: 40px; height: 40px;" class="img-circle"></div>
