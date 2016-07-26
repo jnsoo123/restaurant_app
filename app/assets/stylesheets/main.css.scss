@@ -108,17 +108,21 @@ a {
 }
 
 @media screen and (max-width: 768px) {
-  .navbar .navbar-nav {
-    display: inline-block;
-    float: none;
-    vertical-align: top;
+  #top-nav.affix{
+    .navbar .navbar-nav {
+      display: inline-block;
+      float: none;
+      vertical-align: top;
+    }
+    .navbar .navbar-collapse {
+      text-align: center;
+      position: absolute;
+      background-color: whitesmoke;
+      width: 100%;
+      z-index: 5;
+    }
   }
-  .navbar .navbar-collapse {
-    text-align: center;
-    position: absolute;
-    background-color: black;
-    width: 100%;
-  }
+  
 }
 
 .search_container a {
