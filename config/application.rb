@@ -21,7 +21,7 @@ module Resto
     # config.i18n.default_locale = :de
     config.time_zone = 'Taipei'
 
-    I18n.available_locales = [:en, :ru, :ja]
+    I18n.available_locales = [:en, :ja]
     config.i18n.default_locale = :en
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

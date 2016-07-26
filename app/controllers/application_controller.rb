@@ -9,9 +9,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :success, :failure
   
   rescue_from ActiveRecord::RecordNotFound, with: :raise_not_found
-
-  
-  
+    
   include DeviseHelper
   helper ApplicationHelper
 

@@ -294,11 +294,11 @@ feature "Home Interface" do
   end
   
   context "Language" do
-    scenario "changes the language to russian", js: true do
+    scenario "changes the language to japanese", js: true do
       #sleep 10
       click_button "dropdownMenu2"
       find(:xpath, '//*[@id="footer"]/div/div/div[4]/div[2]/div/ul/li[2]/a').click
-      expect(page).to have_content("ДОМ")
+      expect(page).to have_content("ホーム")
     end
     #footer > div > div > div:nth-child(4) > div.footer_body > div > ul > li:nth-child(2) > a
     #footer > div.container > div > div.col-lg-1.col-md-1.col-xs-12.col-sm-6 > div > ul > li:nth-child(1) > a
