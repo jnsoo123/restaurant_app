@@ -261,12 +261,19 @@ ru:
           sortby: "Sort by"
           noresults: "No Results Found!"
           go: "Go!"
+          open: "Open Now"
+          close: "Closed"
+          addressunavailable: Address not available
+          seerestaurants: "See all restaurants"
+          registerrestaurants: "Register your restaurant"
+          filters: "Filters"
           
      show:
           restonear: "Restaurants near here"
           noresto: "No restaurants found."
           topresto: "Top Rated Restaurants"
           webunavailable: "Website not available"
+          mapunavailable: "Map Not Available"
           sunday: "Sunday"
           monday: "Monday"
           tuesday: "Tuesday"
@@ -284,6 +291,7 @@ ru:
           signintoreview: "Sign in to write a review"
           rateresto: "Rate This Restaurant"
           addreview: "Add Review"
+          newrestaurants: "New Restaurants"
         
 
   home:
@@ -299,6 +307,15 @@ ru:
           filterprice: "Filter by price range:"
           currency: "PHP"
           nodishes: "No available dishes yet."
+      
+     new_resto:
+          newresto: "New Restaurants"
+          checkresto: "Check out new restaurants in the world"
+          open: "Open Now"
+          close: "Closed"
+          addressunavailable: "Address not available"
+          noresto: "No new restaurants available yet."
+          createone: "Create one?"  
                     
      make_a_resto:
           marketingspeech: "Super Awesome Marketing Speech"

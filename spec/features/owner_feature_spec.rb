@@ -257,9 +257,9 @@ feature "User Interface" do
             click_link "Add Dish"
             expect(page).to have_css("#food_name", wait: 10, visible: false)
             find('#food_name', wait: 10, visible: false).set("My Food")
-            find("#food_description").set("Random Description")
-            find("#food_price").set(24)
-            find('#food_cuisine_id').find(:xpath, "option[2]").select_option
+            find("#food_description", wait: 10, visible: false).set("Random Description")
+            find("#food_price", wait: 10, visible: false).set(24)
+            find('#food_cuisine_id', wait: 10, visible: false).find(:xpath, "option[2]").select_option
             find_button("Submit Dish").click
             within(:css, "#user-tabs") do
               find(:css, "a[data-target='#dish']").click
@@ -277,10 +277,10 @@ feature "User Interface" do
           scenario "Edit Dish" do
             click_link "Edit"
             expect(page).to have_css("#food_name", wait: 10, visible: false)
-            find('#food_name').set("My Food")
-            find("#food_description").set("Changed Description")
-            find("#food_price").set(24)
-            find('#food_cuisine_id').find(:xpath, "option[2]").select_option
+            find('#food_name').set("My Food", wait: 10, visible: false)
+            find("#food_description", wait: 10, visible: false).set("Changed Description")
+            find("#food_price", wait: 10, visible: false).set(24)
+            find('#food_cuisine_id', wait: 10, visible: false).find(:xpath, "option[2]").select_option
             find_button("Edit Dish").click
             
             within(:css, "#user-tabs") do
