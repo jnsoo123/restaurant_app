@@ -6,7 +6,7 @@ $(document).on("ready page:change", function() {
   var slideShowTimeout = 15000;
   
   
-    
+//  alert(123);
   $('#filter_search_button').click(function(e){
     e.preventDefault();
     $('#filter_search_field').val($('#search_field').val());
