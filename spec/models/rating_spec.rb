@@ -9,9 +9,9 @@ RSpec.describe Rating, type: :model do
   it { is_expected.to validate_presence_of :user }
   it { is_expected.to validate_presence_of :restaurant }
   
-  let!(:user1){FactoryGirl.create(:user, :admin => false, :name => 'Joe')}
+  let!(:user1){FactoryGirl.create(:user, :admin => false, :name => 'Joelle')}
   let!(:user2){FactoryGirl.create(:user, :admin => false)}
-  let!(:user3){FactoryGirl.create(:user, :admin => false, :name => 'Fred')}
+  let!(:user3){FactoryGirl.create(:user, :admin => false, :name => 'Fredrickson')}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :status => 'Accepted', :name => 'RestoHouse', :user_id => user2.id)}
   let!(:restaurant2){FactoryGirl.create(:restaurant, :status => 'Accepted', :name => 'AnotherResto', :user_id => user2.id)}
   let!(:restaurant3){FactoryGirl.create(:restaurant, :status => 'Accepted', :name => 'YetAnotherOne', :user_id => user2.id)}

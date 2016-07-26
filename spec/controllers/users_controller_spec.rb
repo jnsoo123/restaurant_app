@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   
-  let!(:user1){FactoryGirl.create(:user, :name => "Sam", :admin => false)}
-  let!(:user2){FactoryGirl.create(:user, :name => "Greg", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Samantha", :admin => false)}
+  let!(:user2){FactoryGirl.create(:user, :name => "Gregor", :admin => false)}
   context "logged in as user" do
     before(:each) do
       sign_in user1
@@ -21,7 +21,7 @@ RSpec.describe UsersController, type: :controller do
           end
           
           it "should have a user set for show" do
-            expect(assigns(:user).name).to eq("Sam")
+            expect(assigns(:user).name).to eq("Samantha")
           end
       end
     end

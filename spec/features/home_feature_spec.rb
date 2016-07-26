@@ -4,9 +4,9 @@ require "capybara/rspec"
 
 feature "Home Interface" do
 
-  let!(:owner1){FactoryGirl.create(:user, :name => "Joe", :admin => false)}
-  let!(:rater1){FactoryGirl.create(:user, :name => "Jack", :admin => false)}
-  let!(:user1){FactoryGirl.create(:user, :name => "Dave", :username => 'dave123', :admin => false)}
+  let!(:owner1){FactoryGirl.create(:user, :name => "Joelle", :admin => false)}
+  let!(:rater1){FactoryGirl.create(:user, :name => "Jacklee", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Daveras", :username => 'dave123', :admin => false)}
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Korean")}
     
   before(:each) do
@@ -272,7 +272,7 @@ feature "Home Interface" do
   context "Sign Up", js: true do
     before(:each) do
       click_link "Sign up Today"
-      fill_in 'user[name]', with: "Joe"
+      fill_in 'user[name]', with: "Joedasd"
       fill_in 'user[username]', with: "joe123"
       fill_in 'user[location]', with: "Quezon"
       fill_in 'user[email]', with: "test@test.com"
@@ -282,14 +282,14 @@ feature "Home Interface" do
     end
 
     scenario "Logged in successfully" do
-      expect(page).to have_content("JOE")
+      expect(page).to have_content("#{User.last.name.upcase}")
     end
 
     scenario "Logged out successfully" do
-      click_link('Joe')
+      click_link(User.last.name)
       sleep 5
       click_link('Sign Out')
-      expect(page).not_to have_content("JOE")
+      expect(page).not_to have_content(User.last.name)
     end
   end
   
@@ -316,7 +316,7 @@ feature "Home Interface" do
     
     context "User Profile" do
       scenario "display user profile page" do
-        click_link('Dave')
+        click_link(user1.name)
         sleep 2
         click_link('My Profile')
         expect(page).to have_content("Fudline")

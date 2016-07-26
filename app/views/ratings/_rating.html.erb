@@ -69,9 +69,9 @@
   <% end %>
   <% if @restaurant.ratings.count > 5 %>
     <% if @more_reviews == "true" %>
-<%= link_to "View less", show_more_reviews_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
+<%= link_to t('.viewless'), show_more_reviews_path(@restaurant, more: false), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
     <% else %>
-<%= link_to "View all reviews (#{5 - @restaurant.ratings.count})", show_more_reviews_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
+<%= link_to "#{t('.viewall')} (#{5 - @restaurant.ratings.count})", show_more_reviews_path(@restaurant, more: true), class: 'center-block text-center', style: 'width: 100%; background-color: whitesmoke; padding: 10px; color: #777777;', remote: true, method: :post %>
     <% end %>
   <% end %>
 <% else %>

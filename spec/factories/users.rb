@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
     sequence :name do |n|
-      "David#{n}"
+      "Davidly#{n}"
     end
     sequence :username do |n|
       "Dave#{n}"

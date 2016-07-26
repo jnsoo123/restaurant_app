@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Picture, type: :model do
   
-  let!(:user1){FactoryGirl.create(:user, :admin => false, :name => 'Fred')}
+  let!(:user1){FactoryGirl.create(:user, :admin => false, :name => 'Fredrickson')}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :status => 'Accepted', :name => 'RestoHouse', :user_id => user1.id)}
   
   let!(:picture1){FactoryGirl.create(:picture, :restaurant_id => restaurant1.id, :user_id => user1.id, :pic =>  File.open("#{Rails.root}/spec/support/sisig.jpg")  )}

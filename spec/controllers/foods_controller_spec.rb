@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FoodsController, type: :controller do
   
   
-  let!(:user1){FactoryGirl.create(:user, :name => "Dave", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Davidlee", :admin => false)}
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Korean")}
   let(:food){ create(:food) }
   

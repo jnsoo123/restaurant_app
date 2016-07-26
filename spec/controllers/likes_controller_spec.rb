@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe LikesController, type: :controller do
   
-  let!(:user1){FactoryGirl.create(:user, :name => "Dave", :username => "dave123", :admin => false)}
-  let!(:user2){FactoryGirl.create(:user, :name => "Joe", :username => "joe123", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Davidlee", :username => "dave123", :admin => false)}
+  let!(:user2){FactoryGirl.create(:user, :name => "Joellee", :username => "joe123", :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1, :status => 'Accepted')}
   let!(:post1){FactoryGirl.create(:post, :restaurant => restaurant1, :comment => "THIS IS AN ANNOUNCEMENT")}
   let!(:rating1){FactoryGirl.create(:rating, :restaurant => restaurant1, :rate => 4, :user => user2)}

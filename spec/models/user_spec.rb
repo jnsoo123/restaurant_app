@@ -9,8 +9,9 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of :name }
   it { is_expected.to validate_presence_of :username }
   it { is_expected.to validate_uniqueness_of :username }
+  it { is_expected.to validate_length_of(:name).is_at_least(6) }
   
-  let!(:user1){FactoryGirl.create(:user, :name => 'Joe', :username => 'joe123', :admin => 'false')}
+  let!(:user1){FactoryGirl.create(:user, :name => 'Joelle', :username => 'joe123', :admin => 'false')}
   let!(:notification1){FactoryGirl.create(:notification, :message => "Some message", :user => user1)}
   
   it "checks if there is notification" do

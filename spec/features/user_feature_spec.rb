@@ -3,10 +3,10 @@ require "spec_helper"
 require "capybara/rspec"
 
 feature "User Interface" do
-  let!(:owner1){FactoryGirl.create(:user, :name => "Joe", :admin => false)}
+  let!(:owner1){FactoryGirl.create(:user, :name => "Joelle", :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Some Restaurant", :user_id => owner1.id, :status => 'Accepted')}
   let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
-  let!(:user1){FactoryGirl.create(:user, :name => "Fred", :username => "myuser", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Fredrickson", :username => "myuser", :admin => false)}
   let!(:picture1){FactoryGirl.create(:picture, :restaurant => restaurant1, :user => user1, :pic => File.open("#{Rails.root}/spec/support/sisig.jpg"), :status => true)}
   let!(:ratings1){FactoryGirl.create(:rating, :rate => 2, :restaurant => restaurant1, :user => user1)}
   

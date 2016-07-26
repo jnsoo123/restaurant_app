@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe RatingsController, type: :controller do
   
-  let!(:user1){FactoryGirl.create(:user, :name => "Sam", :username => "sam123", :admin => false)}
-  let!(:user2){FactoryGirl.create(:user, :name => "Greg", :username => "greg123", :admin => false)}
-  let!(:user3){FactoryGirl.create(:user, :name => "Joe", :username => "joe123", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Samantha", :username => "sam123", :admin => false)}
+  let!(:user2){FactoryGirl.create(:user, :name => "Gregor", :username => "greg123", :admin => false)}
+  let!(:user3){FactoryGirl.create(:user, :name => "Joellee", :username => "joe123", :admin => false)}
   
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Resto", :status => "Accepted", :user => user1)}
   let!(:restaurant2){FactoryGirl.create(:restaurant, :name => "AnotherResto", :status => "Accepted", :user => user2)}

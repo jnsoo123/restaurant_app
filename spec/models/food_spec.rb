@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Food, type: :model do
   
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => 'Korean')}
-  let!(:user1){FactoryGirl.create(:user, :name => 'Joe', :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => 'Joelle', :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1)}  
   let!(:food1){FactoryGirl.create(:food, :name => 'Bulgogi', :price => 32, :cuisine => cuisine1, :restaurant => restaurant1)}
   let!(:food2){FactoryGirl.create(:food, :name => 'Kimchi', :price => 10, :cuisine => cuisine1, :restaurant => restaurant1)}

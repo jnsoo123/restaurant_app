@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SchedulesController, type: :controller do
   
   
-  let!(:user1){FactoryGirl.create(:user, :name => "Dave", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Davidly", :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoAcc", :status => "Accepted", :user_id => user1.id)}
   let!(:schedule1){FactoryGirl.create(:schedule, :day => 'Monday', :opening => "8:00 PM", :closing => "11:00 PM", :restaurant_id => restaurant1.id)}
   

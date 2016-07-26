@@ -3,11 +3,11 @@ require "spec_helper"
 require "capybara/rspec"
 
 feature "User Interface" do
-  let!(:owner1){FactoryGirl.create(:user, :name => "Joe", :admin => false)}
+  let!(:owner1){FactoryGirl.create(:user, :name => "Joellee", :admin => false)}
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Korean")}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Some Restaurant", :user_id => owner1.id, :status => 'Accepted')}
   let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
-  let!(:user1){FactoryGirl.create(:user, :name => "Fred", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Fredrickson", :admin => false)}
   let!(:picture1){FactoryGirl.create(:picture, :restaurant => restaurant1, :user => user1, :pic => File.open("#{Rails.root}/spec/support/sisig.jpg"))}
   
   before(:each) do
@@ -184,7 +184,7 @@ feature "User Interface" do
             sleep 3
             find("#schedule_opening", visible: false, wait: 10).set("7:00 AM")
             find("#schedule_closing", visible: false, wait: 10).set("10:00 AM")
-            find_button("Submit Schedule").click
+            find_button("Submit Schedule", visible: false, wait: 10).click
             page.evaluate_script 'window.location.reload()'
           end
           
@@ -201,7 +201,7 @@ feature "User Interface" do
             sleep 3
             find("#schedule_opening", visible: false, wait: 10).set("8:00 AM")
             find("#schedule_closing", visible: false, wait: 10).set("10:00 AM")
-            find_button("Edit Schedule").click
+            find_button("Edit Schedule", visible: false, wait: 10).click
             page.evaluate_script 'window.location.reload()'
 
             expect(page).to have_content("Monday")
@@ -246,7 +246,7 @@ feature "User Interface" do
             find("#food_description", wait: 10, visible: false).set("Random Description")
             find("#food_price", wait: 10, visible: false).set(24)
             find('#food_cuisine_id', wait: 10, visible: false).find(:xpath, "option[2]").select_option
-            find_button("Submit Dish").click
+            find_button("Submit Dish", visible: false, wait: 10).click
             page.evaluate_script 'window.location.reload()'
           end
           
@@ -265,7 +265,7 @@ feature "User Interface" do
             find("#food_description", wait: 10, visible: false).set("Changed Description")
             find("#food_price", wait: 10, visible: false).set(24)
             find('#food_cuisine_id', wait: 10, visible: false).find(:xpath, "option[2]").select_option
-            find_button("Edit Dish").click
+            find_button("Edit Dish", visible: false, wait: 10).click
             page.evaluate_script 'window.location.reload()'
             sleep 1
             food = Food.last

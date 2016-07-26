@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe RepliesController, type: :controller do
-  let!(:user1){FactoryGirl.create(:user, :name => "Joe", :username => "joe123", :admin => false)}
-  let!(:user2){FactoryGirl.create(:user, :name => "Jack", :username => 'jack123', :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Joellee", :username => "joe123", :admin => false)}
+  let!(:user2){FactoryGirl.create(:user, :name => "Jacklee", :username => 'jack123', :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "Resto", :user_id => user1.id)}
   
   context "Logged in user" do

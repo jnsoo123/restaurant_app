@@ -119,6 +119,7 @@ en:
      index:
           explore: "Explore all the cuisines"
           discover: "Discover delicious delicacy from the cuisines registered here"
+          nocuisines: "No Cuisines available yet"
   
   schedules:
      create:
@@ -345,6 +346,7 @@ en:
           headerparagraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
           about1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
           about2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          aboutdevelopers: "About Developers"
 
      contact:
           title: "Contact Us"
@@ -486,6 +488,7 @@ en:
          contact: "Contact Information"
          clickmap: "Click the map to set up your restaurant's location"
          registerresto: "Register Restaurant" 
+         prohibit: "prohibited this task from being saved:"
          
        restaurants: 
          myrestaurants: "My Restaurants"

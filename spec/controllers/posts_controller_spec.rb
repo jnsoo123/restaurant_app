@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-  let!(:user1){FactoryGirl.create(:user, :name => "Dave", :username => "dave123", :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => "Davidly", :username => "dave123", :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1, :status => 'Accepted')}
   
   context "Logged in as owner" do
@@ -88,9 +88,9 @@ RSpec.describe PostsController, type: :controller do
     end
   
     describe "get#show_more" do
-      let!(:user2){FactoryGirl.create(:user, :name => "Fred", :username => "fred123", :admin => false)}
-      let!(:user3){FactoryGirl.create(:user, :name => "Joe", :username => "joe123", :admin => false)}
-      let!(:user4){FactoryGirl.create(:user, :name => "Jack", :username => "jack123", :admin => false)}
+      let!(:user2){FactoryGirl.create(:user, :name => "Fredrickson", :username => "fred123", :admin => false)}
+      let!(:user3){FactoryGirl.create(:user, :name => "Joellee", :username => "joe123", :admin => false)}
+      let!(:user4){FactoryGirl.create(:user, :name => "Jacklee", :username => "jack123", :admin => false)}
       let!(:user5){FactoryGirl.create(:user, :name => "George", :username => "george123", :admin => false)}
       
       context "display replies on rating" do

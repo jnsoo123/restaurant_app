@@ -5,8 +5,8 @@ RSpec.describe Post, type: :model do
   it { is_expected.to have_many :replies }
   it { is_expected.to belong_to :restaurant }
   
-  let!(:user1){ FactoryGirl.create(:user, :name => 'Joe', :admin => false) }
-  let!(:user2){ FactoryGirl.create(:user, :name => 'Fred', :admin => false) }
+  let!(:user1){ FactoryGirl.create(:user, :name => 'Joelle', :admin => false) }
+  let!(:user2){ FactoryGirl.create(:user, :name => 'Fredrickson', :admin => false) }
   let!(:restaurant1){ FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1, :status => 'Accepted') } 
   let!(:rating1){ FactoryGirl.create(:rating, :rate => 3, :restaurant => restaurant1, :user => user2) }
   

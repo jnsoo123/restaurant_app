@@ -4,8 +4,8 @@ RSpec.describe Restaurant, type: :model do
 
   let!(:cuisine1){FactoryGirl.create(:cuisine, :name => 'Korean')}
   
-  let!(:user1){FactoryGirl.create(:user, :name => 'Joe', :admin => false)}
-  let!(:user2){FactoryGirl.create(:user, :name => 'Fred', :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => 'Joelle', :admin => false)}
+  let!(:user2){FactoryGirl.create(:user, :name => 'Fredrickson', :admin => false)}
   let!(:user3){FactoryGirl.create(:user, :name => 'George', :admin => false)}
   
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1)}  

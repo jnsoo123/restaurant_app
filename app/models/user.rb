@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   validates :name, :username, presence: true
+  validates_length_of :name, minimum: 6
   validates :username, uniqueness: true
   validates_format_of :avatar, with: %r{\.(gif|jpg|png|jpeg)\Z}i, allow_blank: true, on: :update, if: :avatar_check?
   validates_format_of :username, without: %r{[\s-]}

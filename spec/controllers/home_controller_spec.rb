@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe HomeController, type: :controller do
 
   describe "GET #index" do
-    let!(:user1){FactoryGirl.create(:user, :name => "Dave", :admin => false)}
+    let!(:user1){FactoryGirl.create(:user, :name => "Davidlee", :admin => false)}
     let!(:cuisine1){FactoryGirl.create(:cuisine, :name => "Korean")}
     let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1, :status => 'Accepted')}
     let!(:rating1){FactoryGirl.create(:rating, :restaurant => restaurant1, :user => user1)}

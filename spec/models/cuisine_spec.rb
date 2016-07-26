@@ -10,7 +10,7 @@ RSpec.describe Cuisine, type: :model do
   let!(:cuisine3){FactoryGirl.create(:cuisine, :name => 'Thai', :avatar => File.open("#{Rails.root}/spec/support/sisig.gif"))}
   let!(:cuisine4){FactoryGirl.create(:cuisine, :name => 'Taiwanese', :avatar => File.open("#{Rails.root}/spec/support/sisig.jpeg"))}
   
-  let!(:user1){FactoryGirl.create(:user, :name => 'Joe', :admin => false)}
+  let!(:user1){FactoryGirl.create(:user, :name => 'Joelle', :admin => false)}
   let!(:restaurant1){FactoryGirl.create(:restaurant, :name => "RestoHouse", :user => user1, :status => 'Accepted')}  
   let!(:food1){FactoryGirl.create(:food, :name => 'Bulgogi', :price => 32, :cuisine => cuisine1, :restaurant => restaurant1)}
   
