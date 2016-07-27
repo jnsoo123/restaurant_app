@@ -12,11 +12,11 @@ feature "Restaurant Interface" do
   before(:each) do
     visit home_path
     within(:css, '.navbar-right') do
-      click_link "Login"
+      find_link("Login").click
     end
     fill_in 'Username', :with => user1.username
     fill_in 'password', :with => user1.password
-    click_button('Login')
+    find_button('Login').click
     visit restaurant_path(restaurant1.id)
   end
 

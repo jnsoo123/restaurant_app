@@ -13,23 +13,23 @@ feature "User Interface" do
   before(:each) do
     visit home_path
     within(:css, '.navbar-right') do
-      click_link "Login"
+      find_link("Login").click
     end
     fill_in 'Username', :with => owner1.username
     fill_in 'password', :with => owner1.password
-    click_button('Login')
+    find_button('Login').click
   end
   
   context "Owner Interface" do
     before(:each) do
       sleep 6
-      click_link "#{owner1.name}"
-      click_link "My Restaurants"
+      find_link("#{owner1.name}").click
+      find_link("My Restaurants").click
     end
     
     context "Messages" do
       before(:each) do
-        click_link "Messages"
+        find_link("Messages").click
       end
       
       scenario "Display Message Page" do
@@ -103,7 +103,7 @@ feature "User Interface" do
       
         scenario "Edit Restaurant" do
           fill_in "restaurant_contact", with: "412-1231"
-          click_button "Update Restaurant"
+          find_button("Update Restaurant").click
           expect(find("#restaurant_contact").value).to eq("412-1231")
         end
       end
@@ -125,7 +125,7 @@ feature "User Interface" do
         
         context "Post Operations" do
           before(:each) do
-            click_link "Add Posts"
+            find_link("Add Posts").click
             expect(page).to have_css("#post_comment", wait: 10, visible: false)
             find("#post_comment", wait: 10, visible: false).set("THIS IS SOME RANDOM POST")
             find_button("Create Post", wait: 10, visible: false).click
@@ -138,7 +138,7 @@ feature "User Interface" do
           end
         
           scenario "Edit post", js: true do
-            click_link "Edit"
+            find_link("Edit").click
             expect(page).to have_css("#post_comment", wait: 10, visible: false)
             find("#post_comment", wait: 10, visible: false).set("THIS IS NOT SOME RANDOM POST")
             find_button("Edit Post / Announcement", wait: 10, visible: false).click
@@ -148,7 +148,7 @@ feature "User Interface" do
           end
         
           scenario "Delete post", js: true do
-            click_link "Delete"
+            find_link("Delete").click
             page.accept_confirm
             sleep 1
             page.evaluate_script 'window.location.reload()'
@@ -177,7 +177,7 @@ feature "User Interface" do
        
         context "Schedule Operations", js: true do
           before(:each) do
-            click_link "Add Schedule"
+            find_link("Add Schedule").click
             expect(page).to have_css("#schedule_day", wait: 10, visible: false)
          #   sleep 5
             find('#schedule_day', visible: false, wait: 10).find(:xpath, "option[2]").select_option
@@ -195,7 +195,7 @@ feature "User Interface" do
           end
           
           scenario "Edit Schedule" do
-            click_link "Edit"
+            find_link("Edit").click
             expect(page).to have_css("#schedule_day", wait: 10, visible: false)
             find('#schedule_day', visible: false, wait: 10).find(:xpath, "option[2]").select_option
             sleep 3
@@ -211,7 +211,7 @@ feature "User Interface" do
           end
         
           scenario "Delete Schedule" do
-            click_link "Delete"
+            find_link("Delete").click
             page.accept_confirm
             sleep 1
             page.evaluate_script 'window.location.reload()'
@@ -240,8 +240,9 @@ feature "User Interface" do
        
         context "Dish Operations", js: true do
           before(:each) do
-            click_link "Add Dish"
+            find_link("Add Dish").click
             expect(page).to have_css("#food_name", wait: 10, visible: false)
+            sleep 5
             find('#food_name', wait: 10, visible: false).set("My Food")
             find("#food_description", wait: 10, visible: false).set("Random Description")
             find("#food_price", wait: 10, visible: false).set(24)
@@ -259,9 +260,9 @@ feature "User Interface" do
           end
           
           scenario "Edit Dish" do
-            click_link "Edit"
+            find_link("Edit").click
             expect(page).to have_css("#food_name", wait: 10, visible: false)
-            find('#food_name').set("My Food", wait: 10, visible: false)
+            find('#food_name', wait: 10, visible: false).set("My Food")
             find("#food_description", wait: 10, visible: false).set("Changed Description")
             find("#food_price", wait: 10, visible: false).set(24)
             find('#food_cuisine_id', wait: 10, visible: false).find(:xpath, "option[2]").select_option
@@ -276,7 +277,7 @@ feature "User Interface" do
           end
         
           scenario "Delete Dish" do
-            click_link "Delete"
+            find_link("Delete").click
             page.accept_confirm
             sleep 1
             page.evaluate_script 'window.location.reload()'
@@ -310,7 +311,8 @@ feature "User Interface" do
             page.evaluate_script 'window.location.reload()'
             find(:css, '#photo_area > div.row.pic-row > a > div', wait: 10).click
             expect(page).to have_css(".btn-danger", wait: 15, visible: false)
-            find_button("Delete").click
+            sleep 10
+            find_button("Delete", wait: 10, visible: false).click
             page.accept_confirm
             sleep 1
             page.evaluate_script 'window.location.reload()'
@@ -332,7 +334,7 @@ feature "User Interface" do
         end
         
         scenario "Delete Restaurant", js: true do
-          click_button "Delete Restaurant"
+          find_button("Delete Restaurant").click
           sleep 10
           page.accept_confirm
           sleep 1
@@ -344,7 +346,7 @@ feature "User Interface" do
     
     context "Add Restaurant Page" do
       before(:each) do
-        click_link "Add Restaurants"
+        find_link("Add Restaurants").click
       end
       
       scenario "Displays Add Restaurant Page" do
@@ -358,7 +360,7 @@ feature "User Interface" do
         page.execute_script("$('#latitude').val(24.1231)")
         page.execute_script("$('#longitude').val(24.1231)")
         
-        click_button "Register Restaurant"
+        find_button("Register Restaurant").click
         expect(page.current_path == users_restaurant_path).to be true
         expect(page).to have_content("THIS IS A RESTAURANT")
         expect(page).to have_content("Pending")

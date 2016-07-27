@@ -14,14 +14,14 @@ feature "User Interface" do
   before(:each) do
     visit home_path
     within(:css, '.navbar-right') do
-      click_link "Login"
+      find_link("Login").click
     end
     fill_in 'Username', :with => user1.username
     fill_in 'password', :with => user1.password
-    click_button('Login')
+    find_button('Login').click
     sleep 6
-    click_link "#{user1.name}"
-    click_link "My Profile"
+    find_link("#{user1.name}").click
+    find_link("My Profile").click
   end
   
   context "Logged in as user" do
@@ -30,10 +30,10 @@ feature "User Interface" do
     end
     
     scenario "Edit Profile" do
-      click_link "Edit Profile"
+      find_link("Edit Profile").click
       fill_in 'user_username', :with => "Fred321"
       fill_in 'user_current_password', :with => user1.password
-      click_button "Update"
+      find_button("Update").click
       user1.reload
       expect(page).to have_content(user1.username)
     end

@@ -121,14 +121,14 @@ feature "Home Interface" do
   context "Navigation" do
     context "About" do
       scenario "displays about page" do
-        click_link("About Us")
+        find_link("About Us").click
         expect(page).to have_content("About Developers")
       end
     end
   
     context "Contact" do
       scenario "displays contact page" do
-        click_link("Contact Us")
+        find_link("Contact Us").click
         expect(page).to have_content("Contact Us")
       end
     end
@@ -136,7 +136,7 @@ feature "Home Interface" do
     context "Make a Resto" do
       scenario "display login page" do
         within(:css, '#footer') do
-          click_link "Make a Resto"
+          find_link("Make a Resto").click
         end
         expect(page).to have_content("Login")
         expect(page).to have_content("Sign Up")
@@ -146,7 +146,7 @@ feature "Home Interface" do
   
     context "Sign Up Today" do
        scenario "display login page" do
-        click_link("Sign up today")
+        find_link("Sign up today").click
         expect(page).to have_content("Login")
         expect(page).to have_content("Sign Up")
         expect(page).to have_content("Login with Facebook")
@@ -159,7 +159,7 @@ feature "Home Interface" do
       let!(:location1){FactoryGirl.create(:location, :address => "Makati", :restaurant => restaurant1)}
       
       before(:each) do
-        click_link("All Cuisines")
+        find_link("All Cuisines").click
       end
       
       scenario "display cuisine list page" do
@@ -183,7 +183,7 @@ feature "Home Interface" do
       
       before(:each) do
         within(:css, '.navbar-right') do
-          click_link 'Restaurants'
+          find_link('Restaurants').click
         end
       end
       
@@ -271,14 +271,14 @@ feature "Home Interface" do
   
   context "Sign Up", js: true do
     before(:each) do
-      click_link "Sign up Today"
+      find_link("Sign up Today").click
       fill_in 'user[name]', with: "Joedasd"
       fill_in 'user[username]', with: "joe123"
       fill_in 'user[location]', with: "Quezon"
       fill_in 'user[email]', with: "test@test.com"
       fill_in 'user[password]', with: "secret"
       fill_in 'user[password_confirmation]', with: "secret"
-      click_button "Sign Up"
+      find_button("Sign Up").click
     end
 
     scenario "Logged in successfully" do
@@ -286,7 +286,7 @@ feature "Home Interface" do
     end
 
     scenario "Logged out successfully" do
-      click_link(User.last.name)
+      find_link(User.last.name).click
       sleep 5
       click_link('Sign Out')
       expect(page).not_to have_content(User.last.name)
@@ -296,7 +296,7 @@ feature "Home Interface" do
   context "Language" do
     scenario "changes the language to japanese", js: true do
       #sleep 10
-      click_button "dropdownMenu2"
+      find_button("dropdownMenu2").click
       find(:xpath, '//*[@id="footer"]/div/div/div[4]/div[2]/div/ul/li[2]/a').click
       expect(page).to have_content("ホーム")
     end
@@ -307,18 +307,18 @@ feature "Home Interface" do
   context "Logged in" do
     before(:each) do
       within(:css, '.navbar-right') do
-        click_link "Login"
+        find_link("Login").click
       end
       fill_in 'Username', :with => user1.username
       fill_in 'password', :with => user1.password
-      click_button('Login')
+      find_button('Login').click
     end
     
     context "User Profile" do
       scenario "display user profile page" do
-        click_link(user1.name)
+        find_link(user1.name).click
         sleep 2
-        click_link('My Profile')
+        find_link('My Profile').click
         expect(page).to have_content("Fudline")
         expect(page).to have_content("@dave123")
       end
@@ -327,7 +327,7 @@ feature "Home Interface" do
     context "Make a Resto" do
       scenario "displays create restaurant page" do
         within(:css, '#footer') do
-          click_link "Make a Resto"
+          find_link("Make a Resto").click
         end
         expect(page).to have_content("Enter your restaurant's information")
       end
