@@ -46,27 +46,13 @@
             function initMap() {
               var metromanila = {lat: 14.597537989987021, lng: 120.98281860351562};
               
-              var no_poi = [
-                  {
-                    featureType: "poi",
-                    stylers: [
-                      { visibility: "off" }
-                    ]
-                  },{
-                    featureType: "transit",
-                    stylers: [
-                      { visibility: "off" }
-                    ]
-                  }
-                ];
-              
               map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
                 center: metromanila,
-                scrollwheel: false
+                scrollwheel: false,
+                clickableIcons: false
               });
               
-              map.setOptions({styles: no_poi});
               
               map.addListener('click', function(event) {
                 marker.setPosition(event.latLng);

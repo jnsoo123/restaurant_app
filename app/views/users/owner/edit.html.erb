@@ -73,25 +73,13 @@
               function initMap() {
                 var init_location = {lat: <%= (@restaurant.location.present? ? @restaurant.location.latitude : "14.598451648903144") %>, lng: <%= (@restaurant.location.present? ? @restaurant.location.longitude : "120.98510786890984" ) %>};
 
-                var no_poi = [
-                  {
-                    featureType: "poi",
-                    stylers: [
-                      { visibility: "off" }
-                    ]
-                  },{
-                    featureType: "transit",
-                    stylers: [
-                      { visibility: "off" }
-                    ]
-                  }
-                ];
+                
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
                   center: init_location,
-                  scrollwheel: false
+                  scrollwheel: false,
+                  clickableIcons: false
                 });
-                map.setOptions({styles: no_poi});
                 
                 map.addListener('click', function(event) {
                   marker.setPosition(event.latLng);
