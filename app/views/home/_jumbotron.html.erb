@@ -8,7 +8,7 @@
   <div class="jumbotron jumbotron_search" style="padding: 100px 25px 0 25px; margin-bottom: -50px;">
     <h1 class="text-center" style="font-weight: 700; font-family: 'Lobster', cursive; font-size: 100px;">Fudz Finder</h1>
     <p class="text-center">find fud for your appetite</p>
-    
+
     <div style='text-align: center;'>
       <%= form_tag(restaurant_search_path, method: :get, id: 'search_form') do %>
         <div class="input-group">
@@ -34,16 +34,16 @@
                     <%= t('.filterprice')%>
                     <div class="row">
                       <div class="col-md-3 col-sm-3 col-xs-3">
-                        <b><%= t('.currency')%> <%= Food.min %></b> 
+                        <b><%= t('.currency')%> <%= Food.min %></b>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
-                        <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= Food.min %>,<%= Food.max %>]"/> 
+                        <input id="price_slider" name= "price_range" type="text" class="span2" value="" data-slider-min="<%= Food.min %>" data-slider-max="<%= Food.max %>" data-slider-step="5" data-slider-value="[<%= Food.min %>,<%= Food.max %>]"/>
                       </div>
                       <div class="col-md-3 col-sm-3 col-xs-3">
                         <b class="pull-right"><%= t('.currency')%> <%= Food.max %></b>
                       </div>
                     </div>
-                      
+
                     <%= hidden_field_tag :searchQuery, '', id: 'filter_search_field' %>
                     <div class="actions" style="margin-top: 20px;">
                       <%= submit_tag t('.search'), class: 'btn btn-default', style: 'width: 100%;', id: 'filter_search_button'%>
@@ -57,6 +57,6 @@
           </div>
         </div>
     </div>
-    
+
   </div>
 </div>

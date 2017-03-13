@@ -6,25 +6,25 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: [:change_locale, :set_locale]
   before_action :set_locale
   add_flash_types :success, :failure
-  
+
   rescue_from ActiveRecord::RecordNotFound, with: :raise_not_found
   rescue_from SecurityError, with: :not_found
   rescue_from RuntimeError, with: :show_error
-    
+
   include DeviseHelper
   helper ApplicationHelper
 
   def raise_not_found
     render template: 'errors/404', :layout => false, status: 404
   end
-    
+
   def change_locale
       l = params[:locale].to_s.strip.to_sym
       l = I18n.default_locale unless I18n.available_locales.include?(l)
       cookies.permanent[:educator_locale] = l
       redirect_to request.referer || root_url
   end
-  
+
   def authorize
     if user_signed_in?
       unless current_user.admin?
@@ -32,22 +32,22 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def authenticate_admin_user!
     raise SecurityError unless current_user.try(:admin?)
   end
-  
+
   private
-  
+
   def not_found
     render :template => "errors/404", :layout => false, :status => 404
   end
-  
+
   def show_error
     flash[:notice] = "Cant delete last admin"
     redirect_to user_path(current_user)
   end
-  
+
   def set_locale
     if cookies[:educator_locale] && I18n.available_locales.include?(cookies[:educator_locale].to_sym)
       l = cookies[:educator_locale].to_sym
@@ -57,12 +57,12 @@ class ApplicationController < ActionController::Base
     end
     I18n.locale = l
   end
-  
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :username, :location])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :username, :location, :profile_picture_url, :avatar])
   end
-#  
+#
 #  def after_sign_in_path_for(resource_or_scope)
 #    if current_user.admin?
 #      administrator_path

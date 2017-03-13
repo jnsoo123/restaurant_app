@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Abel|Lobster" rel="stylesheet">
-  
+
 </head>
 <body id = 'wrap'>
 
@@ -42,7 +42,7 @@
                 <% end %>
               <% else %>
                 <li class=""><a href="#make_a_resto"><%= t('.makeresto')%></a></li>
-              <% end %>  
+              <% end %>
             <% end %>
             <% if user_signed_in? %>
               <li class="dropdown">
@@ -55,7 +55,7 @@
                     <% if current_user.admin? %>
                       <li><%= link_to t('.myadmin'), admin_root_path %></li>
                     <% end%>
-                  <% end%>  
+                  <% end%>
                   <li><%= link_to t('.myprofile'), user_profile_path(current_user.id) %></li>
                   <% if current_user.restaurants.present? %>
                     <li><%= link_to t('.myrestaurants'), users_restaurant_path %></li>
@@ -71,7 +71,7 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    
+
 
     <% if success %>
       <div class="alert alert-success alert-dismissible floating_alert" role="alert">
@@ -147,7 +147,7 @@
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
           <div class="footer_title">
-            <%= t('.language') %> 
+            <%= t('.language') %>
           </div>
           <div class="footer_body">
             <div class="dropdown">
@@ -172,8 +172,8 @@
         &copy; Soolfie, Inc.
       </div>
     </div>
-  </footer>  
-  
+  </footer>
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-md" role="document">
@@ -182,7 +182,7 @@
     </div>
   </div>
 </div>
-  
-   
+
+
 </body>
 </html>

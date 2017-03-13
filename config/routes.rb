@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post 'restaurants/ratings/:id' => 'ratings#more_reviews', as: :show_more_reviews
   post 'restaurants/post/more/:id' => 'posts#show_more', as: :show_more_post
   post 'restaurants/pictures/more/:id' => 'pictures#show_more', as: :show_more_picture
-  
+
   get 'home/about' => 'home#about', as: :about_page
   get 'home/contact' => 'home#contact', as: :contact_page
   get 'home/index'
@@ -32,11 +32,11 @@ Rails.application.routes.draw do
   resources :users, except: :index
   resources :posts
   resources :replies
-  
+
   post 'likes' => 'likes#create', as: :likes
   delete 'likes' => 'likes#destroy', as: :delete_like
-  
-  
+
+
   get 'users/:id' => 'users#show', as: :user_profile
 
   # The priority is based upon order of creation: first created -> highest priority.
