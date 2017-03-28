@@ -64,6 +64,7 @@ gem 'social-share-button'
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'chromedriver-helper'
+gem "pg"
 
 group :development, :test do
   gem "rspec"

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160711073334) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
@@ -24,9 +27,9 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at"
   end
 
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
@@ -45,8 +48,8 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.integer  "restaurant_id"
   end
 
-  add_index "foods", ["cuisine_id"], name: "index_foods_on_cuisine_id"
-  add_index "foods", ["restaurant_id"], name: "index_foods_on_restaurant_id"
+  add_index "foods", ["cuisine_id"], name: "index_foods_on_cuisine_id", using: :btree
+  add_index "foods", ["restaurant_id"], name: "index_foods_on_restaurant_id", using: :btree
 
   create_table "likes", force: :cascade do |t|
     t.integer  "user_id"
@@ -56,9 +59,9 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "likes", ["post_id"], name: "index_likes_on_post_id"
-  add_index "likes", ["rating_id"], name: "index_likes_on_rating_id"
-  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
+  add_index "likes", ["post_id"], name: "index_likes_on_post_id", using: :btree
+  add_index "likes", ["rating_id"], name: "index_likes_on_rating_id", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.string   "address"
@@ -69,7 +72,7 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "locations", ["restaurant_id"], name: "index_locations_on_restaurant_id"
+  add_index "locations", ["restaurant_id"], name: "index_locations_on_restaurant_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -79,7 +82,7 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "pictures", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -90,8 +93,8 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at",                    null: false
   end
 
-  add_index "pictures", ["restaurant_id"], name: "index_pictures_on_restaurant_id"
-  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
+  add_index "pictures", ["restaurant_id"], name: "index_pictures_on_restaurant_id", using: :btree
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -100,7 +103,7 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.text     "comment"
   end
 
-  add_index "posts", ["restaurant_id"], name: "index_posts_on_restaurant_id"
+  add_index "posts", ["restaurant_id"], name: "index_posts_on_restaurant_id", using: :btree
 
   create_table "ratings", force: :cascade do |t|
     t.integer  "rate"
@@ -111,8 +114,8 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "ratings", ["restaurant_id"], name: "index_ratings_on_restaurant_id"
-  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
+  add_index "ratings", ["restaurant_id"], name: "index_ratings_on_restaurant_id", using: :btree
+  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id", using: :btree
 
   create_table "replies", force: :cascade do |t|
     t.integer  "user_id"
@@ -123,9 +126,9 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "replies", ["post_id"], name: "index_replies_on_post_id"
-  add_index "replies", ["rating_id"], name: "index_replies_on_rating_id"
-  add_index "replies", ["user_id"], name: "index_replies_on_user_id"
+  add_index "replies", ["post_id"], name: "index_replies_on_post_id", using: :btree
+  add_index "replies", ["rating_id"], name: "index_replies_on_rating_id", using: :btree
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"
@@ -141,7 +144,7 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.string   "website"
   end
 
-  add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id"
+  add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id", using: :btree
 
   create_table "schedules", force: :cascade do |t|
     t.string   "day"
@@ -152,7 +155,7 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "schedules", ["restaurant_id"], name: "index_schedules_on_restaurant_id"
+  add_index "schedules", ["restaurant_id"], name: "index_schedules_on_restaurant_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -177,7 +180,7 @@ ActiveRecord::Schema.define(version: 20160711073334) do
     t.string   "uid"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
