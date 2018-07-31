@@ -183,4 +183,21 @@ ActiveRecord::Schema.define(version: 20160711073334) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "foods", "cuisines"
+  add_foreign_key "foods", "restaurants"
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "ratings"
+  add_foreign_key "likes", "users"
+  add_foreign_key "locations", "restaurants"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "pictures", "restaurants"
+  add_foreign_key "pictures", "users"
+  add_foreign_key "posts", "restaurants"
+  add_foreign_key "ratings", "restaurants"
+  add_foreign_key "ratings", "users"
+  add_foreign_key "replies", "posts"
+  add_foreign_key "replies", "ratings"
+  add_foreign_key "replies", "users"
+  add_foreign_key "restaurants", "users"
+  add_foreign_key "schedules", "restaurants"
 end
