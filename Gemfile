@@ -3,10 +3,10 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 #gem 'rails', '4.0.0'
-gem 'rails'
+gem 'rails', '4.2.6'
 
 # Use sqlite3 as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.20.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -21,7 +21,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 4.1.1'
 gem 'jquery-ui-rails', '4.1.1'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -38,33 +38,32 @@ end
 
 #gem 'mysql2'
 
-gem 'devise'
-gem 'geocoder'
-gem 'activeadmin', github: 'activeadmin'
+gem 'devise', '~> 4.1.1'
+gem 'geocoder', '~> 1.3.7'
+gem 'activeadmin', github: 'activeadmin', '~> 1.0.0.pre2'
 gem 'font-awesome-sass', '~> 4.6.2'
-gem 'bootstrap-sass'
-gem 'autoprefixer-rails'
-gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-sass', '~> 3.3.5'
+gem 'autoprefixer-rails', '~> 6.3.6.2'
+gem 'bootstrap-datepicker-rails', '~> 1.6.1.1'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
-gem 'jquery-atwho-rails'
-gem 'owlcarousel-rails'
-gem 'bootstrap-slider-rails'
-gem 'hover-rails'
-gem 'nprogress-rails'
-gem 'animate-rails'
+gem 'jquery-atwho-rails', '~> 1.3.2'
+gem 'owlcarousel-rails', '~> 1.1.3.3'
+gem 'bootstrap-slider-rails', '~> 7.0.3'
+gem 'hover-rails', '~> 2.0.2'
+gem 'nprogress-rails', '~> 0.1.6.7'
+gem 'animate-rails', '~> 1.0.10'
 #gem 'wow-rails'
 
-gem 'carrierwave'
-gem 'mailcatcher'
+gem 'carrierwave', '~> 0.11.2'
+gem 'mailcatcher', '~> 0.6.4'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'omniauth-facebook'
-gem 'social-share-button'
+gem 'omniauth-facebook', '~> 3.0.0'
+gem 'social-share-button', '~> 0.3.1'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'chromedriver-helper'
-gem "pg"
 
 group :development, :test do
   gem "rspec"

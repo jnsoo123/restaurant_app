@@ -379,7 +379,7 @@ DEPENDENCIES
   omniauth-facebook
   owlcarousel-rails
   pg
-  rails
+  rails (= 4.2.6)
   rails-i18n (~> 4.0.0)
   rspec
   rspec-activemodel-mocks
